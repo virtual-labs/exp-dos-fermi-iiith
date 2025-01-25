@@ -3,9 +3,9 @@ EMPTY
 ### Subject Matter Experts
 | SNo. | Name | Email | Institute | ID |
 | :---: | :---: | :---: | :---: | :---: |
-| 1 | name | email | institute | id |
+| 1 | Dr. Anshu Sarje | anshu.sarje@iiit.ac.in | IIIT-H | |
 
 ### Developers
 | SNo. | Name | Email | Institute | ID |
 | :---: | :---: | :---: | :---: | :---: |
-| 1 | Deekshita | deekshita.addlagatta@students.iiit.ac.in | IIIT-H | 2022102079 |
+| 1 | Deekshita Addlagatta| deekshita.addlagatta@students.iiit.ac.in | IIIT-H | 2022102079 |
