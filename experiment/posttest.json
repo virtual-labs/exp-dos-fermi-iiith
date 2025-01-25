@@ -2,38 +2,71 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "What is the density of states (DOS) in a system?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
-    },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Number of particles per unit volume Number of allowed modes or states per unit energy range",
+        "b": "Quantum mechanical wave function distribution",
+        "c": "Number of allowed modes or states per unit energy range",
+        "d": "Energy distribution across conduction bands"
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
+    },
+    {
+      "question": "What is the primary difference between the Fermi level and the Fermi function?",
+      "answers": {
+        "a": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
+        "b": "The Fermi level is the probability of an energy state being occupied, while the Fermi function is the energy level at which the probability of occupancy is 50%.",
+        "c": "The Fermi level changes with temperature, whereas the Fermi function remains constant.",
+        "d": "The Fermi level and Fermi function are identical concepts in quantum mechanics."
+      },
+      "explanations": {
+        "a": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
+        "b": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
+        "c": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
+        "d": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advance"
+    },
+    {
+      "question": "What is the effective mass of an electron in a material?",
+      "answers": {
+        "a": "The actual mass of an electron in free space.",
+        "b": "The mass of an electron when it reaches the conduction band.",
+        "c": "A constant value equal to the mass of a proton.",
+        "d": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice."
+      },
+      "explanations": {
+        "a": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass.",
+        "b": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass.",
+        "c": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass.",
+        "d": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the DOS at E = 2 eV, if effective mass is 9.1*10-31kg and reference energy E0 = 1 ev. (Planck’s constant ħ = 4.135667696×10-15 eV.s)",
+      "answers": {
+        "a": "1.04 x 10^(-2) states/eV.m",
+        "b": "2.08 x 10^(-2) states/eV.m",
+        "c": "5.02 x 10^(-3) states/eV.m",
+        "d": "3.12 x 10^(-3) states/eV.m"
+      },
+      "correctAnswer": "A",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Given that f0(E)=0.8 and T=300 K, What is the Fermi level Ef relative to the energy level E=0.2 eV?",
+      "answers": {
+        "a": "0.1 eV",
+        "b": "0.5 eV",
+        "c": "0.3 eV",
+        "d": "0.7 eV"
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
     }
   ]
 }

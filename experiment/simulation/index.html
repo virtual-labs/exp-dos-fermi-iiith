@@ -1,13 +1,57 @@
+<!-- Quiz Page -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<!-- Add CSS at the head of HTML file -->
-    <link rel="stylesheet" href="./css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/css/style.min.css">
+  <style>
+    .quiz-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .quiz-question {
+      margin-bottom: 20px;
+    }
+    .submit-quiz {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-		<!-- Your code goes here-->
+  <div class="quiz-container">
+    <h2 class="is-size-4">Quiz</h2>
+    <form id="quizForm">
+      <div class="quiz-question">
+        <label for="question1" class="is-size-5">What are the maximum and minimum values that the fermi function can return </label>
+        <select id="question1" name="question1" class="select is-primary">
+          <option value="" disabled selected>Select your answer</option>
+          <option value="-10 to 10">-10, 10</option>
+          <option value="-1 to 1">-1 , 1</option>
+          <option value="0 to 100">0 , 100</option>
+        </select>
+      </div>
+      <div class="submit-quiz">
+        <button type="button" class="button is-primary" id="submitQuiz">Submit</button>
+      </div>
+    </form>
+  </div>
 
-	<!-- Add JS at the bottom of HTML file --> 
-        <script src="./js/main.js"></script>
+  <script>
+    // Navigate to the function plot page on quiz submission
+    document.getElementById('submitQuiz').addEventListener('click', function () {
+      const selectedAnswer = document.getElementById('question1').value;
+      if (selectedAnswer === "-1 to 1") {
+        window.location.href = "simulation.html"; // Link to your existing page
+      } else {
+        alert("Incorrect answer. Please try again.");
+      }
+    });
+  </script>
 </body>
 </html>

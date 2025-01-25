@@ -2,35 +2,63 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "In a pure metal, valence electrons are free to move and behave as if they are in a finite potential well. In a semiconductor, the atoms are arranged in a regular, repeating lattice. Electrons in a single lattice structure are influenced by the atomic potential. How does the periodic arrangement of the lattice in semiconductors affect the energy levels of electrons, and what type of function describes the energy dispersion?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "The energy levels form continuous bands, the energy dispersion is periodic in nature.",
+        "b": "The energy levels remain discrete, and the energy dispersion is linear.",
+        "c": "The energy levels overlap completely, and the energy dispersion is parabolic.",
+        "d": "The energy levels are unaffected by the lattice, and the energy dispersion is constant."
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
+        "b": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
+        "c": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
+        "d": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap."
       },
       "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which of the following functions is of the form of a parabola?",
+      "answers": {
+        "a": "y = $ ax + b $",
+        "b": "y = $ ax^2 - bx + c $",
+        "c": "y = $ sin(x)/log(y) $",
+        "d": "y = $ a/x + b $"
+      },
+      "correctAnswer": "b",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "What does the solution of the Schrödinger wave function signify?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "The exact location of an electron at a given time.",
+        "b": "The probability density of finding an electron in a given region of space.",
+        "c": "The energy levels of the electron without any spatial information.",
+        "d": " The path an electron follows around the nucleus."
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
+        "b": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
+        "c": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
+        "d": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advance"
+    },
+    {
+      "question": "What is the primary difference between potential energy and potential?",
+      "answers": {
+        "a": "Potential energy is the energy per unit charge or mass, while potential is the total energy of the system.",
+        "b": "Potential energy depends on the object's charge, while potential depends on its velocity.",
+        "c": "Potential energy is the total energy due to position, while potential is the energy per unit charge or mass due to position.",
+        "d": " Potential energy is measured in volts, while potential is measured in joules."
+      },
+      "explanations": {
+        "a": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field.",
+        "b": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field.",
+        "c": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field.",
+        "d": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
