@@ -16,7 +16,7 @@ For a pure metal conductor, the ends of a metal act like a finite potential well
 </div>
 Where uₖ(r+a) = uₖ(r) periodic potential barrier. This is also called the Bloch wave.
 
-Because of the periodic nature dispersion of energy, only the energy between -pi/a and pi/a is analyzed as the function follows the same pattern for the rest of its values. ALso note that just like in metals, quantum wells can be observed in semiconductors. The boundaries are, however, linear functions of x rather than a constant.
+Because of the periodic nature dispersion of energy, only the energy between -pi/a and pi/a is analyzed as the function follows the same pattern for the rest of its values. Also note that just like in metals, quantum wells can be observed in semiconductors. The boundaries are, however, linear functions of x rather than a constant.
 
 ## Schrodinger Equation in a Periodic Lattice
 
