@@ -9,7 +9,7 @@ E = E₀ + (h² * k²) / (2 * m₀)
 </div>
 
 ## Electrons enclosed in Potential Energy boundaries
-For a pure metal conductor, the ends of a metal act like a finite potential well(see link). For a crystal lattice the potential barrier(dispersion of energy) is periodic. The solution of the schrodinger equation is of the form -
+For a pure metal conductor, the ends of a metal act like a finite potential well(see <a href="https://virtual-labs.github.io/exp-swe-solutions-iiith/">link</a>). For a crystal lattice the potential barrier(dispersion of energy) is periodic. The solution of the schrodinger equation is of the form -
 <div align="center">
 ψ(x) = uₖ(r) * e<sup>(ikr)</sup>
 <span style="float: right;">(2.2)</span>
