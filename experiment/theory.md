@@ -74,7 +74,7 @@ We rewrite the wavevector <b>k</b> as <b>q - G'</b>, where <b>q</b> lies in the 
 <image src="images/12.png" height="50px" width="auto">
 <span style="float: right;">(2.12)</span></p></div>
 
-By changing variables such that <b>&#x1D40B;'' → &#x1D40B; + &#x1D40B;'</b>, the equation becomes:
+By changing variables such that <b>G'' → G + G'</b>, the equation becomes:
 
 <div align="center"><p>
 <image src="images/13.png" height="50px" width="auto">
