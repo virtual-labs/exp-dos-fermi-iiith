@@ -162,7 +162,7 @@ function drawLine(leftPlot, rightItem) {
 }
 
 document.getElementById('submit').addEventListener('click', () => {
-  const correctAnswers = { 1: '1', 2: '2' }; // Correct mappings
+  const correctAnswers = { 1: '2', 2: '1' }; // Correct mappings
   let score = 0;
 
   for (const [key, value] of matches) {
@@ -172,4 +172,8 @@ document.getElementById('submit').addEventListener('click', () => {
   }
 
   document.getElementById('result').innerText = `You got ${score} out of ${Object.keys(correctAnswers).length} correct!`;
+});
+
+document.getElementById('prevPageBtn').addEventListener('click', () => {
+  window.location.href = 'simulation.html'; // Replace with the actual path of your next page
 });

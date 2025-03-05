@@ -2,12 +2,12 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "In a pure metal, valence electrons are free to move and behave as if they are in a finite potential well. In a semiconductor, the atoms are arranged in a regular, repeating lattice. Electrons in a single lattice structure are influenced by the atomic potential. How does the periodic arrangement of the lattice in semiconductors affect the energy levels of electrons, and what type of function describes the energy dispersion?",
+      "question": "Electrons in a lattice structure are influenced by the atomic potential. How does the periodic arrangement of the atoms in semiconductor lattice affect the energy levels of electrons?",
       "answers": {
-        "a": "The energy levels form continuous bands, the energy dispersion is periodic in nature.",
-        "b": "The energy levels remain discrete, and the energy dispersion is linear.",
-        "c": "The energy levels overlap completely, and the energy dispersion is parabolic.",
-        "d": "The energy levels are unaffected by the lattice, and the energy dispersion is constant."
+        "a": "The energy states form continuous bands and discontinuous bands.",
+        "b": "The energy levels remain discrete.",
+        "c": "The energy levels overlap completely.",
+        "d": "The energy levels are unaffected by the lattice."
       },
       "explanations": {
         "a": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
@@ -19,14 +19,20 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "Which of the following functions is of the form of a parabola?",
+      "question": "What is the maximum energy an electrn can have in valence band in silicon?",
       "answers": {
-        "a": "y = $ ax + b $",
-        "b": "y = $ ax^2 - bx + c $",
-        "c": "y = $ sin(x)/log(y) $",
-        "d": "y = $ a/x + b $"
+        "a": "infinite",
+        "b": "Band gap energy",
+        "c": "$E_v$",
+        "d": "$E_c$"
       },
-      "correctAnswer": "b",
+      "explanations":{
+        "a": "inside an atom elctrons have finite energies",
+        "b": "Band gap energy is the minimum energy needed for an electron to jump to the conduction band",
+        "c": "correct",
+        "d": "This is higher than the maximum valence energy "
+      },
+      "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
@@ -47,18 +53,18 @@
       "difficulty": "advance"
     },
     {
-      "question": "What is the primary difference between potential energy and potential?",
+      "question": "Which of the following is false?",
       "answers": {
-        "a": "Potential energy is the energy per unit charge or mass, while potential is the total energy of the system.",
-        "b": "Potential energy depends on the object's charge, while potential depends on its velocity.",
-        "c": "Potential energy is the total energy due to position, while potential is the energy per unit charge or mass due to position.",
-        "d": " Potential energy is measured in volts, while potential is measured in joules."
+        "a": "Fermi function gives the probability of a state being filled by electron",
+        "b": "Fermi function helps infer probability of a state filled by holes",
+        "c": "Fermi value increases as E(energy) increases",
+        "d": "Higher the value of E, higher is it's probability of being empty."
       },
       "explanations": {
-        "a": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field.",
-        "b": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field.",
-        "c": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field.",
-        "d": "Potential, in the context of a field, refers to the amount of energy per unit charge (in electric fields) or mass (in gravitational fields) at a specific location in the field. It tells you how much potential energy would be acquired by a unit charge or mass if it were placed at that point in the field.Potential energy is the total energy that an object possesses due to its position relative to some reference point in a force field, such as a gravitational or electric field. It depends on the object's charge or mass and its position in the field."
+        "a": "This is true - see fermi function definition",
+        "b": "This is also true. 1-f(E) is the probability of a state being empty",
+        "c": "This statement is false",
+        "d": "This option is true. Electrons tend to fill lower energy states first."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"

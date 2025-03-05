@@ -115,3 +115,7 @@ body {
     padding-left: 10%; 
     padding-right: 10%;
   }
+  .next-page-button {
+    margin-top: 20px;
+    text-align: center;
+  }

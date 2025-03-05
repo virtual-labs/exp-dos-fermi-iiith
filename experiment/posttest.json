@@ -4,21 +4,21 @@
     {
       "question": "What is the density of states (DOS) in a system?",
       "answers": {
-        "a": "Number of particles per unit volume Number of allowed modes or states per unit energy range",
+        "a": "Number of particles per unit volume ",
         "b": "Quantum mechanical wave function distribution",
-        "c": "Number of allowed modes or states per unit energy range",
+        "c": "Number of allowed modes or states per unit volume",
         "d": "Energy distribution across conduction bands"
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "What is the primary difference between the Fermi level and the Fermi function?",
+      "question": "Which of the following is true about the Fermi level",
       "answers": {
-        "a": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
-        "b": "The Fermi level is the probability of an energy state being occupied, while the Fermi function is the energy level at which the probability of occupancy is 50%.",
-        "c": "The Fermi level changes with temperature, whereas the Fermi function remains constant.",
-        "d": "The Fermi level and Fermi function are identical concepts in quantum mechanics."
+        "a": "The Fermi level represents the highest occupied energy level at absolute zero.",
+        "b": "The Fermi level is the energy level which has a fermi probability for intrinsic silicon as  50%.",
+        "c": "The Fermi level changes with temperature",
+        "d": "The Fermi level will decrease when electrons are added to the system."
       },
       "explanations": {
         "a": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
@@ -34,7 +34,7 @@
       "answers": {
         "a": "The actual mass of an electron in free space.",
         "b": "The mass of an electron when it reaches the conduction band.",
-        "c": "A constant value equal to the mass of a proton.",
+        "c": "Effective mass is always constant.",
         "d": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice."
       },
       "explanations": {
@@ -43,22 +43,45 @@
         "c": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass.",
         "d": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "d",
       "difficulty": "intermediate"
     },
     {
-      "question": "What is the DOS at E = 2 eV, if effective mass is 9.1*10-31kg and reference energy E0 = 1 ev. (Planck’s constant ħ = 4.135667696×10-15 eV.s)",
+      "question": "How does DOS(Density of States) vary with energy in intrinsic material?",
       "answers": {
-        "a": "1.04 x 10^(-2) states/eV.m",
-        "b": "2.08 x 10^(-2) states/eV.m",
-        "c": "5.02 x 10^(-3) states/eV.m",
-        "d": "3.12 x 10^(-3) states/eV.m"
+        "a": "DOS is constant",
+        "b": "DOS in conduction band increases with energy",
+        "c": "DOS in conduction band decreases linearly with energy",
+        "d": "None of the above"
       },
-      "correctAnswer": "A",
+      "explanations":{
+        "a":"Refer to DOS vs E plot",
+        "b":"Refer to DOS vs E plot",
+        "c":"Refer to DOS vs E plot",
+        "d":"Refer to DOS vs E plot"
+      },
+      "correctAnswer": "b",
       "difficulty": "intermediate"
     },
     {
-      "question": "Given that f0(E)=0.8 and T=300 K, What is the Fermi level Ef relative to the energy level E=0.2 eV?",
+      "question": "How can you calculate the carrier concentration in the conduction band of a semiconductor?",
+      "answers": {
+        "a": "Integrate DOS between Ev and Ec",
+        "b": "Integrate DOS between Ev and Ec after adding the Fermi function",
+        "c": "Multiply DOS with f(E) and Integrate DOS for all E below Ev",
+        "d": "Muliply DOS with f(E) and integrate DOS for all E above Ec"
+      },
+      "explanations":{
+        "a":"Incorrect, this will give the sum of DOS",
+        "b":"Incorrect, review the definition of fermi function",
+        "c":"Incorrect, integration limits are incorrect",
+        "d":"Correct"
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Given that fo(E)=0.8 and T=300 K, What is the Fermi level Ef relative to the energy level E=0.2 eV?",
       "answers": {
         "a": "0.1 eV",
         "b": "0.5 eV",

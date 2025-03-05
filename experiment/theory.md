@@ -11,7 +11,7 @@ This idea can be applied to valence electrons in the semiconductor as well. The 
 ## Electrons enclosed in Potential Energy boundaries
 For a pure metal conductor, the ends of a metal act like a finite potential well(see <a href="https://virtual-labs.github.io/exp-swe-solutions-iiith/">link</a>). For a crystal lattice the potential barrier(dispersion of energy) is periodic. The solution of the schrodinger equation is of the form -
 <div align="center">
-<image src="images/2.png" height="50px" width="auto">
+<image src="images/2.png" height="30px" width="auto">
 <span style="float: right;">(2.2)</span>
 </div>
 Where uₖ(r+a) = uₖ(r) periodic potential barrier. This is also called the Bloch wave.
@@ -31,17 +31,16 @@ The periodic potential can be represented in fourier series as:
 <image src="images/4.png" height="50px" width="auto">
 <span style="float: right;">(2.4)</span></p></div>
 
-where the &#x1D40B; are the reciprocal lattice vectors.We are at liberty to set the origin of potential energy wherever we like as a convenience for later derivations we set the uniform background potential to be zero, i.e.
+where the "G" and "r" are the reciprocal lattice vectors.We are at liberty to set the origin of potential energy wherever we like as a convenience for later derivations we set the uniform background potential to be zero, i.e.
 
 <div align="center"><p>
-<image src="images/5.png" height="50px" width="auto">
+<image src="images/5.png" height="30px" width="auto">
 <span style="float: right;">(2.5)</span></p></div>
 We can write the wave function ψ as a sum of plane waves obeying the Born–von Karman boundary conditions,
 <div align="center"><p>
-<image src="images/6.png" height="50px" width="auto">
+<image src="images/6.png" height="60px" width="auto">
 <span style="float: right;">(2.6)</span></p></div>
 
-This ensures that ψ also obeys the Born-von Karman boundary conditions.
 We now substitute the wave function (Equation 2.6) and the potential (Equation 2.4) into Schrodinger equation (Equation 2.3) to give - 
 
 <div align="center"><p>
@@ -95,12 +94,15 @@ This can be rewritten as:
 
 ## Conduction Bands and Valence Bands
 The energy vs momentum graphs of the conduction and valence bands are as follows
-<img src="images/energy_momentum.png" style="width:400px;height:400px;">
+<img src="images/energy_momentum.png" style="width:400px;height:400px;" label="E-k Diagram>
 
-At the minima of the conduction band plot and at the maxima of the plot of valence bands, the electrons occur at highest probability. So these functions can be approximated as a parabolic function. There are bands above and below the conduction and valence bands but we will not take them into consideration. 
+Part of the solution is shown in figure above also, called E-k diagram. Y axis is electron energy (E) and x axis the momentum (k). The two bands (most important ones in Semiconductors) show the states where electrons exist. The lower band has lower energy band called the valence band and the top band contains the higher energy electrons and is called the conduction band. The various possible locations (E,k) are the available states. Between the two band is the forbidden zone which we call as Energy Band Gap. Lower energy electrons will gain energy (via externally applied heat, light, electric field etc.) and jump to higher band leaving behind vacancies called holes. All empty states are shown as circles (holes) and occupied states and filled holes.Highest energy level Valence Band is called Valance Band Energy Ev ad lowest energy level in conduction band is called the conduction band energy Ec.Difference between them is Band gap Eg. For Silicon this is 1.12 eV and 
+Germanium it is 0.67 eV<br>
 
-The curvature of the parabola that the function is approximated as is the effective mass.
-One way to think about it is, electrons can be treated as semi-classical particles where quantum mechanics influences just the effective mass.
+E-k diagram also gives in formation about the velocity (group velocity to be more specific) and mass of the particles. The slope of E
+k diagram (dE/dk) gives the hbar*vg. The second derivative (curvature) of the E-k diagram is inversely proportional to mass 
+(effective mass more specifically) <img src="images/energy_momentum.png" width="auto" height="40px">.
+
 
 ## Density of States
 The density of states (DOS) of a system describes the number of allowed modes or states per unit energy range. These states are uniformly distributed across the momentum(k). Their distribution across energy, however, depends on the energy momentum function.
@@ -141,14 +143,14 @@ Since it is the same function for negative values of k,
 ## Fermi Level
 The fermi function gives the probability of a state(if it exists) being occupied at equilibrium.
 <div align="center"><p>
-<image src="images/21.png" height="50px" width="auto">
+<image src="images/21.png" height="30px" width="auto">
 <span style="float: right;">(2.21)</span></p></div>
 
 The parameters of the function are, E<sub>f</sub> and T.
 
 It also describes the electron density in the conduction band and the hole density in the valence band.
 <div align="center"><p>
-<image src="images/22.png" height="50px" width="auto">
+<image src="images/22.png" height="30px" width="auto">
 <span style="float: right;">(2.22)</span></p></div>
 
 The fermi level is the value of E<sub>f</sub> when the fermi function equates to ½, i.e.
