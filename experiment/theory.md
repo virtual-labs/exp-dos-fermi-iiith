@@ -1,107 +1,116 @@
 ## The Quantum Free Electron Model
 In 1928, Sommerfield proposed the quantum free electron theory. This theory comes from applying the principles of Quantum Mechanics to the electron. According to this theory, valence electrons can move freely in a metal and are prevented from escaping the metal at its high potential boundaries.
 
-This idea can be applied to valence electrons in the semiconductor as well. The energy of the electron(E) is related to its momentum(k) by the following equation
+This idea can be applied to valence electrons in the semiconductor as well. The energy of the electron(E) is related to its momentum (k) by the following equation
 
-<div align="center">
-<image src="images/1.png" height="50px" width="auto">
-<span style="float: right;">(2.1)</span>
-</div>
+$$
+E = E_{o} + \frac{h^{2} k^{2}}{2m_{o}}
+$$
 
 ## Electrons enclosed in Potential Energy boundaries
 For a pure metal conductor, the ends of a metal act like a finite potential well(see <a href="https://virtual-labs.github.io/exp-swe-solutions-iiith/">link</a>). For a crystal lattice the potential barrier(dispersion of energy) is periodic. The solution of the schrodinger equation is of the form -
-<div align="center">
-<image src="images/2.png" height="30px" width="auto">
-<span style="float: right;">(2.2)</span>
-</div>
-Where uₖ(r+a) = uₖ(r) periodic potential barrier. This is also called the Bloch wave.
+$$
+\psi (x) = u_{k}(r) e^{ikr}
+$$
+Where $$u_{k}(r+a) = u_{k}(r) $$ 
+is use dto represent the periodic potential barrier. This is also called the Bloch wave.
 
-Because of the periodic nature dispersion of energy, only the energy between -pi/a and pi/a is analyzed as the function follows the same pattern for the rest of its values. Also note that just like in metals, quantum wells can be observed in semiconductors. The boundaries are, however, linear functions of x rather than a constant.
+Because of the periodic nature dispersion of energy, only the energy between -&pi;/a and &pi;/a is analyzed as the function follows the same pattern for the rest of its values. Also note that just like in metals, quantum wells can be observed in semiconductors. The boundaries are, however, linear functions of x rather than a constant.
 
 ## Schrodinger Equation in a Periodic Lattice
 
 The Schrodinger equation for a particle of mass m in the periodic potential V(r) may be written
-<div align="center"><p>
-<image src="images/3.png" height="50px" width="auto">
-<span style="float: right;">(2.3)</span></p></div>
+$$
+H \psi = {- \frac{\hbar ^{2} \nabla ^{2}}{2m} + V(r)} \psi = E\psi
+$$
 
 The periodic potential can be represented in fourier series as:
 
-<div align="center"><p>
-<image src="images/4.png" height="50px" width="auto">
-<span style="float: right;">(2.4)</span></p></div>
+$$
+V(r) = \Sigma _{G} V_{G} e^{iG \cdot r}
+$$
 
 where the "G" and "r" are the reciprocal lattice vectors.We are at liberty to set the origin of potential energy wherever we like as a convenience for later derivations we set the uniform background potential to be zero, i.e.
 
-<div align="center"><p>
-<image src="images/5.png" height="30px" width="auto">
-<span style="float: right;">(2.5)</span></p></div>
+$$
+V_{0} \equiv 0
+$$
 We can write the wave function ψ as a sum of plane waves obeying the Born–von Karman boundary conditions,
-<div align="center"><p>
-<image src="images/6.png" height="60px" width="auto">
-<span style="float: right;">(2.6)</span></p></div>
+
+$$
+\psi (r) = \Sigma _{k} C_{k} e^{ik \cdot r}
+$$
 
 We now substitute the wave function (Equation 2.6) and the potential (Equation 2.4) into Schrodinger equation (Equation 2.3) to give - 
 
-<div align="center"><p>
-<image src="images/7.png" height="50px" width="auto"> 
-<span style="float: right;">(2.7)</span></p></div>
+$$
+\Sigma _{k} \frac {\hbar ^{2} k^{2}{2m}}{2m} C_{k}e^{iG \cdot r} + {\Sigma _{G} V_{G} e^{iG \cdot r}} {\Sigma _{k} C_{k} e^{ik \cdot r}} = E {\Sigma _{k} C_{k} e^{ik \cdot r}}
+$$
 
 The potential energy term can be rewritten as
-<div align="center"><p>
-<image src="images/8.png" height="50px" width="auto">
-<span style="float: right;">(2.8)</span></p></div>
+
+$$
+V(r)\psi = \Sigma _{G,k} V_{G} C_{k} e^{i(G+r).r}
+$$
 
 where the sum on the right-hand side is over all G and k. As the sum is overall possible values of G and k, it can be rewritten as
-<div align="center"><p>
-<image src="images/9.png" height="50px" width="auto">
-<span style="float: right;">(2.9)</span></p></div>
 
-Therefore the Schrodinger equation (Equation 2.7) becomes
-<div align="center"><p>
-<image src="images/10.png" height="50px" width="auto"> 
-<span style="float: right;">(2.10)</span></p></div>
+$$
+V(r)\psi = \Sigma _{G,k} V_{G} C_{k-G} e^{ik.r}
+$$
 
- As the Born-von Karman plane waves are orthogonal, the coefficients must satisfy:
+Therefore the Schrodinger equation becomes
 
-<div align="center">
-<image src="images/11.png" height="50px" width="auto">
-<span style="float: right;">(2.11)</span></div>
+$$
+\Sigma _{k} e^{ik.r}{(\frac {\hbar ^{2}k^{2}}{2m} - E)C_{k}+ \Sigma _{G} V_{G}C_{k-G}} = 0
+$$
+
+As the Born-von Karman plane waves are orthogonal, the coefficients must satisfy:
+
+$$
+(\frac {\hbar ^{2}k^{2}}{2m} - E)C_{k}+ \Sigma _{G} V_{G}C_{k-G} = 0
+$$
 
 We rewrite the wavevector <b>k</b> as <b>q - G'</b>, where <b>q</b> lies in the first Brillouin zone:
-<div align="center"><p>
-<image src="images/12.png" height="50px" width="auto">
-<span style="float: right;">(2.12)</span></p></div>
+
+$$
+(\frac {\hbar ^{2}(q-G')^{2}}{2m} - E)C_{q-G'}+ \Sigma _{G} V_{G}C_{q-G'-G} = 0
+$$
 
 By changing variables such that <b>G'' → G + G'</b>, the equation becomes:
 
-<div align="center"><p>
-<image src="images/13.png" height="50px" width="auto">
-<span style="float: right;">(2.13)</span></p></div>
+$$
+(\frac {\hbar ^{2}(q-G')^{2}}{2m} - E)C_{q-G'}+ \Sigma _{G"} V_{G"-G'}C_{q-G'-G} = 0
+$$
 
 #### Bloch’s Theorem
 For each distinct value of <b>q</b>, the wavefunction takes the form:
 
-<div align="center"><p>
-<image src="images/14.png" height="50px" width="auto">
-<span style="float: right;">(2.14)</span></p></div>
+$$
+\psi _{q}(r) = \Sigma _{G} C_{q-G} e^{-i(q-G).r}
+$$
 
 This can be rewritten as:
-<div align="center"><p>
-<image src="images/15.png" height="50px" width="auto">
-<span style="float: right;">(2.15)</span></p></div>
 
+$$
+\psi _{q}(r) = e^{iq.r} \Sigma _{G} C_{q-G} e^{-iG.r} = e^{iq.r}u_{j,q}
+$$
 
 ## Conduction Bands and Valence Bands
 The energy vs momentum graphs of the conduction and valence bands are as follows
-<img src="images/energy_momentum.png" style="width:400px;height:400px;" label="E-k Diagram>
+
+<img src="images/energy_momentum.png" style="width:400px;height:400px;" label="E-k Diagram">
 
 Part of the solution is shown in figure above also, called E-k diagram. Y axis is electron energy (E) and x axis the momentum (k). The two bands (most important ones in Semiconductors) show the states where electrons exist. The lower band has lower energy band called the valence band and the top band contains the higher energy electrons and is called the conduction band. The various possible locations (E,k) are the available states. Between the two band is the forbidden zone which we call as Energy Band Gap. Lower energy electrons will gain energy (via externally applied heat, light, electric field etc.) and jump to higher band leaving behind vacancies called holes. All empty states are shown as circles (holes) and occupied states and filled holes.Highest energy level Valence Band is called Valance Band Energy Ev ad lowest energy level in conduction band is called the conduction band energy Ec.Difference between them is Band gap Eg. For Silicon this is 1.12 eV and 
 Germanium it is 0.67 eV<br>
 
 E-k diagram also gives in formation about the velocity (group velocity to be more specific) and mass of the particles. The slope of E
 k diagram (dE/dk) gives the hbar*vg. The second derivative (curvature) of the E-k diagram is inversely proportional to mass 
-(effective mass more specifically) <img src="images/energy_momentum.png" width="auto" height="40px">.
+(effective mass more specifically) 
+
+$$
+m* = \frac {\hbar ^{2}}{\frac {d^{2}E} {dk^{2}} }
+$$
 
 
 ## Density of States
@@ -109,49 +118,48 @@ The density of states (DOS) of a system describes the number of allowed modes or
 
 We know, energy as a function of momentum is
 
-<div align="center"><p>
-<image src="images/16.png" height="50px" width="auto">
-<span style="float: right;">(2.16)</span></p></div>
-
+$$
+E(k) = E_{k} + \frac {h^{2}k^{2}}{2m_{o}}
+$$
 
 We are considering the parabolic function because the electrons are concentrated in that minima and the maxima region. In a 1 dimensional structure, we can write a function D(E) such that it is equal to the number of particles in the “k” space per unit length.
 
-<div align="center"><p>
-<image src="images/17.png" height="50px" width="auto">
-<span style="float: right;">(2.17)</span></p></div>
+$$
+D(E)dE = \frac {N_{k}dk}{L}
+$$
 
 Here, D(E) is the density of states. The dispersion of E is
 
-<div align="center"><p>
-<image src="images/18.png" height="50px" width="auto">
-<span style="float: right;">(2.18)</span></p></div>
-
+$$
+E = \epsilon _{0} + \frac {h^{2}k^{2}}{2m_{o}}
+$$
 
 Here, m* is the effective mass. Therefore,
 
-<div align="center"><p>
-<image src="images/19.png" height="50px" width="auto">
-<span style="float: right;">(2.19)</span></p></div>
-
+$$
+D(E)dE = \frac{1}{\pi \hbar} \sqrt{\frac{m*}{2(E-E_{0})}}dE
+$$
 
 Since it is the same function for negative values of k, 
 
-<div align="center"><p>
-<image src="images/20.png" height="50px" width="auto">
-<span style="float: right;">(2.20)</span></p></div>
+$$
+D(E)dE = \frac{2}{\pi \hbar} \sqrt{\frac{m*}{2(E-E_{0})}}dE
+$$
 
 ## Fermi Level
 The fermi function gives the probability of a state(if it exists) being occupied at equilibrium.
-<div align="center"><p>
-<image src="images/21.png" height="30px" width="auto">
-<span style="float: right;">(2.21)</span></p></div>
+
+$$
+f_{o}(E) = \frac {1}{1+e^{E+E_{f}/k_{B}T}}
+$$
 
 The parameters of the function are, E<sub>f</sub> and T.
 
 It also describes the electron density in the conduction band and the hole density in the valence band.
-<div align="center"><p>
-<image src="images/22.png" height="30px" width="auto">
-<span style="float: right;">(2.22)</span></p></div>
+
+$$
+f_{o}(E) = \frac{1}{2}
+$$
 
 The fermi level is the value of E<sub>f</sub> when the fermi function equates to ½, i.e.
 
