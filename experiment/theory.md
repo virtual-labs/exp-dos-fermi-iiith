@@ -41,7 +41,7 @@ $$
 \psi (r) = \Sigma _{k} C_{k} e^{ik \cdot r}
 $$
 
-We now substitute the wave function (Equation 2.6) and the potential (Equation 2.4) into Schrodinger equation (Equation 2.3) to give - 
+We now substitute the wave function and the potential into Schrodinger equation to give - 
 
 $$
 \Sigma _{k} \frac {\hbar ^{2} k^{2}{2m}}{2m} C_{k}e^{iG \cdot r} + {\Sigma _{G} V_{G} e^{iG \cdot r}} {\Sigma _{k} C_{k} e^{ik \cdot r}} = E {\Sigma _{k} C_{k} e^{ik \cdot r}}
@@ -59,29 +59,6 @@ $$
 V(r)\psi = \Sigma _{G,k} V_{G} C_{k-G} e^{ik.r}
 $$
 
-Therefore the Schrodinger equation becomes
-
-$$
-\Sigma _{k} e^{ik.r}{(\frac {\hbar ^{2}k^{2}}{2m} - E)C_{k}+ \Sigma _{G} V_{G}C_{k-G}} = 0
-$$
-
-As the Born-von Karman plane waves are orthogonal, the coefficients must satisfy:
-
-$$
-(\frac {\hbar ^{2}k^{2}}{2m} - E)C_{k}+ \Sigma _{G} V_{G}C_{k-G} = 0
-$$
-
-We rewrite the wavevector <b>k</b> as <b>q - G'</b>, where <b>q</b> lies in the first Brillouin zone:
-
-$$
-(\frac {\hbar ^{2}(q-G')^{2}}{2m} - E)C_{q-G'}+ \Sigma _{G} V_{G}C_{q-G'-G} = 0
-$$
-
-By changing variables such that <b>G'' → G + G'</b>, the equation becomes:
-
-$$
-(\frac {\hbar ^{2}(q-G')^{2}}{2m} - E)C_{q-G'}+ \Sigma _{G"} V_{G"-G'}C_{q-G'-G} = 0
-$$
 
 #### Bloch’s Theorem
 For each distinct value of <b>q</b>, the wavefunction takes the form:
@@ -95,7 +72,9 @@ This can be rewritten as:
 $$
 \psi _{q}(r) = e^{iq.r} \Sigma _{G} C_{q-G} e^{-iG.r} = e^{iq.r}u_{j,q}
 $$
-
+On substituting the above equation in SWE and solving it (solution is done computationally due to it complexity), we obtain a solution which somewhat 
+resembles decaying wave equation bounded by +-1 (i.e. cos \theta). The valid solution defines the locations (called states) where electrons can 
+exist. Other locations are not the solution and hence, are forbidded for the electron
 ## Conduction Bands and Valence Bands
 The energy vs momentum graphs of the conduction and valence bands are as follows
 
@@ -123,28 +102,6 @@ E(k) = E_{k} + \frac {h^{2}k^{2}}{2m_{o}}
 $$
 
 We are considering the parabolic function because the electrons are concentrated in that minima and the maxima region. In a 1 dimensional structure, we can write a function D(E) such that it is equal to the number of particles in the “k” space per unit length.
-
-$$
-D(E)dE = \frac {N_{k}dk}{L}
-$$
-
-Here, D(E) is the density of states. The dispersion of E is
-
-$$
-E = \epsilon _{0} + \frac {h^{2}k^{2}}{2m_{o}}
-$$
-
-Here, m* is the effective mass. Therefore,
-
-$$
-D(E)dE = \frac{1}{\pi \hbar} \sqrt{\frac{m*}{2(E-E_{0})}}dE
-$$
-
-Since it is the same function for negative values of k, 
-
-$$
-D(E)dE = \frac{2}{\pi \hbar} \sqrt{\frac{m*}{2(E-E_{0})}}dE
-$$
 
 ## Fermi Level
 The fermi function gives the probability of a state(if it exists) being occupied at equilibrium.
