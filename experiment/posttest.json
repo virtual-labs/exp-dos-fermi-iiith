@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "What is the density of states (DOS) in a system?",
+      "question": "1. What is the density of states (DOS) in a system?",
       "answers": {
         "a": "Number of particles per unit volume ",
         "b": "Quantum mechanical wave function distribution",
@@ -13,24 +13,25 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Which of the following is true about the Fermi level",
-      "answers": {
-        "a": "The Fermi level represents the highest occupied energy level at absolute zero.",
-        "b": "The Fermi level is the energy level which has a fermi probability for intrinsic silicon as  50%.",
-        "c": "The Fermi level changes with temperature",
-        "d": "The Fermi level will decrease when electrons are added to the system."
-      },
-      "explanations": {
-        "a": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
-        "b": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
-        "c": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
-        "d": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature."
-      },
-      "correctAnswer": "a",
+        "question": "2. Which of the following is true about the Fermi level",
+        "answers": {
+          "a": "The Fermi level represents the highest occupied energy level at absolute zero.",
+          "b": "The Fermi level is the energy level which has a Fermi probability for intrinsic silicon as 50%.",
+          "c": "The Fermi level changes with temperature.",
+          "d": "The Fermi level will decrease when electrons are added to the system.",
+          "e": "Both a and b"
+        },
+        "explanations": {
+          "a": "The Fermi level represents the highest occupied energy level at absolute zero. At this temperature, all energy states below the Fermi level are fully occupied, and all states above it are empty.",
+          "b": "In intrinsic semiconductors like silicon, the Fermi level is the energy level at which the probability of finding an electron is 50%. This is because, at this level, the Fermi-Dirac distribution function equals 0.5.",
+          "c": "The Fermi level can change with temperature, especially in semiconductors. As temperature increases, the Fermi level may shift depending on the material and doping concentration.",
+          "d": "The Fermi level typically increases when electrons are added to the system because the additional electrons occupy higher energy states, pushing the Fermi level upward. A decrease would occur if electrons were removed."
+        },
+      "correctAnswer": "e",
       "difficulty": "advance"
     },
     {
-      "question": "What is the effective mass of an electron in a material?",
+      "question": "3. What is the effective mass of an electron in a material?",
       "answers": {
         "a": "The actual mass of an electron in free space.",
         "b": "The mass of an electron when it reaches the conduction band.",
@@ -38,16 +39,16 @@
         "d": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice."
       },
       "explanations": {
-        "a": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass.",
-        "b": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass.",
-        "c": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass.",
-        "d": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass."
+        "a": "The actual mass of an electron in free space is a fundamental constant (approximately 9.11 × 10⁻³¹ kg) and does not account for the effects of the crystal lattice. The effective mass, on the other hand, is a concept used in solid-state physics to describe how electrons behave in a crystal lattice.",
+        "b": "The mass of an electron when it reaches the conduction band is not a separate concept from effective mass. The effective mass describes how electrons behave in both the valence and conduction bands due to their interaction with the crystal lattice.",
+        "c": "The effective mass is not always constant. It depends on the curvature of the energy vs. momentum (E-k) relationship in the material, which can vary depending on the band structure and the energy level of the electron.",
+        "d": "The effective mass is a modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass."
       },
       "correctAnswer": "d",
       "difficulty": "intermediate"
     },
     {
-      "question": "How does DOS(Density of States) vary with energy in intrinsic material?",
+      "question": "4. How does DOS(Density of States) vary with energy in intrinsic material?",
       "answers": {
         "a": "DOS is constant",
         "b": "DOS in conduction band increases with energy",
@@ -64,7 +65,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "How can you calculate the carrier concentration in the conduction band of a semiconductor?",
+      "question": "5. How can you calculate the carrier concentration in the conduction band of a semiconductor?",
       "answers": {
         "a": "Integrate DOS between Ev and Ec",
         "b": "Integrate DOS between Ev and Ec after adding the Fermi function",
@@ -78,17 +79,6 @@
         "d":"Correct"
       },
       "correctAnswer": "b",
-      "difficulty": "intermediate"
-    },
-    {
-      "question": "Given that fo(E)=0.8 and T=300 K, What is the Fermi level Ef relative to the energy level E=0.2 eV?",
-      "answers": {
-        "a": "0.1 eV",
-        "b": "0.5 eV",
-        "c": "0.3 eV",
-        "d": "0.7 eV"
-      },
-      "correctAnswer": "c",
       "difficulty": "intermediate"
     }
   ]
