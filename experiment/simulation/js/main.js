@@ -133,7 +133,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
       if(yValue.toFixed(2)<0.25 || yValue.toFixed(2) > 1.2)
       {
         valid = false
-        results.push(`${dot.id}: Outside y range`);
+        results.push(`dots are outside the solution range`);
       }
       else
       {
