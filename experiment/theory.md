@@ -4,16 +4,16 @@ In 1928, Sommerfield proposed the quantum free electron theory. This theory come
 This idea can be applied to valence electrons in the semiconductor as well. The energy of the electron(E) is related to its momentum (k) by the following equation
 
 $$
-E = E_{o} + \frac{h^{2} k^{2}}{2m_{o}} \tag{2.1}
+E = E_{o} + \frac{\hbar^{2} k^{2}}{2m_{o}} \tag{2.1}
 $$
 
 ## Electrons enclosed in Potential Energy boundaries
-For a pure metal conductor, the ends of a metal act like a finite potential well (see <a href="https://virtual-labs.github.io/exp-swe-solutions-iiith/">link</a>). For a crystal lattice the potential barrier(dispersion of energy) is periodic. The solution of the Schrodinger equation is of the form -
+For a pure metal conductor, the ends of a metal act like a finite potential well (see <a href="https://virtual-labs.github.io/exp-swe-solutions-iiith/">link</a>). For a crystal lattice the potential barrier (dispersion of energy) is periodic. The solution of the Schrodinger equation is of the form -
 $$
 \psi (x) = u_{k}(r) e^{ikr} \tag{2.2}
 $$
 Where $$u_{k}(r+a) = u_{k}(r) $$ 
-is use dto represent the periodic potential barrier. This is also called the Bloch wave.
+is used to represent the periodic potential barrier. This is also called the Bloch wave.
 
 Because of the periodic nature dispersion of energy, only the energy between -&pi;/a and &pi;/a is analyzed as the function follows the same pattern for the rest of its values. Also note that just like in metals, quantum wells can be observed in semiconductors. The boundaries are, however, linear functions of x rather than a constant.
 
@@ -41,7 +41,7 @@ $$
 \psi (r) = \Sigma _{k} C_{k} e^{ik \cdot r} \tag{2.6}
 $$
 
-We now substitute the wave function (equation 2.6) and the potential(equation 2.4) into Schrodinger equation(equation 2.3) to give - 
+We now substitute the wave function (equation 2.6) and the potential (equation 2.4) into Schrodinger equation (equation 2.3) to give - 
 
 $$
 \Sigma _{k} \frac {\hbar ^{2} k^{2}{2m}}{2m} C_{k}e^{iG \cdot r} + {\Sigma _{G} V_{G} e^{iG \cdot r}} {\Sigma _{k} C_{k} e^{ik \cdot r}} = E {\Sigma _{k} C_{k} e^{ik \cdot r}} \tag{2.7}
@@ -70,7 +70,7 @@ $$
 This can be rewritten as:
 
 $$
-\psi _{q}(r) = e^{iq.r} \Sigma _{G} C_{q-G} e^{-iG.r} = e^{iq.r}u_{j,q} \\tag{2.11}
+\psi _{q}(r) = e^{iq.r} \Sigma _{G} C_{q-G} e^{-iG.r} = e^{iq.r}u_{j,q} \tag{2.11}
 $$
 On substituting the above equation in SWE and solving it (solution is done computationally due to it complexity), we obtain a solution which somewhat 
 resembles decaying wave equation bounded by +-1 (i.e. cos &theta;). The valid solution defines the locations (called states) where electrons can 
@@ -98,7 +98,7 @@ The density of states (DOS) of a system describes the number of allowed modes or
 We know, energy as a function of momentum is
 
 $$
-E(k) = E_{k} + \frac {h^{2}k^{2}}{2m_{o}} \tag{2.13}
+E(k) = E_{k} + \frac {\hbar^{2}k^{2}}{2m_{o}} \tag{2.13}
 $$
 
 We are considering the parabolic function because the electrons are concentrated in that minima and the maxima region. In a 1 dimensional structure, we can write a function D(E) such that it is equal to the number of particles in the “k” space per unit length.
