@@ -77,8 +77,10 @@ resembles decaying wave equation bounded by +-1 (i.e. cos &theta;). The valid so
 exist. Other locations are not the solution and hence, are forbidded for the electron
 ## Conduction Bands and Valence Bands
 The energy vs momentum graphs of the conduction and valence bands are as follows
-
+<figure>
 <img src="images/energy_momentum.png" style="width:400px;height:400px;" label="E-k Diagram">
+<figcaption style="margin-top: 10px; font-style: italic;"><b>E-k Diagram</b></figcaption>
+</figure>
 
 Part of the solution is shown in figure above also, called E-k diagram. Y axis is electron energy (E) and x axis the momentum (k). <br>
 The two bands (most important ones in Semiconductors) show the states where electrons exist. The lower band has lower energy band called the valence band and the top band contains the higher energy electrons and is called the conduction band. The various possible locations (E,k) are the available states. Between the two band is the forbidden zone which we call as Energy Band Gap.<br> 

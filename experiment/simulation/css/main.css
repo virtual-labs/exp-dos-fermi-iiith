@@ -253,7 +253,18 @@
     background-color: black;
     border-radius: 50%;
     cursor: grab;
-  }
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap; /* Prevents text from wrapping */
+  line-height: 0; /* Adjust line height to ensure text is in one line */
+}
+
+.dot p {
+  margin: 0; /* Remove default paragraph margin */
+}
+
   .submit-button {
     margin-top: 20px;
     text-align: center;
