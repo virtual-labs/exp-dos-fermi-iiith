@@ -4,8 +4,13 @@ In 1928, Sommerfield proposed the quantum free electron theory. This theory come
 This idea can be applied to valence electrons in the semiconductor as well. The energy of the electron(E) is related to its momentum (k) by the following equation
 
 $$
-E = E_{o} + \frac{\hbar^{2} k^{2}}{2m_{o}} \tag{2.1}
+E = \frac{\hbar^{2} k^{2}}{2m^{*}} \tag{2.1}
 $$
+
+where,<br>
+m* is the effective mass<br>
+and &hbar; is the reduced Planck's constant
+
 
 ## Electrons enclosed in Potential Energy boundaries
 For a pure metal conductor, the ends of a metal act like a finite potential well (see <a href="https://virtual-labs.github.io/exp-swe-solutions-iiith/">link</a>). For a crystal lattice the potential barrier (dispersion of energy) is periodic. The solution of the Schrodinger equation is of the form -
@@ -75,6 +80,7 @@ $$
 On substituting the above equation in SWE and solving it (solution is done computationally due to it complexity), we obtain a solution which somewhat 
 resembles decaying wave equation bounded by +-1 (i.e. cos &theta;). The valid solution defines the locations (called states) where electrons can 
 exist. Other locations are not the solution and hence, are forbidded for the electron
+
 ## Conduction Bands and Valence Bands
 The energy vs momentum graphs of the conduction and valence bands are as follows
 <figure>
@@ -82,15 +88,24 @@ The energy vs momentum graphs of the conduction and valence bands are as follows
 <figcaption style="margin-top: 10px; font-style: italic;"><b>E-k Diagram</b></figcaption>
 </figure>
 
+$$
+p = \hbar k \tag{2.12}
+$$
+"p" is the momentum and<br>
+"k" is used to denote wave vectore in reciprocal space.<br>
+Therefore, we can write,
+$$
+p \qquad \alpha \qquad k \tag{2.13}
+$$
+
 Part of the solution is shown in figure above also, called E-k diagram. Y axis is electron energy (E) and x axis the momentum (k). <br>
 The two bands (most important ones in Semiconductors) show the states where electrons exist. The lower band has lower energy band called the valence band and the top band contains the higher energy electrons and is called the conduction band. The various possible locations (E,k) are the available states. Between the two band is the forbidden zone which we call as Energy Band Gap.<br> 
-Lower energy electrons will gain energy (via externally applied heat, light, electric field etc.) and jump to higher band leaving behind vacancies called holes. All empty states are shown as circles (holes) and occupied states and filled holes.Highest energy level Valence Band is called Valance Band Energy Ev ad lowest energy level in conduction band is called the conduction band energy Ec.Difference between them is Band gap Eg. For Silicon this is 1.12 eV and Germanium it is 0.67 eV<br>
+Lower energy electrons will gain energy (via externally applied heat, light, electric field etc.) and jump to higher band leaving behind vacancies called holes. All empty states are shown as circles (holes) and occupied states and filled holes.Highest energy level Valence Band is called Valance Band Energy Ev ad lowest energy level in conduction band is called the conduction band energy Ec.Difference between them is Band gap Eg. For Silicon this is 1.12 eV and Germanium it is 0.67 eV at room temperature.<br>
 
-E-k diagram also gives in formation about the velocity (group velocity to be more specific) and mass of the particles. The slope of E-k diagram (dE/dk) gives the &hbar;*vg. The second derivative (curvature) of the E-k diagram is inversely proportional to mass 
-(effective mass more specifically) 
+E-k diagram also gives in formation about the velocity (group velocity to be more specific) and mass of the particles. The slope of E-k diagram (dE/dk) gives the &hbar;*vg. The second derivative (curvature) of the E-k diagram is inversely proportional to effective mass 
 
 $$
-m* = \frac {\hbar ^{2}}{\frac {d^{2}E} {dk^{2}} } \tag{2.12}
+m^{*} = \frac {\hbar ^{2}}{\frac {d^{2}E} {dk^{2}} } \tag{2.14}
 $$
 
 
@@ -100,27 +115,26 @@ The density of states (DOS) of a system describes the number of allowed modes or
 We know, energy as a function of momentum is
 
 $$
-E(k) = E_{k} + \frac {\hbar^{2}k^{2}}{2m_{o}} \tag{2.13}
+E(k) = \frac {\hbar^{2}k^{2}}{2m^{*}} \tag{2.15}
 $$
 
 We are considering the parabolic function because the electrons are concentrated in that minima and the maxima region. In a 1 dimensional structure, we can write a function D(E) such that it is equal to the number of particles in the “k” space per unit length.
 
 ## Fermi Level
-The fermi function gives the probability of a state(if it exists) being occupied at equilibrium.
+The fermi function gives the probability that a quatum state of energy E will be occupied by an electron.
 
 $$
-f_{o}(E) = \frac {1}{1+e^{E+E_{f}/k_{B}T}} \tag{2.14}
+f(E) = \frac {1}{1+e^{E-E_{f}/k_{B}T}} \tag{2.16}
 $$
 
-The parameters of the function are, E<sub>f</sub> and T.
+The parameters of the function are, E<sub>f</sub> and T.<br>
 
-It also describes the electron density in the conduction band and the hole density in the valence band.
-
+At E = E<sub>f</sub>,
 $$
-f_{o}(E) = \frac{1}{2} \tag{2.15}
+f_{o}(E) = \frac{1}{2} \tag{2.17}
 $$
 
-The fermi level is the value of E<sub>f</sub> when the fermi function equates to ½, i.e.
+The fermi level is the value of E when the fermi function equates to ½, i.e.
 
 States below the fermi level have a low probability of being empty and the states above the fermi level have a low probability of being filled.
 

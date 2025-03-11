@@ -133,12 +133,12 @@ document.getElementById('submitBtn').addEventListener('click', () => {
       if(yValue.toFixed(2)<0.25 || yValue.toFixed(2) > 1.2)
       {
         valid = false
-        results.push(`${dot.id}: are outside the solution range`);
+        results.push(`${dot.id}: is outside the solution range`);
       }
-      else
-      {
-        results.push(`${dot.id}: X=${xValue.toFixed(2)}, Y=${yValue.toFixed(2)}`)
-      }
+      //else
+      //{
+      //  results.push(`${dot.id}: X=${xValue.toFixed(2)}, Y=${yValue.toFixed(2)}`)
+      //}
     }
   });
 

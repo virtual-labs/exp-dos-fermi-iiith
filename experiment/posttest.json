@@ -6,7 +6,7 @@
       "answers": {
         "a": "Number of particles per unit volume ",
         "b": "Quantum mechanical wave function distribution",
-        "c": "Number of allowed modes or states per unit volume",
+        "c": "Number of allowed modes or states per unit energy",
         "d": "Energy distribution across conduction bands"
       },
       "correctAnswer": "c",
@@ -35,13 +35,13 @@
       "answers": {
         "a": "The actual mass of an electron in free space.",
         "b": "The mass of an electron when it reaches the conduction band.",
-        "c": "Effective mass is always constant.",
+        "c": "The mass of an electron when f(E)=1/2",
         "d": "A modified mass that accounts for the interaction of an electron with the periodic crystal lattice."
       },
       "explanations": {
         "a": "The actual mass of an electron in free space is a fundamental constant (approximately 9.11 × 10⁻³¹ kg) and does not account for the effects of the crystal lattice. The effective mass, on the other hand, is a concept used in solid-state physics to describe how electrons behave in a crystal lattice.",
         "b": "The mass of an electron when it reaches the conduction band is not a separate concept from effective mass. The effective mass describes how electrons behave in both the valence and conduction bands due to their interaction with the crystal lattice.",
-        "c": "The effective mass is not always constant. It depends on the curvature of the energy vs. momentum (E-k) relationship in the material, which can vary depending on the band structure and the energy level of the electron.",
+        "c": "The mass of an electron when it reaches the fermi level of f(E)=1/2 is not a separate concept from effective mass. The effective mass describes how electrons behave in both the valence and conduction bands due to their interaction with the crystal lattice.",
         "d": "The effective mass is a modified mass that accounts for the interaction of an electron with the periodic crystal lattice. It arises due to the interaction of electrons with the periodic potential of the crystal lattice, which modifies the electron's motion. The effective mass is derived from the curvature of the energy vs. momentum (E-k) relationship and allows electrons in a crystal to be treated as though they were free particles with a modified mass."
       },
       "correctAnswer": "d",

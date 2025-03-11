@@ -2,9 +2,9 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "Electrons in a lattice structure are influenced by the atomic potential. How does the periodic arrangement of the atoms in semiconductor lattice affect the energy levels of electrons?",
+      "question": "1. Electrons in a lattice structure are influenced by the atomic potential. How does the periodic arrangement of the atoms in semiconductor lattice affect the energy levels of electrons?",
       "answers": {
-        "a": "The energy states form continuous bands and discontinuous bands.",
+        "a": "The energy states form continuous bands and continuum of energy bands .",
         "b": "The energy levels remain discrete.",
         "c": "The energy levels overlap completely.",
         "d": "The energy levels are unaffected by the lattice."
@@ -19,7 +19,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "What is the maximum energy an electrn can have in valence band in silicon?",
+      "question": "2. What is the maximum energy an electron can have in valence band in silicon?",
       "answers": {
         "a": "infinite",
         "b": "Band gap energy",
@@ -36,12 +36,12 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What does the solution of the Schrödinger wave function signify?",
+      "question": "3. What does the solution of the Schrödinger wave function signify?",
       "answers": {
         "a": "The exact location of an electron at a given time.",
         "b": "The probability density of finding an electron in a given region of space.",
         "c": "The energy levels of the electron without any spatial information.",
-        "d": " The path an electron follows around the nucleus."
+        "d": "The path an electron follows around the nucleus."
       },
       "explanations": {
         "a": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
@@ -53,11 +53,11 @@
       "difficulty": "advance"
     },
     {
-      "question": "Which of the following is false?",
+      "question": "4. Which of the following is false?",
       "answers": {
         "a": "Fermi function gives the probability of a state being filled by electron",
         "b": "Fermi function helps infer probability of a state filled by holes",
-        "c": "Fermi value increases as E(energy) increases",
+        "c": "The value of fermi function, f(E), increases as E(energy) increases",
         "d": "Higher the value of E, higher is it's probability of being empty."
       },
       "explanations": {
