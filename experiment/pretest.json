@@ -10,10 +10,10 @@
         "d": "The energy levels are unaffected by the lattice."
       },
       "explanations": {
-        "a": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
-        "b": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
-        "c": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
-        "d": "The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap."
+        "a": "Correct. The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
+        "b": "Incorrect. The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
+        "c": "Incorrect. The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap.",
+        "d": "Incorrect. The periodicity of the lattice causes the allowed energy states for electrons to form bands. These bands represent continuous ranges of energies where electrons can exist. Between these bands, there is often a band gap where no electron states exist. The conduction band (higher energy states) and valence band (lower energy states) are separated by this gap."
       },
       "correctAnswer": "a",
       "difficulty": "intermediate"
@@ -27,10 +27,10 @@
         "d": "$E_c$"
       },
       "explanations":{
-        "a": "inside an atom elctrons have finite energies",
-        "b": "Band gap energy is the minimum energy needed for an electron to jump to the conduction band",
+        "a": "Incorrect. Inside an atom elctrons have finite energies",
+        "b": "Incorrect. Band gap energy is the minimum energy needed for an electron to jump to the conduction band",
         "c": "correct",
-        "d": "This is higher than the maximum valence energy "
+        "d": "Incorrect. This is higher than the maximum valence energy "
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
@@ -44,10 +44,10 @@
         "d": "The path an electron follows around the nucleus."
       },
       "explanations": {
-        "a": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
-        "b": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
-        "c": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
-        "d": "The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time."
+        "a": "Incorrect. The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
+        "b": "Correct. The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
+        "c": "Incorrect. The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time.",
+        "d": "Incorrect. The wave function (ψ) describes the quantum state of a particle, such as an electron in an atom or a molecule. The square of the absolute value of the wave function, ∣ψ(x,t)∣2, gives the probability density of finding the particle at a particular position in space at a particular time."
       },
       "correctAnswer": "b",
       "difficulty": "advance"
@@ -61,10 +61,10 @@
         "d": "Higher the value of E, higher is it's probability of being empty."
       },
       "explanations": {
-        "a": "This is true - see fermi function definition",
-        "b": "This is also true. 1-f(E) is the probability of a state being empty",
-        "c": "This statement is false",
-        "d": "This option is true. Electrons tend to fill lower energy states first."
+        "a": "Incorrect. This is true - see fermi function definition",
+        "b": "Incorrect. This is also true. 1-f(E) is the probability of a state being empty",
+        "c": "Correct. This statement is false",
+        "d": "Incorrect. This option is true. Electrons tend to fill lower energy states first."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
