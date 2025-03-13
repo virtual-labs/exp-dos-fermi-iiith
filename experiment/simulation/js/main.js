@@ -153,7 +153,22 @@ document.getElementById('submitBtn').addEventListener('click', () => {
 document.getElementById('nextPageBtn').addEventListener('click', () => {
   window.location.href = 'effective_mass.html'; // Replace with the actual path of your next page
 });
+document.getElementById('refreshBtn').addEventListener('click', function() {
+  // Reset dot positions
+  document.getElementById('dot1').style.top = '50px';
+  document.getElementById('dot1').style.left = '50px';
+  document.getElementById('dot2').style.top = '100px';
+  document.getElementById('dot2').style.left = '50px';
+  document.getElementById('dot3').style.top = '150px';
+  document.getElementById('dot3').style.left = '50px';
 
+  // Clear any messages
+  document.getElementById('outputMessage').textContent = '';
+
+  // If you have any other states to reset, do it here
+  // For example, if you have a chart that needs to be reset, you can reinitialize it
+  // myChart.update();
+});
     
        // Check if the dot is outside the plot bounds
 //      if (
