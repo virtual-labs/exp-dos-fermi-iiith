@@ -1,2 +1,2 @@
-### Aim of the experiment
+
 The objective is to simulate the output for DOS and Fermi Level vs Energy for a given system (known semiconductor Si or Ge).  The concept of DOS and Fermi Energy Level are usually explained theoretically to the students, leaving them with somewhat unappreciative of the concept and its importance. Using the virtual lab experiment on this topic, we hope to make this concept more comprehensible as well easy to understand how various parameters affect the DOS and Fermi level.
