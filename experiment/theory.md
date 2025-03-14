@@ -92,10 +92,10 @@ $$
 p = \hbar k \tag{2.12}
 $$
 "p" is the momentum and<br>
-"k" is used to denote wave vectore in reciprocal space.<br>
+"k" is used to denote wave vector in reciprocal space.<br>
 Therefore, we can write,
 $$
-p \qquad \alpha \qquad k \tag{2.13}
+p \quad \alpha \quad k \tag{2.13}
 $$
 
 Part of the solution is shown in figure above also, called E-k diagram. Y axis is electron energy (E) and x axis the momentum (k). <br>
@@ -110,7 +110,7 @@ $$
 
 
 ## Density of States
-The density of states (DOS) of a system describes the number of allowed modes or states per unit energy range. These states are uniformly distributed across the momentum(k). Their distribution across energy, however, depends on the energy momentum function.
+The density of states (DOS) of a system describes the number of allowed modes or states per unit energy range and volume. These states are uniformly distributed across the momentum(k). Their distribution across energy, however, depends on the energy momentum function.
 
 We know, energy as a function of momentum is
 
@@ -124,7 +124,7 @@ We are considering the parabolic function because the electrons are concentrated
 The fermi function gives the probability that a quatum state of energy E will be occupied by an electron.
 
 $$
-f(E) = \frac {1}{1+e^{E-E_{f}/k_{B}T}} \tag{2.16}
+f(E) = \frac {1}{1+e^{(E-E_{f})/k_{B}T}} \tag{2.16}
 $$
 
 The parameters of the function are, E<sub>f</sub> and T.<br>

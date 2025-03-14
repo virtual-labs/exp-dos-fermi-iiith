@@ -36,7 +36,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "3. What does the solution of the Schrödinger wave function signify?",
+      "question": "3. What does the square of the solution of the Schrödinger wave function signify?",
       "answers": {
         "a": "The exact location of an electron at a given time.",
         "b": "The probability density of finding an electron in a given region of space.",
