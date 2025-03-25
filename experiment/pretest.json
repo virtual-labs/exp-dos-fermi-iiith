@@ -23,8 +23,8 @@
       "answers": {
         "a": "infinite",
         "b": "Band gap energy",
-        "c": "$E_v$",
-        "d": "$E_c$"
+        "c": "E<sub>v</sub>",
+        "d": "E<sub>c</sub>"
       },
       "explanations":{
         "a": "Incorrect. Inside an atom elctrons have finite energies",

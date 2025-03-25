@@ -4,8 +4,11 @@ In 1928, Sommerfield proposed the quantum free electron theory. This theory come
 This idea can be applied to valence electrons in the semiconductor as well. The energy of the electron(E) is related to its momentum (k) by the following equation
 
 $$
-E = \frac{\hbar^{2} k^{2}}{2m^{*}} \tag{2.1}
+E = \frac{\hbar^{2} k^{2}}{2m^{*}} $$
 $$
+\tag{2.1}
+$$
+<br>
 
 where,<br>
 m* is the effective mass<br>
@@ -15,8 +18,11 @@ and &hbar; is the reduced Planck's constant
 ## Electrons enclosed in Potential Energy boundaries
 For a pure metal conductor, the ends of a metal act like a finite potential well (see <a href="https://virtual-labs.github.io/exp-swe-solutions-iiith/">link</a>). For a crystal lattice the potential barrier (dispersion of energy) is periodic. The solution of the Schrodinger equation is of the form -
 $$
-\psi (x) = u_{k}(r) e^{ikr} \tag{2.2}
+\psi (x) = u_{k}(r) e^{ikr} $$
 $$
+\tag{2.2}
+$$
+<br>
 Where $$u_{k}(r+a) = u_{k}(r) $$ 
 is used to represent the periodic potential barrier. This is also called the Bloch wave.
 
@@ -26,57 +32,82 @@ Because of the periodic nature dispersion of energy, only the energy between -&p
 
 The Schrodinger equation for a particle of mass m in the periodic potential V(r) may be written
 $$
-H \psi = {- \frac{\hbar ^{2} \nabla ^{2}}{2m} + V(r)} \psi = E\psi \tag{2.3}
+H \psi = {- \frac{\hbar ^{2} \nabla ^{2}}{2m} + V(r)} \psi = E\psi $$
 $$
+\tag{2.3}
+$$
+<br>
 
 The periodic potential can be represented in fourier series as:
 
 $$
-V(r) = \Sigma _{G} V_{G} e^{iG \cdot r} \tag{2.4}
+V(r) = \Sigma _{G} V_{G} e^{iG \cdot r} $$
 $$
-
+\tag{2.4}
+$$
+<br>
 where the "G" is the reciprocal lattice vector and "r" is the position vector. We are at liberty to set the origin of potential energy wherever we like as a convenience for later derivations we set the uniform background potential to be zero, i.e.
 
 $$
-V_{0} \equiv 0 \tag{2.5}
+V_{0} \equiv 0 $$
 $$
+\tag{2.5}
+$$
+<br>
 We can write the wave function ψ as a sum of plane waves obeying the Krong Penny and Born–von Karman boundary conditions,
 
 $$
-\psi (r) = \Sigma _{k} C_{k} e^{ik \cdot r} \tag{2.6}
+\psi (r) = \Sigma _{k} C_{k} e^{ik \cdot r} $$
 $$
+\tag{2.6}
+$$
+<br>
 
 We now substitute the wave function (equation 2.6) and the potential (equation 2.4) into Schrodinger equation (equation 2.3) to give - 
 
 $$
-\Sigma _{k} \frac {\hbar ^{2} k^{2}{2m}}{2m} C_{k}e^{iG \cdot r} + {\Sigma _{G} V_{G} e^{iG \cdot r}} {\Sigma _{k} C_{k} e^{ik \cdot r}} = E {\Sigma _{k} C_{k} e^{ik \cdot r}} \tag{2.7}
+\Sigma _{k} \frac {\hbar ^{2} k^{2}{2m}}{2m} C_{k}e^{iG \cdot r} + {\Sigma _{G} V_{G} e^{iG \cdot r}} {\Sigma _{k} C_{k} e^{ik \cdot r}} = E {\Sigma _{k} C_{k} e^{ik \cdot r}} $$
 $$
+\tag{2.7}
+$$
+<br>
 
 The potential energy term can be rewritten as
 
 $$
-V(r)\psi = \Sigma _{G,k} V_{G} C_{k} e^{i(G+r).r} \tag{2.8}
+V(r)\psi = \Sigma _{G,k} V_{G} C_{k} e^{i(G+r).r} $$
 $$
+\tag{2.8}
+$$
+<br>
 
 where the sum on the right-hand side is over all G and k. As the sum is overall possible values of G and k, it can be rewritten as
 
 $$
-V(r)\psi = \Sigma _{G,k} V_{G} C_{k-G} e^{ik.r} \tag{2.9}
+V(r)\psi = \Sigma _{G,k} V_{G} C_{k-G} e^{ik.r} $$
 $$
-
+\tag{2.9}
+$$
+<br>
 
 #### Bloch’s Theorem
 For each distinct value of <b>q</b>, the wavefunction takes the form:
 
 $$
-\psi _{q}(r) = \Sigma _{G} C_{q-G} e^{-i(q-G).r} \tag{2.10}
+\psi _{q}(r) = \Sigma _{G} C_{q-G} e^{-i(q-G).r} $$
 $$
+\tag{2.10}
+$$
+<br>
 
 This can be rewritten as:
 
 $$
-\psi _{q}(r) = e^{iq.r} \Sigma _{G} C_{q-G} e^{-iG.r} = e^{iq.r}u_{j,q} \tag{2.11}
+\psi _{q}(r) = e^{iq.r} \Sigma _{G} C_{q-G} e^{-iG.r} = e^{iq.r}u_{j,q} $$
 $$
+\tag{2.11}
+$$
+<br>
 On substituting the above equation in SWE and solving it (solution is done computationally due to it complexity), we obtain a solution which somewhat 
 resembles decaying wave equation bounded by +-1 (i.e. cos &theta;). The valid solution defines the locations (called states) where electrons can 
 exist. Other locations are not the solution and hence, are forbidded for the electron
@@ -89,14 +120,20 @@ The energy vs momentum graphs of the conduction and valence bands are as follows
 </figure>
 
 $$
-p = \hbar k \tag{2.12}
+p = \hbar k $$
 $$
+\tag{2.12}
+$$
+<br>
 "p" is the momentum and<br>
 "k" is used to denote wave vector in reciprocal space.<br>
 Therefore, we can write,
 $$
-p \quad \alpha \quad k \tag{2.13}
+p \quad \alpha \quad k $$
 $$
+\tag{2.13}
+$$
+<br>
 
 Part of the solution is shown in figure above also, called E-k diagram. Y axis is electron energy (E) and x axis the momentum (k). <br>
 The two bands (most important ones in Semiconductors) show the states where electrons exist. The lower band has lower energy band called the valence band and the top band contains the higher energy electrons and is called the conduction band. The various possible locations (E,k) are the available states. Between the two band is the forbidden zone which we call as Energy Band Gap.<br> 
@@ -105,8 +142,11 @@ Lower energy electrons will gain energy (via externally applied heat, light, ele
 E-k diagram also gives in formation about the velocity (group velocity to be more specific) and mass of the particles. The slope of E-k diagram (dE/dk) gives the &hbar;*vg. The second derivative (curvature) of the E-k diagram is inversely proportional to effective mass 
 
 $$
-m^{*} = \frac {\hbar ^{2}}{\frac {d^{2}E} {dk^{2}} } \tag{2.14}
+m^{*} = \frac {\hbar ^{2}}{\frac {d^{2}E} {dk^{2}} } $$
 $$
+\tag{2.14}
+$$
+<br>
 
 
 ## Density of States
@@ -115,8 +155,11 @@ The density of states (DOS) of a system describes the number of allowed modes or
 We know, energy as a function of momentum is
 
 $$
-E(k) = \frac {\hbar^{2}k^{2}}{2m^{*}} \tag{2.15}
+E(k) = \frac {\hbar^{2}k^{2}}{2m^{*}} $$
 $$
+\tag{2.15}
+$$
+<br>
 
 We are considering the parabolic function because the electrons are concentrated in that minima and the maxima region. In a 1 dimensional structure, we can write a function D(E) such that it is equal to the number of particles in the “k” space per unit length.
 
@@ -124,15 +167,21 @@ We are considering the parabolic function because the electrons are concentrated
 The fermi function gives the probability that a quatum state of energy E will be occupied by an electron.
 
 $$
-f(E) = \frac {1}{1+e^{(E-E_{f})/k_{B}T}} \tag{2.16}
+f(E) = \frac {1}{1+e^{(E-E_{f})/k_{B}T}} $$
 $$
+\tag{2.16}
+$$
+<br>
 
 The parameters of the function are, E<sub>f</sub> and T.<br>
 
 At E = E<sub>f</sub>,
 $$
-f_{o}(E) = \frac{1}{2} \tag{2.17}
+f_{o}(E) = \frac{1}{2} $$
 $$
+\tag{2.17}
+$$
+<br>
 
 The fermi level is the value of E when the fermi function equates to ½, i.e.
 

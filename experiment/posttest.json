@@ -56,11 +56,11 @@
         "c": "DOS in conduction band decreases linearly with energy",
         "d": "None of the above"
       },
-      "explanations":{
-        "a":"Incorrect. Refer to DOS vs E plot",
-        "b":"Correct. Refer to DOS vs E plot",
-        "c":"Incorrect. Refer to DOS vs E plot",
-        "d":"Incorrect. Refer to DOS vs E plot"
+      "explanations": {
+        "a": "Incorrect. The DOS is not constant; it depends on the energy level. Near the band edges, the DOS follows a parabolic relationship with energy.",
+        "b": "Correct. In the conduction band, the DOS increases with energy because the number of available electronic states grows as we move higher in energy away from the conduction band edge.",
+        "c": "Incorrect. The DOS does not decrease linearly with energy. Instead, it typically follows a square-root dependence (for 3D materials) due to the parabolic nature of energy bands near the band edges.",
+        "d": "Incorrect. Option (b) correctly describes the behavior of DOS in the conduction band."
       },
       "correctAnswer": "b",
       "difficulty": "intermediate"
