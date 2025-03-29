@@ -1,1 +1,1 @@
-## Density of States (DOS) and Fermi Level
+## Density of States
