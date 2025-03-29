@@ -185,4 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('prevPageBtn').addEventListener('click', () => {
       window.location.href = 'simulation.html'; // Replace with the actual path of your next page
   });
+  document.getElementById('startSimulation').addEventListener('click', () => {
+      window.location.href = 'index.html';
+  });
 });
