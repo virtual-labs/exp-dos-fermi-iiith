@@ -36,6 +36,7 @@
       "content-type": "text"
     },
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     {
       "target": "procedure.html",
       "source": "procedure.md",
@@ -43,6 +44,8 @@
       "unit-type": "task",
       "content-type": "text"
     },
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     {
