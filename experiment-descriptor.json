@@ -35,6 +35,7 @@
       "unit-type": "task",
       "content-type": "text"
     },
+<<<<<<< Updated upstream
     {
       "target": "procedure.html",
       "source": "procedure.md",
@@ -42,6 +43,8 @@
       "unit-type": "task",
       "content-type": "text"
     },
+=======
+>>>>>>> Stashed changes
     {
       "target": "simulation.html",
       "source": "simulation/index.html",
