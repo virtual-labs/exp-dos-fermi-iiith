@@ -562,12 +562,13 @@
         }
 
         .matching-connections {
-            width: 40px;
-            min-height: 200px;
+            width: 60px;
+            min-height: 300px;
             position: relative;
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
+            z-index: 10;
         }
 
         .matching-item {
@@ -2345,16 +2346,26 @@
 
         function calculateFermiLevel(material, temperature, dopingConc, dopingType) {
             const bandGap = material.bandGap;
-            const intrinsicLevel = 0;
+            const intrinsicLevel = 0; // Midway between VB and CB
+            const conductionBandBottom = bandGap / 2;
+            const valenceBandTop = -bandGap / 2;
             
             if (dopingType === 'intrinsic') {
                 return intrinsicLevel;
             } else if (dopingType === 'n') {
+                // N-type: Fermi level moves UP towards conduction band
+                // It starts at intrinsic (0) and can approach but never enter CB
                 const shift = k * temperature * Math.log(dopingConc / 1e16);
-                return intrinsicLevel + Math.min(shift, bandGap/3);
+                // Clamp between intrinsic level (0) and just below conduction band
+                const maxShift = conductionBandBottom - 0.05; // Stay 0.05 eV below CB
+                return Math.max(intrinsicLevel, Math.min(shift, maxShift));
             } else {
+                // P-type: Fermi level moves DOWN towards valence band
+                // It starts at intrinsic (0) and can approach but never enter VB
                 const shift = k * temperature * Math.log(dopingConc / 1e16);
-                return intrinsicLevel - Math.min(shift, bandGap/3);
+                // Clamp between intrinsic level (0) and just above valence band
+                const minShift = valenceBandTop + 0.05; // Stay 0.05 eV above VB
+                return Math.min(intrinsicLevel, Math.max(-shift, minShift));
             }
         }
 
@@ -2566,8 +2577,8 @@
         }
 
         function drawThermalCarriers(margin, plotWidth, plotHeight, energyMin, energyMax, temperature, dopingType) {
-            // Draw thermal carriers only at higher temperatures and thermal intensity
-            if (temperature < 250 || thermalIntensity < 0.8) return;
+            // Draw thermal carriers at all temperatures above 200K
+            if (temperature < 200) return;
             
             const bandGap = materials[document.getElementById('material')?.value || 'silicon'].bandGap;
             const valenceBandTop = -bandGap/2;
@@ -2577,8 +2588,10 @@
                 return margin + plotHeight - ((energy - energyMin) / (energyMax - energyMin)) * plotHeight;
             }
             
-            // Fewer, more visible carriers
-            const numCarriers = Math.min(8, Math.floor((temperature - 250) / 30) * thermalIntensity);
+            // More carriers for better visualization
+            // Scale with temperature and thermal intensity
+            const baseCarriers = Math.floor((temperature - 200) / 25);
+            const numCarriers = Math.min(20, Math.max(4, baseCarriers * thermalIntensity));
             
             for (let i = 0; i < numCarriers; i++) {
                 // Much slower movement
@@ -2934,6 +2947,9 @@
             if (currentTourStep < tourSteps.length - 1) {
                 currentTourStep++;
                 showTourStep();
+            } else if (currentTourStep === tourSteps.length - 1) {
+                // Last step - finalize tour
+                finalizeTour();
             }
         }
 
@@ -2977,6 +2993,8 @@
             if (overlay) {
                 overlay.classList.remove('active');
                 overlay.style.display = 'none';
+                overlay.style.pointerEvents = 'none';
+                overlay.style.zIndex = '-1';
             }
             if (popup) {
                 popup.classList.remove('active');
@@ -2992,6 +3010,19 @@
             if (secondarySpotlight) {
                 secondarySpotlight.style.display = 'none';
             }
+            
+            // Ensure challenges tab is properly reset and interactive
+            const challengesTab = document.getElementById('challenges');
+            if (challengesTab) {
+                challengesTab.style.pointerEvents = 'auto';
+                challengesTab.style.zIndex = '1';
+            }
+            
+            // Re-enable all matching items
+            document.querySelectorAll('.matching-item').forEach(item => {
+                item.style.pointerEvents = 'auto';
+                item.style.zIndex = 'auto';
+            });
             
             setTimeout(() => {
                 const finalAchievement = {
@@ -3528,6 +3559,79 @@
             const rightItem = item1.closest('.matching-column:first-child') ? item2 : item1;
             
             challengeAnswers.matching[leftItem.dataset.id] = rightItem.dataset.id;
+            
+            // Draw the visual connection line
+            drawMatchingLine(connectionId, leftItem, rightItem);
+        }
+        
+        function drawMatchingLine(connectionId, leftItem, rightItem) {
+            const connectionsDiv = document.getElementById('matchingConnections');
+            if (!connectionsDiv) {
+                console.log('matchingConnections div not found');
+                return;
+            }
+            
+            // Create or get SVG
+            let svg = connectionsDiv.querySelector('svg');
+            if (!svg) {
+                svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.style.position = 'absolute';
+                svg.style.top = '0';
+                svg.style.left = '0';
+                svg.style.width = '100%';
+                svg.style.height = '100%';
+                svg.style.pointerEvents = 'none';
+                svg.style.zIndex = '50';
+                svg.style.overflow = 'visible';
+                connectionsDiv.appendChild(svg);
+            }
+            
+            // Get the matching container to calculate relative positions
+            const matchingContainer = connectionsDiv.closest('.matching-container');
+            if (!matchingContainer) {
+                console.log('matching container not found');
+                return;
+            }
+            
+            const containerRect = matchingContainer.getBoundingClientRect();
+            const connectionsRect = connectionsDiv.getBoundingClientRect();
+            const leftRect = leftItem.getBoundingClientRect();
+            const rightRect = rightItem.getBoundingClientRect();
+            
+            // Calculate line coordinates
+            // Start from right edge of left item relative to connections div
+            const x1 = leftRect.right - connectionsRect.left;
+            const y1 = leftRect.top + leftRect.height / 2 - connectionsRect.top;
+            
+            // End at left edge of right item relative to connections div
+            const x2 = rightRect.left - connectionsRect.left;
+            const y2 = rightRect.top + rightRect.height / 2 - connectionsRect.top;
+            
+            console.log(`Drawing line: (${x1}, ${y1}) to (${x2}, ${y2})`);
+            
+            // Create line element
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            line.setAttribute('stroke', '#6366f1');
+            line.setAttribute('stroke-width', '4');
+            line.setAttribute('stroke-linecap', 'round');
+            line.setAttribute('id', connectionId);
+            
+            svg.appendChild(line);
+            console.log('Line added to SVG');
+        }
+        
+        function clearMatchingLines() {
+            const connectionsDiv = document.getElementById('matchingConnections');
+            if (!connectionsDiv) return;
+            
+            const svg = connectionsDiv.querySelector('svg');
+            if (svg) {
+                svg.remove();
+            }
         }
 
         // Challenge checking functions
@@ -3553,7 +3657,9 @@
                             opt.classList.add('correct');
                         }
                     });
-                    explanationHTML += `<p><strong>Q${i + 1}:</strong> ✓ Correct! ${question.explanation}</p>`;
+                    explanationHTML += `<p><strong>Q${i + 1}:</strong> ✓ <span style="color: #10b981;">Correct!</span><br>` +
+                                      `<strong>Your Answer:</strong> ${correctAnswers[i] ? 'True' : 'False'}<br>` +
+                                      `<strong>Explanation:</strong> ${question.explanation}</p>`;
                 } else {
                     // Mark incorrect answer
                     options.forEach(opt => {
@@ -3561,7 +3667,11 @@
                             opt.classList.add('incorrect');
                         }
                     });
-                    explanationHTML += `<p><strong>Q${i + 1}:</strong> ✗ Incorrect. ${question.explanation}</p>`;
+                    const yourAnswer = userAnswers[i] !== null && userAnswers[i] !== undefined ? (userAnswers[i] ? 'True' : 'False') : 'Not answered';
+                    explanationHTML += `<p><strong>Q${i + 1}:</strong> ✗ <span style="color: #ef4444;">Incorrect</span><br>` +
+                                      `<strong>Your Answer:</strong> ${yourAnswer}<br>` +
+                                      `<strong>Correct Answer:</strong> <span style="color: #10b981; font-weight: 600;">${correctAnswers[i] ? 'True' : 'False'}</span><br>` +
+                                      `<strong>Explanation:</strong> ${question.explanation}</p>`;
                 }
             }
             
@@ -3583,22 +3693,30 @@
             challengeAnswers.fillBlanks.forEach((questionBlanks, qIndex) => {
                 const question = selectedQuestions.fillInTheBlanks[qIndex];
                 let questionCorrect = true;
+                let blankDetails = '';
                 
-                questionBlanks.forEach(blank => {
+                questionBlanks.forEach((blank, blankIndex) => {
                     totalBlanks++;
                     const input = document.getElementById(blank.id);
                     const userAnswer = input.value.toLowerCase().trim();
+                    const correctAnswer = blank.correctAnswer;
                     
-                    if (userAnswer === blank.correctAnswer.toLowerCase()) {
+                    if (userAnswer === correctAnswer.toLowerCase()) {
                         correctBlanks++;
                         input.classList.add('correct');
+                        blankDetails += `  • Blank ${blankIndex + 1}: ✓ Correct (${correctAnswer})<br>`;
                     } else {
                         questionCorrect = false;
                         input.classList.add('incorrect');
+                        blankDetails += `  • Blank ${blankIndex + 1}: ✗ Your answer: "${userAnswer || 'empty'}" | <span style="color: #10b981; font-weight: 600;">Correct: ${correctAnswer}</span><br>`;
                     }
                 });
                 
-                explanationHTML += `<p><strong>Q${qIndex + 1}:</strong> ${questionCorrect ? '✓' : '✗'} ${question.hint}</p>`;
+                const statusIcon = questionCorrect ? '✓' : '✗';
+                const statusColor = questionCorrect ? '#10b981' : '#ef4444';
+                explanationHTML += `<p><strong>Q${qIndex + 1}:</strong> <span style="color: ${statusColor};">${statusIcon}</span><br>` +
+                                  blankDetails +
+                                  `<strong>Hint:</strong> ${question.hint}</p>`;
             });
             
             const feedback = document.getElementById('challenge2-feedback');
@@ -3619,32 +3737,59 @@
                 'doping': 'def-doping'
             };
             
+            const matchLabels = {
+                'dos': 'Density of States',
+                'fermi': 'Fermi Level',
+                'bandgap': 'Bandgap',
+                'doping': 'Doping'
+            };
+            
+            const matchDescriptions = {
+                'def-dos': 'Number of quantum states per unit energy',
+                'def-fermi': 'Chemical potential of electrons',
+                'def-bandgap': 'Forbidden energy region',
+                'def-doping': 'Adding impurities to control conductivity'
+            };
+            
             let correct = 0;
             let total = Object.keys(correctMatches).length;
+            let detailsHTML = '';
             
             // Check each match
-            Object.keys(challengeAnswers.matching).forEach(leftId => {
-                const rightId = challengeAnswers.matching[leftId];
+            Object.keys(correctMatches).forEach(leftId => {
+                const userRightId = challengeAnswers.matching[leftId];
+                const correctRightId = correctMatches[leftId];
                 const leftItem = document.querySelector(`[data-id="${leftId}"]`);
-                const rightItem = document.querySelector(`[data-id="${rightId}"]`);
                 
-                if (correctMatches[leftId] === rightId) {
-                    correct++;
-                    leftItem.classList.add('correct-match');
-                    rightItem.classList.add('correct-match');
+                if (userRightId) {
+                    const rightItem = document.querySelector(`[data-id="${userRightId}"]`);
+                    
+                    if (correctRightId === userRightId) {
+                        correct++;
+                        leftItem.classList.add('correct-match');
+                        rightItem.classList.add('correct-match');
+                        detailsHTML += `<p><strong>${matchLabels[leftId]}:</strong> ✓ <span style="color: #10b981;">Correct match!</span><br>` +
+                                      `Matched with: ${matchDescriptions[userRightId]}</p>`;
+                    } else {
+                        leftItem.classList.add('incorrect-match');
+                        rightItem.classList.add('incorrect-match');
+                        detailsHTML += `<p><strong>${matchLabels[leftId]}:</strong> ✗ <span style="color: #ef4444;">Incorrect</span><br>` +
+                                      `Your match: ${matchDescriptions[userRightId]}<br>` +
+                                      `<span style="color: #10b981; font-weight: 600;">Correct match: ${matchDescriptions[correctRightId]}</span></p>`;
+                    }
                 } else {
-                    leftItem.classList.add('incorrect-match');
-                    rightItem.classList.add('incorrect-match');
+                    detailsHTML += `<p><strong>${matchLabels[leftId]}:</strong> ⚠️ <span style="color: #f59e0b;">Not matched</span><br>` +
+                                  `<span style="color: #10b981; font-weight: 600;">Should match with: ${matchDescriptions[correctRightId]}</span></p>`;
                 }
             });
             
             const feedback = document.getElementById('challenge3-feedback');
             if (correct === total) {
-                feedback.innerHTML = '🎉 Perfect matching! You understand the relationships between these concepts.';
+                feedback.innerHTML = '<h4 style="color: #10b981;">🎉 Perfect matching!</h4>' + detailsHTML;
                 feedback.className = 'challenge-feedback success';
                 markChallengeComplete(3, 120);
             } else {
-                feedback.innerHTML = `You got ${correct}/${total} matches correct. Review the concepts and try again!`;
+                feedback.innerHTML = `<h4 style="color: #ef4444;">Score: ${correct}/${total} correct</h4>` + detailsHTML;
                 feedback.className = 'challenge-feedback error';
             }
             feedback.style.display = 'block';
@@ -3658,26 +3803,34 @@
             challengeAnswers.calculations.forEach((questionBlanks, qIndex) => {
                 const question = selectedQuestions.calculations[qIndex];
                 let questionCorrect = true;
+                let blankDetails = '';
                 
-                questionBlanks.forEach(blank => {
+                questionBlanks.forEach((blank, blankIndex) => {
                     totalBlanks++;
                     const input = document.getElementById(blank.id);
                     const userAnswer = parseFloat(input.value);
                     const correctAnswer = parseFloat(blank.correctAnswer);
                     const tolerance = blank.tolerance || 0;
                     
-                    const isCorrect = Math.abs(userAnswer - correctAnswer) <= tolerance;
+                    const isCorrect = !isNaN(userAnswer) && Math.abs(userAnswer - correctAnswer) <= tolerance;
                     
                     if (isCorrect) {
                         correctBlanks++;
                         input.classList.add('correct');
+                        blankDetails += `  • Value ${blankIndex + 1}: ✓ Correct (${correctAnswer})<br>`;
                     } else {
                         questionCorrect = false;
                         input.classList.add('incorrect');
+                        const userVal = isNaN(userAnswer) ? 'empty/invalid' : userAnswer.toFixed(4);
+                        blankDetails += `  • Value ${blankIndex + 1}: ✗ Your answer: ${userVal} | <span style="color: #10b981; font-weight: 600;">Correct: ${correctAnswer}</span>${tolerance > 0 ? ` (±${tolerance})` : ''}<br>`;
                     }
                 });
                 
-                explanationHTML += `<p><strong>Problem ${qIndex + 1}:</strong> ${questionCorrect ? '✓' : '✗'} ${question.explanation}</p>`;
+                const statusIcon = questionCorrect ? '✓' : '✗';
+                const statusColor = questionCorrect ? '#10b981' : '#ef4444';
+                explanationHTML += `<p><strong>Problem ${qIndex + 1}:</strong> <span style="color: ${statusColor};">${statusIcon}</span><br>` +
+                                  blankDetails +
+                                  `<strong>Explanation:</strong> ${question.explanation}</p>`;
             });
             
             const feedback = document.getElementById('challenge4-feedback');
@@ -3731,6 +3884,8 @@
                     challengeAnswers.matching = {};
                     selectedMatchingItems = [];
                     connectionLines = {};
+                    currentConnectionId = 0;
+                    clearMatchingLines();
                     challengeSection.querySelectorAll('.matching-item').forEach(item => {
                         item.classList.remove('selected', 'matched', 'paired', 'correct-match', 'incorrect-match');
                         delete item.dataset.connectionId;
@@ -3878,41 +4033,6 @@
                 document.body.removeChild(notification);
             }, 3000);
         }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            switch(e.key) {
-                case ' ':
-                    e.preventDefault();
-                    toggleAnimation();
-                    break;
-                case 'r':
-                case 'R':
-                    resetSimulation();
-                    break;
-                case 'h':
-                case 'H':
-                    toggleHelp();
-                    break;
-                case '+':
-                case '=':
-                    animationSpeed = Math.min(3, animationSpeed + 0.1);
-                    const speedEl = document.getElementById('speedValue');
-                    if (speedEl) speedEl.textContent = animationSpeed.toFixed(1) + 'x';
-                    break;
-                case '-':
-                    animationSpeed = Math.max(0.1, animationSpeed - 0.1);
-                    const speedEl2 = document.getElementById('speedValue');
-                    if (speedEl2) speedEl2.textContent = animationSpeed.toFixed(1) + 'x';
-                    break;
-                case 't':
-                case 'T':
-                    if (!tourActive) {
-                        startGuidedTour();
-                    }
-                    break;
-            }
-        });
 
         // Initialize when page loads
         function initializeApp() {
