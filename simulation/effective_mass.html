@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match the Following</title>
+  <link rel="stylesheet" href="css/em.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/css/style.min.css">
+</head>
+<body>
+    <!-- Instructions Section -->
+    <div class="columns is-centered">
+        <div class="column">
+            <div class="v-instruction-container">
+                <div class="v-collapsible is-size-5" id="task-description">
+                    Instructions
+                </div>
+                <div class="v-content instruction-list">
+                    <ul style="list-style: disc;">
+                        <li>The formula of effective mass is as follows</li>
+                        <div align="center">
+                            <image src="images/1.png" height="40px" width="auto">
+                            <span style="float: right;">(4.1)</span>
+                        </div>
+                        <li>The curvature of the parabola of the function is approximated as is the inverse of effective mass.</li>
+                        <li>Suppose there are two electrons with effective masses m*<sub>1</sub> and m*<sub>2</sub> such that <b>m*<sub>1</sub> > m*<sub>2</sub>.</b></li>
+                        <li>Your task is to match the energy momentum plots to the respective effective masses</li>
+                        <li>First select the graphs shown and then select the text boxes to match your answers.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Match the Following</h1>
+        <div class="column1">
+            <div class="left-column">
+                <canvas id="plot1" width="400" height="200"></canvas>
+                <canvas id="plot2" width="400" height="200"></canvas>
+            </div>
+            <svg id="lines" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div class="right-column">
+                <ul>
+                    <li data-id="1">m*<sub>2</sub></li>
+                    <li data-id="2">m*<sub>1</sub></li>
+                </ul>
+            </div>
+        </div>
+        <button id="submit">Submit</button>
+        <button id="refresh">Refresh</button>
+        <p id="result"></p>
+    </div>
+
+    <div class="next-page-button">
+        <button id="prevPageBtn" class="button is-secondary">Previous Page</button>
+    </div>
+
+    <div class="next-page-button">
+        <button id="startSimulation" class="button is-secondary">Start Simulation</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/em.js"></script>
+</body>
+</html>

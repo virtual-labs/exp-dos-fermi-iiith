@@ -1,0 +1,158 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What does the density of states (DOS) represent in a semiconductor?",
+      "answers": {
+        "a": "The number of free electrons",
+        "b": "The number of available energy states per unit volume per unit energy",
+        "c": "The total energy stored in the system",
+        "d": "The number of holes present in the conduction band"
+      },
+      "explanations": {
+        "a": "Incorrect. Free electrons relate to carrier concentration, not DOS.",
+        "b": "Correct. DOS represents the number of quantum states available per unit volume per unit energy range.",
+        "c": "Incorrect. This refers more to internal energy, not DOS.",
+        "d": "Incorrect. Holes are in the valence band and represent missing electrons."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "At absolute zero (0 K), what is the probability that an energy state below the Fermi level is occupied?",
+      "answers": {
+        "a": "0",
+        "b": "0.5",
+        "c": "1",
+        "d": "Cannot be determined"
+      },
+      "explanations": {
+        "a": "Incorrect. Below the Fermi level, all states are filled at 0 K.",
+        "b": "Incorrect. This occurs only at the Fermi level at finite T.",
+        "c": "Correct. At 0 K, all states below Fermi energy are fully occupied.",
+        "d": "Incorrect. This is well-defined in quantum statistics."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does the Fermi-Dirac distribution function f(E) calculate?",
+      "answers": {
+        "a": "Density of holes",
+        "b": "Probability of a state being occupied by an electron",
+        "c": "The drift velocity of electrons",
+        "d": "Energy band gap of a semiconductor"
+      },
+      "explanations": {
+        "a": "Incorrect. It’s related to holes, but not what f(E) computes.",
+        "b": "Correct. f(E) gives the probability that an energy level E is occupied by an electron.",
+        "c": "Incorrect. Drift velocity depends on electric field and mobility.",
+        "d": "Incorrect. Band gap is a material property, not derived from f(E)."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What happens to the Fermi-Dirac distribution at very high energies (E >> E<sub>F</sub>) and room temperature?",
+      "answers": {
+        "a": "It approaches 1",
+        "b": "It becomes negative",
+        "c": "It becomes zero",
+        "d": "It approaches zero"
+      },
+      "explanations": {
+        "a": "Incorrect. This would happen only at E ≪ E<sub>F</sub>",
+        "b": "Incorrect. The probability function never becomes negative.",
+        "c": "Incorrect. It only tends to zero asymptotically.",
+        "d": "Correct. As E >> E<sub>F</sub>, f(E) ≈ 0 due to exponential term."
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "For conduction band electrons in a 3D semiconductor, how does the DOS vary with energy?",
+      "answers": {
+        "a": "Linearly with energy",
+        "b": "Inversely proportional to energy",
+        "c": "Proportional to the square root of energy",
+        "d": "Constant with energy"
+      },
+      "explanations": {
+        "a": "Incorrect. This is not true for 3D cases.",
+        "b": "Incorrect. This might apply in special low-dimensional systems.",
+        "c": "Correct. For 3D semiconductors, DOS ∝ √(E - E<sub>C</sub>) for conduction band.",
+        "d": "Incorrect. DOS varies with energy."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why is the Fermi level significant in determining electrical properties of semiconductors?",
+      "answers": {
+        "a": "It determines the resistivity only",
+        "b": "It defines where electrons are always present",
+        "c": "It determines carrier concentration through occupation probability",
+        "d": "It determines the bandgap energy"
+      },
+      "explanations": {
+        "a": "Incorrect. Resistivity is influenced by many factors including mobility.",
+        "b": "Incorrect. Electrons may or may not be present depending on f(E).",
+        "c": "Correct. Fermi level helps determine electron and hole concentrations.",
+        "d": "Incorrect. Bandgap is intrinsic to the material, not the Fermi level."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "In intrinsic silicon at T = 300 K, where is the Fermi level located?",
+      "answers": {
+        "a": "At the bottom of the conduction band",
+        "b": "At the top of the valence band",
+        "c": "Exactly at the midpoint of the bandgap",
+        "d": "Slightly below the conduction band"
+      },
+      "explanations": {
+        "a": "Incorrect. That would be for heavily doped n-type.",
+        "b": "Incorrect. That would be true for p-type.",
+        "c": "Correct. For intrinsic semiconductors, Fermi level lies in the middle of the bandgap.",
+        "d": "Incorrect. That’s the case in moderately doped n-type."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Which of the following affects the density of states near the conduction band edge?",
+      "answers": {
+        "a": "Effective mass of electrons",
+        "b": "Energy gap width",
+        "c": "Fermi level",
+        "d": "Mobility of carriers"
+      },
+      "explanations": {
+        "a": "Correct. DOS ∝ (m*)<sup>3/2</sup> where m* is the effective mass.",
+        "b": "Incorrect. The bandgap affects the range, not DOS near the band edge.",
+        "c": "Incorrect. Fermi level affects occupation, not the DOS shape.",
+        "d": "Incorrect. Mobility is a transport property, not a structural one."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "How does increasing temperature affect the sharpness of the Fermi-Dirac distribution?",
+      "answers": {
+        "a": "It makes it sharper",
+        "b": "It makes it more step-like",
+        "c": "It spreads it out over energy",
+        "d": "No effect"
+      },
+      "explanations": {
+        "a": "Incorrect. Higher temperature reduces sharpness.",
+        "b": "Incorrect. Step-like behavior occurs at T = 0 K.",
+        "c": "Correct. Temperature broadens the distribution, increasing the spread of occupied states.",
+        "d": "Incorrect. Temperature strongly affects f(E)."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    }
+  ]
+}
