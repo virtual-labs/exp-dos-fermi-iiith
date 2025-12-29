@@ -1,0 +1,158 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What does the Fermi-Dirac distribution function indicate about electron occupancy?",
+      "answers": {
+        "a": "It gives the number of energy states in the conduction band",
+        "b": "It indicates how many holes are present in the valence band",
+        "c": "It gives the probability that a given energy level is occupied by an electron",
+        "d": "It shows the distribution of atoms in a crystal"
+      },
+      "explanations": {
+        "a": "Incorrect. That's the density of states, not the probability.",
+        "b": "Incorrect. Holes are complementary to the electron occupancy.",
+        "c": "Correct. f(E) represents the likelihood that an energy state is occupied by an electron.",
+        "d": "Incorrect. Crystal structure is not governed by f(E)."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the value of f(E) exactly at E = E<sub>F</sub> for any temperature T?",
+      "answers": {
+        "a": "0",
+        "b": "0.5",
+        "c": "1",
+        "d": "T-dependent"
+      },
+      "explanations": {
+        "a": "Incorrect. 0 is the value only at very high energies.",
+        "b": "Correct. f(E) = 0.5 exactly at the Fermi level, regardless of temperature.",
+        "c": "Incorrect. That occurs at E < E<sub>F</sub> and T = 0 K.",
+        "d": "Incorrect. It is always 0.5 at E = E<sub>F</sub>."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which of the following plots best represents the Density of States (DOS) vs Energy for a 3D semiconductor?",
+      "answers": {
+        "a": "A constant flat line",
+        "b": "A decreasing exponential curve",
+        "c": "A curve increasing with square root dependence on energy",
+        "d": "A parabolic increase"
+      },
+      "explanations": {
+        "a": "Incorrect. DOS is energy-dependent in 3D systems.",
+        "b": "Incorrect. This shape resembles the distribution function, not DOS.",
+        "c": "Correct. DOS ∝ √(E − E<sub>C</sub>) near the conduction band edge in 3D.",
+        "d": "Incorrect. Parabolic variation is not typical of DOS."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Why does the Fermi-Dirac distribution differ in metals and semiconductors at room temperature?",
+      "answers": {
+        "a": "Metals have a larger bandgap than semiconductors",
+        "b": "Semiconductors have more free electrons at room temperature",
+        "c": "Fermi level lies within a band in metals and in the gap for semiconductors",
+        "d": "DOS is higher in semiconductors"
+      },
+      "explanations": {
+        "a": "Incorrect. Metals do not have a bandgap.",
+        "b": "Incorrect. Free electrons are more abundant in metals.",
+        "c": "Correct. This fundamental difference affects occupation probabilities.",
+        "d": "Incorrect. DOS is material-dependent but not necessarily higher in semiconductors."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What does a higher effective mass imply about the density of states (DOS) in a semiconductor?",
+      "answers": {
+        "a": "DOS decreases with higher effective mass",
+        "b": "DOS remains unchanged",
+        "c": "DOS increases because it is proportional to (m*)<sup>3/2</sup>",
+        "d": "DOS depends only on bandgap and not mass"
+      },
+      "explanations": {
+        "a": "Incorrect. DOS increases with effective mass.",
+        "b": "Incorrect. Effective mass directly affects DOS.",
+        "c": "Correct. DOS ∝ (m*)<sup>3/2</sup> in 3D semiconductors.",
+        "d": "Incorrect. Bandgap affects carrier concentration, not directly DOS."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "How does the product of DOS and f(E) influence carrier distribution in semiconductors?",
+      "answers": {
+        "a": "It determines the number of atoms in the crystal",
+        "b": "It gives the effective bandgap",
+        "c": "It defines how carriers are distributed in energy space",
+        "d": "It affects only mobility, not carrier distribution"
+      },
+      "explanations": {
+        "a": "Incorrect. Crystal structure is not related.",
+        "b": "Incorrect. The bandgap is a fixed material property.",
+        "c": "Correct. The number of electrons in a given energy range is given by DOS × f(E).",
+        "d": "Incorrect. Carrier distribution depends on both DOS and occupation probability."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "For an n-type semiconductor, how does the Fermi level shift with increasing donor concentration?",
+      "answers": {
+        "a": "It moves toward the valence band",
+        "b": "It stays constant",
+        "c": "It shifts upward toward the conduction band",
+        "d": "It moves to mid-gap"
+      },
+      "explanations": {
+        "a": "Incorrect. That occurs in p-type material.",
+        "b": "Incorrect. Fermi level is sensitive to doping.",
+        "c": "Correct. Higher donor concentration increases n-type behavior, shifting E<sub>F</sub> up.",
+        "d": "Incorrect. Mid-gap is for intrinsic semiconductors."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "What is the mathematical expression for the density of states in a 3D semiconductor near the conduction band?",
+      "answers": {
+        "a": "D(E) ∝ (E - E<sub>C</sub>)<sup>1/2</sup>",
+        "b": "D(E) ∝ (E - E<sub>C</sub>)",
+        "c": "D(E) ∝ log(E - E<sub>C</sub>)",
+        "d": "D(E) ∝ (E - E<sub>C</sub>)<sup>-1</sup>"
+      },
+      "explanations": {
+        "a": "Correct. This is the standard form in 3D semiconductors.",
+        "b": "Incorrect. Linear relationship is not valid here.",
+        "c": "Incorrect. Logarithmic dependence is not observed.",
+        "d": "Incorrect. DOS doesn’t diverge near E<sub>C</sub>."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "What is the physical meaning of the temperature dependence in the Fermi-Dirac distribution function?",
+      "answers": {
+        "a": "It sharpens the distribution as temperature increases",
+        "b": "It broadens the transition between filled and empty states",
+        "c": "It shifts the energy levels",
+        "d": "It reduces the number of energy states available"
+      },
+      "explanations": {
+        "a": "Incorrect. Higher temperature reduces sharpness.",
+        "b": "Correct. Higher temperature causes a smoother transition across E<sub>F</sub>.",
+        "c": "Incorrect. Energy levels themselves do not shift due to temperature.",
+        "d": "Incorrect. DOS is not temperature dependent in this context."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    }
+  ]
+}

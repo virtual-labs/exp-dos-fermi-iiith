@@ -1,0 +1,18 @@
+
+/home/runner/work/exp-dos-fermi-iiith/exp-dos-fermi-iiith/experiment/simulation/js/em.js
+  28:7  warning  'Chart' is not defined  no-undef
+  62:7  warning  'Chart' is not defined  no-undef
+
+/home/runner/work/exp-dos-fermi-iiith/exp-dos-fermi-iiith/experiment/simulation/js/main.js
+   37:7   warning  'chart' is assigned a value but never used   no-unused-vars
+   37:19  warning  'Chart' is not defined                       no-undef
+   92:21  warning  'e' is defined but never used                no-unused-vars
+  131:13  warning  'xValue' is assigned a value but never used  no-unused-vars
+
+/home/runner/work/exp-dos-fermi-iiith/exp-dos-fermi-iiith/experiment/simulation/mobile-detection.js
+  283:7   warning  'mobileDetection' is assigned a value but never used  no-unused-vars
+  286:38  warning  'module' is not defined                               no-undef
+  287:3   warning  'module' is not defined                               no-undef
+
+✖ 9 problems (0 errors, 9 warnings)
+

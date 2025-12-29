@@ -1,0 +1,4069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Density of States and Fermi Level Simulator - Interactive Tour</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="mobile-detection.js"></script>
+    <style>
+        /* Common styles for Virtual Labs experiments */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .btn {
+            transition: all 0.2s;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #e879f9, #c084fc);
+            color: white;
+        }
+
+        input[type="range"] {
+            height: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        /* Main layout - side by side */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            gap: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Tab content specific layouts */
+        #simulation {
+            display: flex;
+            flex: 1;
+            gap: 15px;
+            min-height: 0;
+        }
+
+        #challenges {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .simulation-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .parameters-side {
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 100%;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Simulation area - full height */
+        .plot-area {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            flex: 1;
+            min-height: 500px;
+            z-index: 1;
+        }
+
+        /* Controls panel styling */
+        .controls-container {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            position: relative;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .controls-container h3 {
+            margin-top: 0;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-family: inherit;
+            background: white;
+            font-size: 0.9rem;
+        }
+
+        .range-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .range-value {
+            min-width: 70px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6366f1;
+            background: #f3f4f6;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Canvas styles */
+        #dosCanvas {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: block;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        /* Status indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .status-indicator.active {
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.inactive {
+            background: #ef4444;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Floating buttons */
+        .floating-button {
+            position: fixed;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: none;
+            font-size: 1.2rem;
+        }
+
+        .floating-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+        }
+
+        .floating-button.primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            bottom: 2rem;
+            left: 2rem;
+        }
+
+        .floating-button.tour {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            bottom: 6.5rem;
+            left: 2rem;
+        }
+
+        /* Help panel */
+        .floating-panel {
+            position: fixed;
+            max-width: 18rem;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 99;
+            bottom: 7rem;
+            left: 2rem;
+            transform-origin: bottom left;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1.5rem;
+        }
+
+        .floating-panel.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .floating-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .floating-panel-close {
+            cursor: pointer;
+            color: #6b7280;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .panel-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        /* Tab System */
+        .experiment-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 6px;
+        }
+
+        .tab {
+            padding: 8px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: inherit;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Fix experiment content display */
+        .experiment-content {
+            display: none;
+        }
+
+        .experiment-content.active {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        /* Simulation tab needs flex layout when active */
+        #simulation.active {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+        }
+
+        /* Challenges tab needs block layout when active */
+        #challenges.active {
+            display: block;
+            flex: 1;
+        }
+
+        /* Challenge Tab Styles */
+        .challenge-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .challenge-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-section:hover {
+            border-color: #6366f1;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .challenge-section.completed {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .challenge-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .challenge-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .challenge-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Quiz and Challenge Interaction Styles */
+        .quiz-question {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6366f1;
+        }
+
+        .quiz-question h4 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+            font-size: 1rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .quiz-option:hover {
+            border-color: #6366f1;
+            background: #f8fafc;
+        }
+
+        .quiz-option.selected {
+            border-color: #6366f1;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .quiz-option.correct {
+            border-color: #10b981;
+            background: #f0fdf4;
+            color: #065f46;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #ef4444;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .fill-blank-container {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6366f1;
+        }
+
+        .fill-blank-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #1f2937;
+        }
+
+        .fill-blank-input {
+            display: inline-block;
+            border: none;
+            border-bottom: 2px solid #6366f1;
+            background: transparent;
+            padding: 2px 8px;
+            margin: 0 5px;
+            font-weight: 600;
+            color: #1f2937;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .fill-blank-input:focus {
+            outline: none;
+            border-bottom-color: #4f46e5;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .fill-blank-input.correct {
+            border-bottom-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .fill-blank-input.incorrect {
+            border-bottom-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+            align-items: start;
+        }
+
+        .matching-column {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .matching-connections {
+            width: 60px;
+            min-height: 300px;
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .matching-item {
+            padding: 12px 16px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .matching-item:hover {
+            border-color: #6366f1;
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .matching-item.selected {
+            border-color: #6366f1;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .matching-item.correct-match {
+            border-color: #10b981;
+            background: #f0fdf4;
+            color: #065f46;
+        }
+
+        .matching-item.incorrect-match {
+            border-color: #ef4444;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .matching-item.matched {
+            opacity: 0.8;
+        }
+
+        .matching-item.paired {
+            border-color: #6366f1;
+            background: #eff6ff;
+        }
+
+        .challenge-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .challenge-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .challenge-btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .challenge-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .challenge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .challenge-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .challenge-feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .challenge-feedback.success {
+            background: #f0fdf4;
+            color: #065f46;
+            border: 1px solid #10b981;
+            display: block;
+        }
+
+        .challenge-feedback.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+            display: block;
+        }
+
+        .challenge-progress {
+            background: #f3f4f6;
+            border-radius: 8px;
+            height: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .challenge-progress-bar {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .challenge-stats {
+            display: flex;
+            justify-content: space-around;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* ==================== GUIDED TOUR STYLES ==================== */
+        
+        /* Tour overlay and spotlight system */
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 99998;
+            display: none;
+            pointer-events: none;
+        }
+
+        .tour-overlay.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .tour-spotlight {
+            position: absolute;
+            background: transparent;
+            border: 3px solid #3b82f6;
+            border-radius: 8px;
+            transition: all 0.5s ease;
+            z-index: 99999;
+            pointer-events: none;
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            animation: spotlight-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spotlight-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 12px rgba(59, 130, 246, 0);
+                transform: scale(1.02);
+            }
+        }
+
+        .tour-spotlight-secondary {
+            position: absolute;
+            background: transparent;
+            border: 2px solid #8b5cf6;
+            border-radius: 8px;
+            transition: all 0.5s ease;
+            z-index: 99999;
+            pointer-events: none;
+            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+            animation: secondary-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes secondary-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+                transform: scale(1.01);
+            }
+        }
+
+        /* Tour popup window */
+        .tour-popup {
+            position: fixed;
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            z-index: 100000;
+            min-width: 280px;
+            max-width: 380px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .tour-popup.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .tour-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .tour-step-number {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .tour-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .tour-content {
+            color: #4b5563;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .tour-challenge {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0;
+        }
+
+        .tour-challenge-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .tour-challenge-title i {
+            margin-right: 6px;
+        }
+
+        .tour-challenge-content {
+            color: #78350f;
+            font-size: 0.85rem;
+            white-space: pre-line;
+        }
+
+        .tour-progress {
+            background: #f3f4f6;
+            height: 5px;
+            border-radius: 3px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .tour-progress-bar {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .tour-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .tour-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .tour-btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .tour-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .tour-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .tour-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Tour score panel */
+        .tour-score {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 10002;
+            display: none;
+            min-width: 200px;
+        }
+
+        .tour-score.active {
+            display: block;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .tour-score-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .tour-score-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Tour achievements modal */
+        .tour-achievements {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            text-align: center;
+            display: none;
+            max-width: 500px;
+            margin: 20px;
+        }
+
+        .tour-achievements.active {
+            display: block;
+            animation: popIn 0.5s ease-out;
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .achievement-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .achievement-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Challenge completion styling */
+        .challenge-success {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 2px solid #3b82f6;
+            color: #1e40af;
+        }
+
+        /* Highlight element animation */
+        .highlight-element {
+            animation: pulse-highlight 2s ease-in-out 3;
+        }
+
+        @keyframes pulse-highlight {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(59, 130, 246, 0); }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes popIn {
+            from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Animation speed controls */
+        .animation-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: center;
+        }
+
+        .speed-control {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            #simulation {
+                flex-direction: column;
+            }
+            
+            .parameters-side {
+                width: 100%;
+                order: -1;
+            }
+            
+            .plot-area {
+                min-height: 400px;
+            }
+            
+            .floating-button.primary {
+                right: 2rem;
+                left: auto;
+            }
+            
+            .floating-button.tour {
+                right: 2rem;
+                left: auto;
+            }
+            
+            .floating-panel {
+                right: 2rem;
+                left: auto;
+                transform-origin: bottom right;
+            }
+
+            .tour-popup {
+                max-width: 90%;
+                margin: 20px;
+            }
+
+            .tour-score {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                position: fixed;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .main-container {
+                padding: 10px;
+            }
+            
+            .parameters-side {
+                width: 100%;
+            }
+            
+            .experiment-tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .tab {
+                padding: 10px 20px;
+            }
+
+            .tour-popup {
+                min-width: auto;
+                width: 90%;
+                padding: 20px;
+            }
+
+            .tour-score {
+                font-size: 0.8rem;
+            }
+
+            .tour-step-number {
+                width: 25px;
+                height: 25px;
+                font-size: 12px;
+            }
+
+            .tour-title {
+                font-size: 1rem;
+            }
+
+            .tour-content {
+                font-size: 0.9rem;
+            }
+
+            .matching-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .matching-connections {
+                display: none;
+            }
+
+            .challenge-controls {
+                justify-content: center;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .challenge-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Tab Navigation -->
+        <div class="experiment-tabs">
+            <button class="tab active" onclick="switchTab(this, 'simulation')">
+                <i class="fas fa-chart-line"></i> Simulation
+            </button>
+            <button class="tab" onclick="switchTab(this, 'challenges')">
+                <i class="fas fa-brain"></i> Challenges
+            </button>
+        </div>
+
+        <!-- Simulation Tab -->
+        <div id="simulation" class="experiment-content active">
+            <!-- Left side - Simulation -->
+            <div class="simulation-side">
+
+                
+                <div class="plot-area card fade-in">
+                    <canvas id="dosCanvas" width="800" height="600"></canvas>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #3b82f6;"></div>
+                            <span>Density of States</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ef4444;"></div>
+                            <span>Fermi Level</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div>
+                            <span>Dynamic Filled States</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f59e0b;"></div>
+                            <span>Energy Bands</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #6366f1; border-radius: 50%; height: 8px; width: 8px;"></div>
+                            <span>Thermal Carriers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side - Controls -->
+            <div class="parameters-side">
+                <!-- Controls Panel -->
+                <div class="controls-container card fade-in">
+                    <h3><i class="fas fa-sliders-h"></i> Simulation Controls</h3>
+                    
+                    <div class="control-group">
+                        <label for="material">Semiconductor Material</label>
+                        <select id="material">
+                            <option value="silicon">Silicon (Si)</option>
+                            <option value="germanium">Germanium (Ge)</option>
+                            <option value="gaas">Gallium Arsenide (GaAs)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="temperature">Temperature (K)</label>
+                        <div class="range-container">
+                            <input type="range" id="temperature" min="100" max="500" value="300" step="10">
+                            <span class="range-value" id="tempValue">300</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="doping">Doping Concentration (cm⁻³)</label>
+                        <div class="range-container">
+                            <input type="range" id="doping" min="10" max="20" value="15" step="1">
+                            <span class="range-value" id="dopingValue">10^15</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="dopingType">Doping Type</label>
+                        <select id="dopingType">
+                            <option value="n">N-type (Donor)</option>
+                            <option value="p">P-type (Acceptor)</option>
+                            <option value="intrinsic">Intrinsic</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="energyRange">Energy Range (eV)</label>
+                        <div class="range-container">
+                            <input type="range" id="energyRange" min="1" max="4" value="2" step="0.1">
+                            <span class="range-value" id="energyValue">2.0</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="animationSpeed">Animation Speed</label>
+                        <div class="range-container">
+                            <input type="range" id="animationSpeed" min="0.1" max="3" value="1" step="0.1">
+                            <span class="range-value" id="speedValue">1.0x</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="thermalEffects">Thermal Fluctuations</label>
+                        <div class="range-container">
+                            <input type="range" id="thermalEffects" min="0" max="2" value="1" step="0.1">
+                            <span class="range-value" id="thermalValue">1.0</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="resetSimulation()" style="width: 100%; margin-bottom: 10px;">
+                        <i class="fas fa-undo"></i> Reset Simulation
+                    </button>
+                    
+                    <button class="btn btn-secondary" onclick="toggleAnimation()" style="width: 100%;">
+                        <i class="fas fa-play-pause"></i> Toggle Animation
+                        <span class="status-indicator active" id="animationStatus"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges Tab -->
+        <div id="challenges" class="experiment-content">
+            <div class="challenge-container">
+                <div class="header" style="color: #1f2937; margin-bottom: 15px;">
+                    <h1 style="font-size: 1.8rem; margin-bottom: 5px;"><i class="fas fa-brain"></i> DOS & Fermi Level Challenges</h1>
+                    <p style="margin-bottom: 10px;">Test your understanding with interactive questions</p>
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-primary" onclick="generateNewQuestions()" style="margin-right: 10px;">
+                            <i class="fas fa-refresh"></i> Generate New Questions
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetAllChallenges()">
+                            <i class="fas fa-undo"></i> Reset All Challenges
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Challenge sections will be populated by JavaScript -->
+                <div id="challengeContent">
+                    <!-- Challenges will be dynamically generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="floating-button tour" onclick="startGuidedTour()">
+        <i class="fas fa-route"></i>
+    </div>
+
+    <div class="floating-button primary" onclick="toggleHelp()">
+        <i class="fas fa-question"></i>
+    </div>
+
+    <!-- Tour Elements -->
+    <div class="tour-overlay" id="tourOverlay">
+        <div class="tour-spotlight" id="tourSpotlight"></div>
+        <div class="tour-spotlight-secondary" id="tourSpotlightSecondary" style="display: none;"></div>
+    </div>
+
+    <div class="tour-popup" id="tourPopup">
+        <div class="tour-header">
+            <div class="tour-step-number" id="tourStepNumber">1</div>
+            <h3 class="tour-title" id="tourTitle">Welcome!</h3>
+        </div>
+        <div class="tour-progress">
+            <div class="tour-progress-bar" id="tourProgressBar"></div>
+        </div>
+        <div class="tour-content" id="tourContent">
+            Let's start exploring the fascinating world of DOS and Fermi levels!
+        </div>
+        <div id="tourChallenge"></div>
+        <div class="tour-controls">
+            <button class="tour-btn tour-btn-secondary" id="tourPrevBtn" onclick="prevTourStep()">Previous</button>
+            <div>
+                <button class="tour-btn tour-btn-secondary" id="tourSkipBtn" onclick="skipTour()">Skip Tour</button>
+                <button class="tour-btn tour-btn-primary" id="tourNextBtn" onclick="nextTourStep()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tour-score" id="tourScore">
+        <div class="tour-score-title">🏆 Your Progress</div>
+        <div class="tour-score-item">
+            <span>Steps Completed:</span>
+            <span id="stepsCompleted">0/14</span>
+        </div>
+        <div class="tour-score-item">
+            <span>Challenges Solved:</span>
+            <span id="challengesSolved">0/8</span>
+        </div>
+        <div class="tour-score-item">
+            <span>Score:</span>
+            <span id="totalScore">0</span>
+        </div>
+    </div>
+
+    <div class="tour-achievements" id="tourAchievements">
+        <div class="achievement-icon">🎉</div>
+        <div class="achievement-title" id="achievementTitle">Achievement Unlocked!</div>
+        <div class="achievement-description" id="achievementDescription">You've mastered a new concept!</div>
+        <button class="tour-btn tour-btn-primary" onclick="closeAchievement()">Continue</button>
+    </div>
+
+    <!-- Help Panel -->
+    <div class="floating-panel" id="helpPanel">
+        <div class="floating-panel-header">
+            <h3 class="panel-title">Help & Instructions</h3>
+            <div class="floating-panel-close" onclick="toggleHelp()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="floating-panel-content">
+            <p><strong>New Dynamic Features:</strong></p>
+            <ul style="padding-left: 20px; line-height: 1.6;">
+                <li>Filled states now fluctuate based on temperature</li>
+                <li>Animation speed control for different viewing modes</li>
+                <li>Thermal fluctuation intensity control</li>
+                <li>Thermal carriers (e⁻/h⁺) appear at high temperatures</li>
+                <li>Real-time dynamic visualization</li>
+            </ul>
+            
+            <p><strong>How to use:</strong></p>
+            <ul style="padding-left: 20px; line-height: 1.6;">
+                <li>Select different semiconductor materials</li>
+                <li>Adjust temperature to see thermal effects</li>
+                <li>Change doping concentration and type</li>
+                <li>Control animation speed and thermal effects</li>
+                <li>Watch dynamic filled states respond to changes</li>
+            </ul>
+            
+            <p><strong>Key Concepts:</strong></p>
+            <ul style="padding-left: 20px; line-height: 1.6;">
+                <li>Blue curve: Density of States (parabolic)</li>
+                <li>Red line: Fermi Level position</li>
+                <li>Green area: Dynamic occupied states</li>
+                <li>Orange bands: Valence and conduction bands</li>
+                <li>Moving dots: Thermal carriers (e⁻ = electrons, h⁺ = holes)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let canvas, ctx;
+        let animationId;
+        let isAnimating = true;
+        let time = 0;
+        let animationSpeed = 1.0;
+        let thermalIntensity = 1.0;
+        let currentTab = 'simulation';
+        let challengesSolved = 0;
+
+        // Tour state variables
+        let tourActive = false;
+        let currentTourStep = 0;
+        let tourScore = 0;
+
+        // Material properties
+        const materials = {
+            silicon: { 
+                bandGap: 1.12, 
+                effectiveMass: 0.26, 
+                name: "Silicon",
+                color: "#3b82f6"
+            },
+            germanium: { 
+                bandGap: 0.67, 
+                effectiveMass: 0.12, 
+                name: "Germanium",
+                color: "#8b5cf6"
+            },
+            gaas: { 
+                bandGap: 1.42, 
+                effectiveMass: 0.067, 
+                name: "GaAs",
+                color: "#06b6d4"
+            }
+        };
+
+        // Physical constants
+        const k = 8.617e-5; // Boltzmann constant in eV/K
+        const hbar = 6.582e-16; // Reduced Planck constant in eV·s
+        const m0 = 9.109e-31; // Electron rest mass in kg
+
+        // Tour steps definition
+        const tourSteps = [
+            {
+                title: "Welcome to the DOS & Fermi Level Lab! 🎓",
+                content: "This interactive simulation will teach you about Density of States and Fermi levels in semiconductors. You'll explore how these fundamental concepts govern electronic properties of materials. Let's begin your journey into quantum physics!",
+                target: ".main-container",
+                challenge: null,
+                position: "center"
+            },
+            {
+                title: "Understanding the DOS Visualization",
+                content: "This is your main visualization canvas. Here you'll see the Density of States curves (blue), Fermi level (red line), filled states (green), energy bands (orange), and thermal carriers (moving dots). Each element tells us something important about the electronic structure!",
+                target: "#dosCanvas",
+                challenge: null,
+                position: "top"
+            },
+            {
+                title: "🎯 Challenge 1: Material Properties Explorer",
+                content: "Different semiconductor materials have completely different electronic properties! Let's discover how the bandgap affects electronic behavior.",
+                target: "#material",
+                challenge: {
+                    type: "material_comparison",
+                    instruction: "📝 STEP 1: Find the 'Semiconductor Material' dropdown (currently showing 'Silicon (Si)')\n📝 STEP 2: Click it and select 'Germanium (Ge)'\n📝 STEP 3: Watch how the energy bands change - Germanium has a smaller bandgap than Silicon!",
+                    target_element: "#material",
+                    target_value: "germanium",
+                    reward: 100,
+                    secondary_highlight: "#dosCanvas"
+                },
+                position: "left"
+            },
+            {
+                title: "Excellent Discovery! 🎉",
+                content: "Perfect! You've discovered that Germanium has a smaller bandgap (~0.67 eV) compared to Silicon (~1.12 eV). This smaller gap means it's easier for electrons to jump from valence to conduction band, making Germanium more conductive at room temperature!",
+                target: "#material",
+                challenge: null,
+                position: "left"
+            },
+            {
+                title: "🎯 Challenge 2: Temperature Effects on Electronics",
+                content: "Temperature dramatically affects semiconductor behavior! Higher temperatures give electrons more energy to move around. Let's heat things up!",
+                target: "#temperature",
+                challenge: {
+                    type: "temperature_experiment",
+                    instruction: "📝 STEP 1: Find the Temperature slider (currently at 300K)\n📝 STEP 2: Increase the temperature to 450K\n📝 STEP 3: Watch the thermal carriers appear and see how the Fermi level responds!",
+                    target_element: "#temperature",
+                    target_value: 450,
+                    tolerance: 10,
+                    reward: 120,
+                    secondary_highlight: "#tempValue"
+                },
+                position: "left"
+            },
+            {
+                title: "Thermal Physics in Action! 🔥",
+                content: "Amazing! You can see thermal carriers (electrons and holes) appearing as moving dots. Higher temperature increases intrinsic carrier concentration exponentially - this is why semiconductors become more conductive when heated!",
+                target: "#temperature",
+                challenge: null,
+                position: "left"
+            },
+            {
+                title: "🎯 Challenge 3: The Power of Doping",
+                content: "Now let's explore doping - the secret weapon of semiconductor engineering! Adding impurities can dramatically change electrical properties.",
+                target: "#doping",
+                challenge: {
+                    type: "doping_exploration",
+                    instruction: "📝 STEP 1: Find the Doping Concentration slider\n📝 STEP 2: Increase it to 10^18 (move slider to 18)\n📝 STEP 3: Observe how the Fermi level moves and filled states change dramatically!",
+                    target_element: "#doping",
+                    target_value: 18,
+                    tolerance: 0.5,
+                    reward: 150,
+                    secondary_highlight: "#dopingValue"
+                },
+                position: "left"
+            },
+            {
+                title: "🎯 Challenge 4: N-type vs P-type Magic",
+                content: "There are two types of doping that create opposite effects! Let's explore the difference between N-type and P-type semiconductors.",
+                target: "#dopingType",
+                challenge: {
+                    type: "doping_type_switch",
+                    instruction: "📝 STEP 1: Find the 'Doping Type' dropdown (currently showing your selection)\n📝 STEP 2: Change it to 'P-type (Acceptor)'\n📝 STEP 3: Watch the Fermi level move in the opposite direction!",
+                    target_element: "#dopingType",
+                    target_value: "p",
+                    reward: 130,
+                    secondary_highlight: "#dosCanvas"
+                },
+                position: "left"
+            },
+            {
+                title: "Doping Mastery! ⚡",
+                content: "Brilliant! You've seen how P-type doping shifts the Fermi level toward the valence band, while N-type shifts it toward the conduction band. This is the foundation of all semiconductor devices - diodes, transistors, and computer chips!",
+                target: "#dopingType",
+                challenge: null,
+                position: "left"
+            },
+            {
+                title: "🎯 Challenge 5: Energy Range Exploration",
+                content: "Let's adjust our view to see more of the energy spectrum! The energy range control lets us zoom in and out of different energy levels.",
+                target: "#energyRange",
+                challenge: {
+                    type: "energy_range_adjustment",
+                    instruction: "📝 STEP 1: Find the Energy Range slider\n📝 STEP 2: Increase it to 3.0 eV to see a wider energy spectrum\n📝 STEP 3: Observe how the DOS curves extend further and you can see more detail!",
+                    target_element: "#energyRange",
+                    target_value: 3.0,
+                    tolerance: 0.1,
+                    reward: 100,
+                    secondary_highlight: "#energyValue"
+                },
+                position: "left"
+            },
+            {
+                title: "🎯 Challenge 6: Animation and Thermal Effects",
+                content: "The simulation includes dynamic effects that show real thermal motion! Let's enhance these effects to see electrons and holes dancing with thermal energy.",
+                target: "#thermalEffects",
+                challenge: {
+                    type: "thermal_effects_boost",
+                    instruction: "📝 STEP 1: Find the 'Thermal Fluctuations' slider\n📝 STEP 2: Increase it to maximum (2.0)\n📝 STEP 3: Watch the filled states fluctuate more dramatically with thermal motion!",
+                    target_element: "#thermalEffects",
+                    target_value: 2.0,
+                    tolerance: 0.1,
+                    reward: 110,
+                    secondary_highlight: "#thermalValue"
+                },
+                position: "left"
+            },
+            {
+                title: "Dynamic Physics Visualization! 🌊",
+                content: "Fantastic! You're now seeing the dynamic nature of quantum mechanics. The fluctuating filled states represent real thermal motion of electrons - this is what happens inside every electronic device at the quantum level!",
+                target: "#thermalEffects",
+                challenge: null,
+                position: "left"
+            },
+            {
+                title: "🎯 Challenge 7: Speed Control Mastery",
+                content: "Sometimes you need to slow things down to observe details, other times speed them up to see trends. Let's master the animation controls!",
+                target: "#animationSpeed",
+                challenge: {
+                    type: "animation_speed_control",
+                    instruction: "📝 STEP 1: Find the Animation Speed slider\n📝 STEP 2: Set it to 0.5x (slow motion)\n📝 STEP 3: Watch the thermal carriers move in slow motion to study their behavior!",
+                    target_element: "#animationSpeed",
+                    target_value: 0.5,
+                    tolerance: 0.1,
+                    reward: 90,
+                    secondary_highlight: "#speedValue"
+                },
+                position: "left"
+            },
+            {
+                title: "Understanding the Legend",
+                content: "The legend shows you what each color and symbol represents in the visualization. Blue curves are DOS, red line is Fermi level, green areas are filled states, orange bands show allowed energy regions, and moving dots are thermal carriers!",
+                target: ".legend",
+                challenge: null,
+                position: "left"
+            },
+            {
+                title: "🎯 Challenge 8: Test Your Knowledge!",
+                content: "Now that you've mastered the simulation, let's test your understanding with some interactive challenges! Time to prove you're a DOS expert!",
+                target: ".tab:nth-child(2)",
+                challenge: {
+                    type: "tab_switch",
+                    instruction: "📝 STEP 1: Click on the 'Challenges' tab at the top\n📝 STEP 2: This will take you to interactive questions to test your knowledge\n📝 STEP 3: Complete at least one challenge to show your expertise!",
+                    target_element: "[onclick*='challenges']",
+                    reward: 50
+                },
+                position: "bottom"
+            },
+            {
+                title: "🏆 Congratulations, Quantum Physics Expert!",
+                content: "You've successfully mastered the Density of States and Fermi level concepts! You now understand how temperature, doping, and material properties affect electronic behavior in semiconductors. This knowledge is fundamental to understanding all modern electronics!",
+                target: ".main-container",
+                challenge: null,
+                position: "center"
+            }
+        ];
+
+        // Tab switching function
+        function switchTab(tabElement, tabName) {
+            // Remove active class from all tabs and contents
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.experiment-content').forEach(content => {
+                content.classList.remove('active');
+                content.style.display = 'none';
+            });
+            
+            // Add active class to clicked tab and corresponding content
+            tabElement.classList.add('active');
+            const targetTab = document.getElementById(tabName);
+            targetTab.classList.add('active');
+            
+            // Set proper display style based on tab
+            if (tabName === 'simulation') {
+                targetTab.style.display = 'flex';
+                targetTab.style.flexDirection = 'row';
+                targetTab.style.flex = '1';
+                
+                // Ensure canvas is properly sized when switching back to simulation
+                setTimeout(() => {
+                    if (canvas) {
+                        canvas.width = 800;
+                        canvas.height = 600;
+                        drawSimulation();
+                    }
+                }, 100);
+            } else if (tabName === 'challenges') {
+                targetTab.style.display = 'block';
+                targetTab.style.flex = '1';
+                initializeChallenges();
+            }
+            
+            currentTab = tabName;
+        }
+
+        // Initialize simulation
+        function init() {
+            canvas = document.getElementById('dosCanvas');
+            if (!canvas) {
+                console.error('Canvas element not found');
+                return;
+            }
+            ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = 800;
+            canvas.height = 600;
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Start animation loop
+            animate();
+            
+            // Initial draw
+            drawSimulation();
+        }
+
+        function setupEventListeners() {
+            // Temperature control
+            const temperature = document.getElementById('temperature');
+            const tempValue = document.getElementById('tempValue');
+            if (temperature && tempValue) {
+                temperature.addEventListener('input', function() {
+                    tempValue.textContent = this.value;
+                    updateDisplay();
+                });
+            }
+
+            // Doping control
+            const doping = document.getElementById('doping');
+            const dopingValue = document.getElementById('dopingValue');
+            if (doping && dopingValue) {
+                doping.addEventListener('input', function() {
+                    const power = parseFloat(this.value);
+                    dopingValue.textContent = `10^${power}`;
+                    updateDisplay();
+                });
+            }
+
+            // Material selection
+            const material = document.getElementById('material');
+            if (material) {
+                material.addEventListener('input', function() {
+                    updateDisplay();
+                });
+            }
+
+            // Doping type
+            const dopingType = document.getElementById('dopingType');
+            if (dopingType) {
+                dopingType.addEventListener('input', function() {
+                    updateDisplay();
+                });
+            }
+
+            // Energy range
+            const energyRange = document.getElementById('energyRange');
+            const energyValue = document.getElementById('energyValue');
+            if (energyRange && energyValue) {
+                energyRange.addEventListener('input', function() {
+                    energyValue.textContent = parseFloat(this.value).toFixed(1);
+                    updateDisplay();
+                });
+            }
+
+            // Animation speed control
+            const animationSpeedControl = document.getElementById('animationSpeed');
+            const speedValue = document.getElementById('speedValue');
+            if (animationSpeedControl && speedValue) {
+                animationSpeedControl.addEventListener('input', function() {
+                    animationSpeed = parseFloat(this.value);
+                    speedValue.textContent = animationSpeed.toFixed(1) + 'x';
+                    updateDisplay();
+                });
+            }
+
+            // Thermal effects control
+            const thermalEffectsControl = document.getElementById('thermalEffects');
+            const thermalValue = document.getElementById('thermalValue');
+            if (thermalEffectsControl && thermalValue) {
+                thermalEffectsControl.addEventListener('input', function() {
+                    thermalIntensity = parseFloat(this.value);
+                    thermalValue.textContent = thermalIntensity.toFixed(1);
+                    updateDisplay();
+                });
+            }
+        }
+
+        function updateDisplay() {
+            // This will trigger a redraw in the animation loop
+        }
+
+        function animate() {
+            if (isAnimating) {
+                time += 0.02 * animationSpeed;
+                drawSimulation();
+            }
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function drawSimulation() {
+            // Clear canvas with gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#fafafa');
+            gradient.addColorStop(1, '#f0f4f8');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add subtle grid pattern
+            drawBackgroundGrid();
+            
+            // Get current parameters with safe defaults
+            const materialSelect = document.getElementById('material');
+            const temperatureInput = document.getElementById('temperature');
+            const dopingInput = document.getElementById('doping');
+            const dopingTypeSelect = document.getElementById('dopingType');
+            const energyRangeInput = document.getElementById('energyRange');
+            
+            const materialKey = materialSelect ? materialSelect.value : 'silicon';
+            const material = materials[materialKey];
+            const temperature = temperatureInput ? parseFloat(temperatureInput.value) : 300;
+            const dopingConc = dopingInput ? Math.pow(10, parseFloat(dopingInput.value)) : 1e15;
+            const dopingType = dopingTypeSelect ? dopingTypeSelect.value : 'n';
+            const energyRange = energyRangeInput ? parseFloat(energyRangeInput.value) : 2;
+
+            // Set up coordinate system
+            const margin = 70;
+            const plotWidth = canvas.width - 2 * margin;
+            const plotHeight = canvas.height - 2 * margin;
+            
+            // Energy axis (vertical)
+            const energyMin = -energyRange;
+            const energyMax = energyRange;
+            
+            // Draw subtle shadow for depth
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 10;
+            
+            // Draw main plot area background
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.fillRect(margin - 10, margin - 10, plotWidth + 20, plotHeight + 20);
+            
+            // Reset shadow
+            ctx.shadowBlur = 0;
+            ctx.shadowColor = 'transparent';
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            
+            // Draw axes
+            drawAxes(margin, plotWidth, plotHeight, energyMin, energyMax);
+            
+            // Draw energy bands with enhanced visuals
+            drawEnergyBands(margin, plotWidth, plotHeight, energyMin, energyMax, material);
+            
+            // Calculate and draw DOS with glow effect
+            drawDOS(margin, plotWidth, plotHeight, energyMin, energyMax, material, temperature);
+            
+            // Calculate and draw Fermi level
+            const fermiLevel = calculateFermiLevel(material, temperature, dopingConc, dopingType);
+            drawFermiLevel(margin, plotWidth, plotHeight, energyMin, energyMax, fermiLevel);
+            
+            // Draw dynamic filled states
+            drawDynamicFilledStates(margin, plotWidth, plotHeight, energyMin, energyMax, material, temperature, fermiLevel, dopingConc, dopingType);
+            
+            // Add decorative elements
+            drawDecorations(margin, plotWidth, plotHeight, material, temperature);
+        }
+        
+        function drawBackgroundGrid() {
+            const gridSize = 40;
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.02)';
+            ctx.lineWidth = 1;
+            
+            // Vertical lines
+            for (let x = 0; x <= canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            
+            // Horizontal lines
+            for (let y = 0; y <= canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+        
+        function drawDecorations(margin, plotWidth, plotHeight, material, temperature) {
+            // Draw material indicator with glow
+            ctx.save();
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = material.color;
+            ctx.fillStyle = material.color;
+            ctx.font = 'bold 16px Poppins';
+            ctx.textAlign = 'right';
+            ctx.fillText(material.name, canvas.width - 20, 40);
+            ctx.restore();
+            
+            // Draw temperature indicator with thermal glow
+            const tempGlow = Math.min(255, (temperature - 200) / 2);
+            ctx.save();
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = `rgba(255, ${255 - tempGlow}, 0, 0.6)`;
+            ctx.fillStyle = `rgba(255, ${Math.max(0, 255 - tempGlow)}, 0, 0.8)`;
+            ctx.font = 'bold 14px Poppins';
+            ctx.textAlign = 'right';
+            ctx.fillText(`${temperature}K`, canvas.width - 20, 65);
+            ctx.restore();
+            
+            // Draw animated energy flow lines
+            drawEnergyFlowLines(margin, plotWidth, plotHeight);
+            
+            // Draw particle trails
+            drawParticleTrails(margin, plotWidth, plotHeight);
+        }
+        
+        function drawEnergyFlowLines(margin, plotWidth, plotHeight) {
+            const numLines = 5;
+            const lineSpacing = plotHeight / (numLines + 1);
+            
+            for (let i = 0; i < numLines; i++) {
+                const y = margin + lineSpacing * (i + 1);
+                const phase = time + i * 0.5;
+                const amplitude = 20;
+                const frequency = 0.02;
+                
+                ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 + 0.05 * Math.sin(phase)})`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                for (let x = 0; x <= plotWidth; x += 5) {
+                    const waveY = y + amplitude * Math.sin(frequency * x + phase);
+                    if (x === 0) {
+                        ctx.moveTo(margin + x, waveY);
+                    } else {
+                        ctx.lineTo(margin + x, waveY);
+                    }
+                }
+                ctx.stroke();
+            }
+        }
+        
+        function drawParticleTrails(margin, plotWidth, plotHeight) {
+            const numTrails = 8;
+            
+            for (let i = 0; i < numTrails; i++) {
+                const x = margin + (plotWidth / numTrails) * i + 20;
+                const phase = time * 0.5 + i * 0.8;
+                const trailLength = 30;
+                
+                for (let j = 0; j < trailLength; j++) {
+                    const y = margin + plotHeight/2 + 100 * Math.sin(phase + j * 0.1);
+                    const alpha = (1 - j / trailLength) * 0.3;
+                    const size = 2 * (1 - j / trailLength);
+                    
+                    ctx.fillStyle = `rgba(139, 92, 246, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(x, y, size, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            }
+        }
+
+        function drawAxes(margin, plotWidth, plotHeight, energyMin, energyMax) {
+            // Enhanced axes with gradient colors
+            const axisGradient = ctx.createLinearGradient(0, 0, 0, plotHeight);
+            axisGradient.addColorStop(0, '#374151');
+            axisGradient.addColorStop(1, '#6b7280');
+            
+            ctx.strokeStyle = axisGradient;
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            
+            // Y-axis (Energy) with subtle glow
+            ctx.save();
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = 'rgba(55, 65, 81, 0.3)';
+            ctx.beginPath();
+            ctx.moveTo(margin, margin);
+            ctx.lineTo(margin, margin + plotHeight);
+            ctx.stroke();
+            ctx.restore();
+            
+            // X-axis (DOS) with subtle glow
+            ctx.save();
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = 'rgba(55, 65, 81, 0.3)';
+            ctx.beginPath();
+            ctx.moveTo(margin, margin + plotHeight/2);
+            ctx.lineTo(margin + plotWidth, margin + plotHeight/2);
+            ctx.stroke();
+            ctx.restore();
+            
+            // Energy labels with better styling
+            ctx.fillStyle = '#1f2937';
+            ctx.font = 'bold 12px Poppins';
+            ctx.textAlign = 'right';
+            
+            for (let i = 0; i <= 10; i++) {
+                const energy = energyMin + (energyMax - energyMin) * i / 10;
+                const y = margin + plotHeight - (plotHeight * i / 10);
+                
+                // Enhanced grid lines with gradient
+                const gridGradient = ctx.createLinearGradient(margin, y, margin + plotWidth, y);
+                gridGradient.addColorStop(0, 'rgba(229, 231, 235, 0.8)');
+                gridGradient.addColorStop(0.5, 'rgba(229, 231, 235, 0.4)');
+                gridGradient.addColorStop(1, 'rgba(229, 231, 235, 0.8)');
+                
+                ctx.strokeStyle = gridGradient;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(margin, y);
+                ctx.lineTo(margin + plotWidth, y);
+                ctx.stroke();
+                
+                // Energy value labels
+                if (Math.abs(energy) > 0.1) {
+                    ctx.fillText(energy.toFixed(1) + ' eV', margin - 10, y + 4);
+                } else {
+                    ctx.fillText('0', margin - 10, y + 4);
+                }
+            }
+
+            // Enhanced axis labels with shadows
+            ctx.save();
+            ctx.shadowBlur = 3;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillStyle = '#1f2937';
+            ctx.font = 'bold 14px Poppins';
+            ctx.textAlign = 'center';
+            
+            // Y-axis label
+            ctx.save();
+            ctx.translate(15, margin + plotHeight/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('Energy (eV)', 0, 0);
+            ctx.restore();
+            
+            // X-axis label
+            ctx.fillText('Density of States', margin + plotWidth/2, canvas.height - 20);
+            ctx.restore();
+        }
+
+        function drawEnergyBands(margin, plotWidth, plotHeight, energyMin, energyMax, material) {
+            const bandGap = material.bandGap;
+            const valenceBandTop = -bandGap/2;
+            const conductionBandBottom = bandGap/2;
+            
+            // Convert energy to y-coordinate
+            function energyToY(energy) {
+                return margin + plotHeight - ((energy - energyMin) / (energyMax - energyMin)) * plotHeight;
+            }
+            
+            // Create enhanced gradients for energy bands
+            const vbTop = energyToY(valenceBandTop);
+            const vbBottom = energyToY(energyMin);
+            const cbTop = energyToY(energyMax);
+            const cbBottom = energyToY(conductionBandBottom);
+            
+            // Valence band gradient
+            const vbGradient = ctx.createLinearGradient(margin, vbTop, margin, vbBottom);
+            vbGradient.addColorStop(0, 'rgba(245, 158, 11, 0.4)');
+            vbGradient.addColorStop(0.5, 'rgba(245, 158, 11, 0.2)');
+            vbGradient.addColorStop(1, 'rgba(245, 158, 11, 0.1)');
+            
+            // Conduction band gradient
+            const cbGradient = ctx.createLinearGradient(margin, cbTop, margin, cbBottom);
+            cbGradient.addColorStop(0, 'rgba(245, 158, 11, 0.1)');
+            cbGradient.addColorStop(0.5, 'rgba(245, 158, 11, 0.2)');
+            cbGradient.addColorStop(1, 'rgba(245, 158, 11, 0.4)');
+            
+            // Draw valence band with pattern
+            ctx.save();
+            ctx.fillStyle = vbGradient;
+            ctx.fillRect(margin, vbTop, plotWidth, vbBottom - vbTop);
+            
+            // Add subtle pattern to valence band
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.1)';
+            const patternSize = 20;
+            for (let x = margin; x < margin + plotWidth; x += patternSize) {
+                for (let y = vbTop; y < vbBottom; y += patternSize) {
+                    if ((Math.floor(x / patternSize) + Math.floor(y / patternSize)) % 2 === 0) {
+                        ctx.fillRect(x, y, patternSize, patternSize);
+                    }
+                }
+            }
+            ctx.restore();
+            
+            // Draw conduction band with pattern
+            ctx.save();
+            ctx.fillStyle = cbGradient;
+            ctx.fillRect(margin, cbTop, plotWidth, cbBottom - cbTop);
+            
+            // Add subtle pattern to conduction band
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.1)';
+            for (let x = margin; x < margin + plotWidth; x += patternSize) {
+                for (let y = cbTop; y < cbBottom; y += patternSize) {
+                    if ((Math.floor(x / patternSize) + Math.floor(y / patternSize)) % 2 === 0) {
+                        ctx.fillRect(x, y, patternSize, patternSize);
+                    }
+                }
+            }
+            ctx.restore();
+            
+            // Enhanced band edge lines with animated dashing
+            const shimmer = 0.02 * Math.sin(time * 1.5);
+            
+            // Valence band edge with glow
+            ctx.save();
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#f59e0b';
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3 + shimmer;
+            ctx.setLineDash([8, 4]);
+            ctx.lineDashOffset = -time * 15;
+            
+            ctx.beginPath();
+            ctx.moveTo(margin, vbTop);
+            ctx.lineTo(margin + plotWidth, vbTop);
+            ctx.stroke();
+            ctx.restore();
+            
+            // Conduction band edge with glow
+            ctx.save();
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#f59e0b';
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3 + shimmer;
+            ctx.setLineDash([8, 4]);
+            ctx.lineDashOffset = -time * 15;
+            
+            ctx.beginPath();
+            ctx.moveTo(margin, cbBottom);
+            ctx.lineTo(margin + plotWidth, cbBottom);
+            ctx.stroke();
+            ctx.restore();
+            
+            // Enhanced band labels with backgrounds
+            ctx.save();
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            
+            // VB label
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(margin + 5, vbTop - 25, 30, 20);
+            ctx.fillStyle = '#92400e';
+            ctx.font = 'bold 12px Poppins';
+            ctx.textAlign = 'left';
+            ctx.fillText('VB', margin + 10, vbTop - 10);
+            
+            // CB label
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(margin + 5, cbBottom + 5, 30, 20);
+            ctx.fillStyle = '#92400e';
+            ctx.fillText('CB', margin + 10, cbBottom + 20);
+            
+            // Bandgap label
+            const midY = (vbTop + cbBottom) / 2;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(margin + plotWidth - 80, midY - 10, 75, 20);
+            ctx.fillStyle = '#92400e';
+            ctx.textAlign = 'right';
+            ctx.fillText(`Eg = ${bandGap.toFixed(2)} eV`, margin + plotWidth - 10, midY + 5);
+            
+            ctx.restore();
+        }
+
+        function drawDOS(margin, plotWidth, plotHeight, energyMin, energyMax, material, temperature) {
+            const bandGap = material.bandGap;
+            const effectiveMass = material.effectiveMass;
+            
+            // Convert energy to y-coordinate
+            function energyToY(energy) {
+                return margin + plotHeight - ((energy - energyMin) / (energyMax - energyMin)) * plotHeight;
+            }
+            
+            const steps = 200;
+            const dosScale = plotWidth / 8;
+            
+            // Add subtle breathing effect to DOS
+            const breathe = 1 + 0.05 * Math.sin(time * 0.8);
+            
+            // Create gradient for DOS curve
+            const dosGradient = ctx.createLinearGradient(margin, 0, margin + plotWidth/2, 0);
+            dosGradient.addColorStop(0, material.color);
+            dosGradient.addColorStop(1, material.color.replace(/[\d\.]+\)$/, '0.3)'));
+            
+            // Valence band DOS with glow effect
+            ctx.save();
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = material.color;
+            ctx.strokeStyle = dosGradient;
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            ctx.beginPath();
+            let firstPoint = true;
+            const dosPoints = [];
+            
+            for (let i = 0; i <= steps; i++) {
+                const energy = energyMin + ((-bandGap/2) - energyMin) * i / steps;
+                
+                if (energy <= -bandGap/2) {
+                    const E = Math.abs(-bandGap/2 - energy);
+                    
+                    if (E >= 0) {
+                        const dos = Math.sqrt(Math.max(0, E)) * effectiveMass * 2 * breathe;
+                        const x = margin + dos * dosScale;
+                        const y = energyToY(energy);
+                        
+                        dosPoints.push({x, y});
+                        
+                        if (firstPoint) {
+                            ctx.moveTo(x, y);
+                            firstPoint = false;
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                }
+            }
+            ctx.stroke();
+            
+            // Fill under VB DOS curve with gradient
+            if (dosPoints.length > 0) {
+                const fillGradient = ctx.createLinearGradient(margin, 0, margin + plotWidth/3, 0);
+                fillGradient.addColorStop(0, material.color.replace(/[\d\.]+\)$/, '0.1)'));
+                fillGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                
+                ctx.fillStyle = fillGradient;
+                ctx.beginPath();
+                ctx.moveTo(margin, dosPoints[0].y);
+                dosPoints.forEach(point => ctx.lineTo(point.x, point.y));
+                ctx.lineTo(margin, dosPoints[dosPoints.length - 1].y);
+                ctx.fill();
+            }
+            
+            // Conduction band DOS with glow effect
+            ctx.beginPath();
+            firstPoint = true;
+            const cbDosPoints = [];
+            
+            for (let i = 0; i <= steps; i++) {
+                const energy = bandGap/2 + (energyMax - bandGap/2) * i / steps;
+                
+                if (energy >= bandGap/2) {
+                    const E = energy - bandGap/2;
+                    
+                    if (E >= 0) {
+                        const dos = Math.sqrt(E) * effectiveMass * 2 * breathe;
+                        const x = margin + dos * dosScale;
+                        const y = energyToY(energy);
+                        
+                        cbDosPoints.push({x, y});
+                        
+                        if (firstPoint) {
+                            ctx.moveTo(x, y);
+                            firstPoint = false;
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                }
+            }
+            ctx.stroke();
+            
+            // Fill under CB DOS curve with gradient
+            if (cbDosPoints.length > 0) {
+                const fillGradient = ctx.createLinearGradient(margin, 0, margin + plotWidth/3, 0);
+                fillGradient.addColorStop(0, material.color.replace(/[\d\.]+\)$/, '0.1)'));
+                fillGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                
+                ctx.fillStyle = fillGradient;
+                ctx.beginPath();
+                ctx.moveTo(margin, cbDosPoints[0].y);
+                cbDosPoints.forEach(point => ctx.lineTo(point.x, point.y));
+                ctx.lineTo(margin, cbDosPoints[cbDosPoints.length - 1].y);
+                ctx.fill();
+            }
+            
+            ctx.restore();
+            
+            // Add sparkle effects along DOS curves
+            drawSparkles(dosPoints.concat(cbDosPoints), material.color);
+        }
+        
+        function drawSparkles(points, color) {
+            if (points.length === 0) return;
+            
+            const numSparkles = 6;
+            const sparkleIndices = [];
+            
+            for (let i = 0; i < numSparkles; i++) {
+                const index = Math.floor((points.length / numSparkles) * i + (time * 10) % (points.length / numSparkles));
+                if (index < points.length) {
+                    sparkleIndices.push(index);
+                }
+            }
+            
+            sparkleIndices.forEach((index, i) => {
+                const point = points[index];
+                const phase = time * 3 + i * 0.8;
+                const size = 2 + Math.sin(phase) * 1.5;
+                const alpha = 0.5 + 0.3 * Math.sin(phase * 1.2);
+                
+                ctx.save();
+                ctx.fillStyle = color.replace(/[\d\.]+\)$/, `${alpha})`);
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = color;
+                
+                // Draw sparkle
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, size, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Draw sparkle rays
+                ctx.strokeStyle = color.replace(/[\d\.]+\)$/, `${alpha * 0.7})`);
+                ctx.lineWidth = 1;
+                for (let j = 0; j < 4; j++) {
+                    const angle = (j * Math.PI / 2) + phase;
+                    const rayLength = size * 2;
+                    ctx.beginPath();
+                    ctx.moveTo(point.x, point.y);
+                    ctx.lineTo(
+                        point.x + Math.cos(angle) * rayLength,
+                        point.y + Math.sin(angle) * rayLength
+                    );
+                    ctx.stroke();
+                }
+                
+                ctx.restore();
+            });
+        }
+
+        function calculateFermiLevel(material, temperature, dopingConc, dopingType) {
+            const bandGap = material.bandGap;
+            const intrinsicLevel = 0; // Midway between VB and CB
+            const conductionBandBottom = bandGap / 2;
+            const valenceBandTop = -bandGap / 2;
+            
+            if (dopingType === 'intrinsic') {
+                return intrinsicLevel;
+            } else if (dopingType === 'n') {
+                // N-type: Fermi level moves UP towards conduction band
+                // It starts at intrinsic (0) and can approach but never enter CB
+                const shift = k * temperature * Math.log(dopingConc / 1e16);
+                // Clamp between intrinsic level (0) and just below conduction band
+                const maxShift = conductionBandBottom - 0.05; // Stay 0.05 eV below CB
+                return Math.max(intrinsicLevel, Math.min(shift, maxShift));
+            } else {
+                // P-type: Fermi level moves DOWN towards valence band
+                // It starts at intrinsic (0) and can approach but never enter VB
+                const shift = k * temperature * Math.log(dopingConc / 1e16);
+                // Clamp between intrinsic level (0) and just above valence band
+                const minShift = valenceBandTop + 0.05; // Stay 0.05 eV above VB
+                return Math.min(intrinsicLevel, Math.max(-shift, minShift));
+            }
+        }
+
+        function drawFermiLevel(margin, plotWidth, plotHeight, energyMin, energyMax, fermiLevel) {
+            function energyToY(energy) {
+                return margin + plotHeight - ((energy - energyMin) / (energyMax - energyMin)) * plotHeight;
+            }
+            
+            const y = energyToY(fermiLevel);
+            
+            // Create gradient for Fermi level
+            const fermiGradient = ctx.createLinearGradient(margin, y, margin + plotWidth, y);
+            fermiGradient.addColorStop(0, 'rgba(239, 68, 68, 0.8)');
+            fermiGradient.addColorStop(0.5, 'rgba(239, 68, 68, 1)');
+            fermiGradient.addColorStop(1, 'rgba(239, 68, 68, 0.8)');
+            
+            // Animated dashed line with pulsing effect
+            const pulse = 1 + 0.1 * Math.sin(time * 3);
+            
+            ctx.save();
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = 'rgba(239, 68, 68, 0.6)';
+            ctx.strokeStyle = fermiGradient;
+            ctx.lineWidth = 4 * pulse;
+            ctx.setLineDash([12, 6]);
+            ctx.lineDashOffset = -time * 25;
+            
+            ctx.beginPath();
+            ctx.moveTo(margin, y);
+            ctx.lineTo(margin + plotWidth, y);
+            ctx.stroke();
+            ctx.restore();
+            
+            // Add animated arrow indicators
+            const arrowSize = 8;
+            const arrowSpacing = 100;
+            const numArrows = Math.floor(plotWidth / arrowSpacing);
+            
+            for (let i = 0; i < numArrows; i++) {
+                const x = margin + arrowSpacing * i + (time * 30) % arrowSpacing;
+                const arrowAlpha = 0.6 + 0.3 * Math.sin(time * 2 + i * 0.5);
+                
+                ctx.save();
+                ctx.fillStyle = `rgba(239, 68, 68, ${arrowAlpha})`;
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = 'rgba(239, 68, 68, 0.3)';
+                
+                // Draw arrow pointing right
+                ctx.beginPath();
+                ctx.moveTo(x - arrowSize, y - arrowSize/2);
+                ctx.lineTo(x, y);
+                ctx.lineTo(x - arrowSize, y + arrowSize/2);
+                ctx.lineTo(x - arrowSize/2, y);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+            
+            // Enhanced Fermi level label with background
+            ctx.save();
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            
+            const labelText = `EF = ${fermiLevel.toFixed(3)} eV`;
+            ctx.font = 'bold 14px Poppins';
+            ctx.textAlign = 'left';
+            
+            // Measure text for background
+            const textMetrics = ctx.measureText(labelText);
+            const textWidth = textMetrics.width;
+            const textHeight = 16;
+            
+            // Draw background
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.fillRect(margin + plotWidth - textWidth - 20, y - textHeight, textWidth + 10, textHeight + 5);
+            
+            // Draw border
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(margin + plotWidth - textWidth - 20, y - textHeight, textWidth + 10, textHeight + 5);
+            
+            // Draw text
+            ctx.fillStyle = '#dc2626';
+            ctx.fillText(labelText, margin + plotWidth - textWidth - 15, y - 5);
+            
+            ctx.restore();
+        }
+
+        function drawDynamicFilledStates(margin, plotWidth, plotHeight, energyMin, energyMax, material, temperature, fermiLevel, dopingConc, dopingType) {
+            const bandGap = material.bandGap;
+            const valenceBandTop = -bandGap/2;
+            const conductionBandBottom = bandGap/2;
+            
+            function energyToY(energy) {
+                return margin + plotHeight - ((energy - energyMin) / (energyMax - energyMin)) * plotHeight;
+            }
+            
+            // Thermal energy for fluctuations
+            const kT = k * temperature;
+            
+            // Dynamic fluctuation based on thermal energy and time
+            const thermalFluctuation = thermalIntensity * kT * 0.1;
+            const fluctuation1 = Math.sin(time * 2) * thermalFluctuation;
+            const fluctuation2 = Math.cos(time * 1.5) * thermalFluctuation;
+            const fluctuation3 = Math.sin(time * 2.5 + Math.PI/3) * thermalFluctuation;
+            
+            // Function to draw dynamic parabolic fill with thermal fluctuations
+            function drawDynamicParabolicFill(startY, endY, baseWidth, color, fluctuationPhase = 0) {
+                const height = Math.abs(endY - startY);
+                const steps = 60;
+                
+                // Create gradient for more realistic effect
+                const gradient = ctx.createLinearGradient(margin, startY, margin + baseWidth, startY);
+                gradient.addColorStop(0, color);
+                gradient.addColorStop(0.7, color.replace(/[\d\.]+\)$/, '0.4)'));
+                gradient.addColorStop(1, color.replace(/[\d\.]+\)$/, '0.1)'));
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.moveTo(margin, startY);
+                
+                for (let i = 0; i <= steps; i++) {
+                    const t = i / steps;
+                    const y = startY + (endY - startY) * t;
+                    
+                    // Enhanced parabolic profile with thermal fluctuations
+                    let widthFactor = 4 * t * (1 - t); // Base parabola
+                    
+                    // Add thermal fluctuations that vary with position and time
+                    const thermalEffect = 1 + 
+                        0.1 * Math.sin(time * 3 + fluctuationPhase + t * Math.PI) * thermalIntensity +
+                        0.05 * Math.cos(time * 4 + fluctuationPhase + t * 2 * Math.PI) * thermalIntensity +
+                        0.03 * Math.sin(time * 5 + fluctuationPhase + t * 3 * Math.PI) * thermalIntensity;
+                    
+                    // Temperature-dependent broadening
+                    const temperatureBroadening = 1 + (temperature - 300) / 1000 * thermalIntensity;
+                    
+                    widthFactor *= thermalEffect * temperatureBroadening;
+                    
+                    const x = margin + baseWidth * Math.max(0, widthFactor);
+                    ctx.lineTo(x, y);
+                }
+                
+                ctx.lineTo(margin, endY);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Add shimmering outline
+                ctx.strokeStyle = color.replace(/rgba?\([^)]+\)/, 'rgba(255, 255, 255, 0.3)');
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+            
+            // Base parabola sizes with dynamic scaling
+            const baseWidth = plotWidth * 0.04;
+            const temperatureScale = 1 + (temperature - 300) / 2000; // Scale with temperature
+            
+            // Doping concentration scale factor (logarithmic scaling)
+            const baseDopingConc = 1e15; // Reference concentration
+            const dopingScale = Math.log10(dopingConc / baseDopingConc) / 5 + 1; // Scale factor based on doping
+            const clampedDopingScale = Math.max(0.3, Math.min(3.0, dopingScale)); // Clamp to reasonable range
+            
+            // Valence Band Dynamic Fill
+            if (energyMin < valenceBandTop) {
+                const vbTopY = energyToY(valenceBandTop);
+                const vbBottomY = energyToY(energyMin);
+                
+                let vbWidth = baseWidth * temperatureScale;
+                let vbColor = 'rgba(34, 197, 94, 0.6)';
+                
+                if (dopingType === 'p') {
+                    vbWidth *= 1.6 * clampedDopingScale; // Larger for p-type (more holes), scaled by doping
+                    vbColor = `rgba(34, 197, 94, ${Math.min(0.9, 0.5 + clampedDopingScale * 0.1)})`;
+                } else if (dopingType === 'n') {
+                    vbWidth *= 0.6 / clampedDopingScale; // Smaller for n-type (fewer holes), inversely scaled by doping
+                    vbColor = `rgba(34, 197, 94, ${Math.max(0.2, 0.6 - clampedDopingScale * 0.1)})`;
+                } else {
+                    vbWidth *= 1.0; // Intrinsic - no doping dependence
+                    vbColor = 'rgba(34, 197, 94, 0.6)';
+                }
+                
+                drawDynamicParabolicFill(vbTopY, vbBottomY, vbWidth, vbColor, 0);
+            }
+            
+            // Conduction Band Dynamic Fill
+            if (energyMax > conductionBandBottom) {
+                const cbBottomY = energyToY(conductionBandBottom);
+                const cbTopY = energyToY(energyMax);
+                
+                let cbWidth = baseWidth * 0.4 * temperatureScale;
+                let cbColor = 'rgba(34, 197, 94, 0.5)';
+                
+                if (dopingType === 'n') {
+                    cbWidth = baseWidth * 1.8 * temperatureScale * clampedDopingScale; // Much larger for n-type (many electrons), scaled by doping
+                    cbColor = `rgba(34, 197, 94, ${Math.min(0.9, 0.5 + clampedDopingScale * 0.1)})`;
+                } else if (dopingType === 'p') {
+                    cbWidth *= 0.5 / clampedDopingScale; // Smaller for p-type (fewer electrons), inversely scaled by doping
+                    cbColor = `rgba(34, 197, 94, ${Math.max(0.2, 0.5 - clampedDopingScale * 0.1)})`;
+                } else {
+                    cbWidth = baseWidth * 1.0 * temperatureScale; // Intrinsic - no doping dependence
+                    cbColor = 'rgba(34, 197, 94, 0.5)';
+                }
+                
+                drawDynamicParabolicFill(cbBottomY, cbTopY, cbWidth, cbColor, Math.PI/2);
+            }
+            
+            // Add thermal carriers visualization
+            drawThermalCarriers(margin, plotWidth, plotHeight, energyMin, energyMax, temperature, dopingType);
+        }
+
+        function drawThermalCarriers(margin, plotWidth, plotHeight, energyMin, energyMax, temperature, dopingType) {
+            // Draw thermal carriers at all temperatures above 200K
+            if (temperature < 200) return;
+            
+            const bandGap = materials[document.getElementById('material')?.value || 'silicon'].bandGap;
+            const valenceBandTop = -bandGap/2;
+            const conductionBandBottom = bandGap/2;
+            
+            function energyToY(energy) {
+                return margin + plotHeight - ((energy - energyMin) / (energyMax - energyMin)) * plotHeight;
+            }
+            
+            // More carriers for better visualization
+            // Scale with temperature and thermal intensity
+            const baseCarriers = Math.floor((temperature - 200) / 25);
+            const numCarriers = Math.min(20, Math.max(4, baseCarriers * thermalIntensity));
+            
+            for (let i = 0; i < numCarriers; i++) {
+                // Much slower movement
+                const phase = time * 0.3 + i * 0.8;
+                const oscillation = time * 0.5 + i * 1.2;
+                
+                // Horizontal movement across the plot
+                const x = margin + 40 + (plotWidth - 80) * (0.5 + 0.4 * Math.sin(phase));
+                
+                // Vertical position: alternate between valence and conduction bands
+                let y;
+                if (i % 2 === 0) {
+                    // Electron in conduction band
+                    const cbCenterY = energyToY(conductionBandBottom + 0.2);
+                    y = cbCenterY + 15 * Math.sin(oscillation);
+                } else {
+                    // Hole in valence band  
+                    const vbCenterY = energyToY(valenceBandTop - 0.2);
+                    y = vbCenterY + 15 * Math.sin(oscillation + Math.PI);
+                }
+                
+                // Larger, more visible size
+                const baseSize = 4;
+                const size = baseSize + Math.sin(phase * 1.5) * 1;
+                const alpha = 0.7 + 0.2 * Math.sin(phase);
+                
+                // Color coding with better visibility
+                if (i % 2 === 0) {
+                    // Electrons (blue) in conduction band
+                    ctx.fillStyle = `rgba(59, 130, 246, ${alpha})`;
+                } else {
+                    // Holes (red) in valence band
+                    ctx.fillStyle = `rgba(239, 68, 68, ${alpha})`;
+                }
+                
+                // Draw carrier with outline for better visibility
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Add subtle outline
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Add small label near first few carriers
+                if (i < 2 && Math.sin(time * 0.5) > 0.5) {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                    ctx.font = '10px Poppins';
+                    ctx.textAlign = 'center';
+                    if (i % 2 === 0) {
+                        ctx.fillText('e⁻', x, y - size - 5);
+                    } else {
+                        ctx.fillText('h⁺', x, y - size - 5);
+                    }
+                }
+            }
+        }
+
+        function resetSimulation() {
+            const controls = {
+                material: 'silicon',
+                temperature: '300',
+                doping: '15',
+                dopingType: 'n',
+                energyRange: '2',
+                animationSpeed: '1',
+                thermalEffects: '1'
+            };
+            
+            const displays = {
+                tempValue: '300',
+                dopingValue: '10^15',
+                energyValue: '2.0',
+                speedValue: '1.0x',
+                thermalValue: '1.0'
+            };
+            
+            Object.keys(controls).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.value = controls[id];
+            });
+            
+            Object.keys(displays).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = displays[id];
+            });
+            
+            animationSpeed = 1.0;
+            thermalIntensity = 1.0;
+            updateDisplay();
+        }
+
+        function toggleAnimation() {
+            isAnimating = !isAnimating;
+            const status = document.getElementById('animationStatus');
+            
+            if (status) {
+                status.className = isAnimating ? 'status-indicator active' : 'status-indicator inactive';
+            }
+        }
+
+        function toggleHelp() {
+            const helpPanel = document.getElementById('helpPanel');
+            if (helpPanel) {
+                helpPanel.classList.toggle('active');
+            }
+        }
+
+        // ==================== GUIDED TOUR SYSTEM ====================
+
+        // Tour management functions
+        function startGuidedTour() {
+            console.log('Starting DOS guided tour...');
+            tourActive = true;
+            currentTourStep = 0;
+            tourScore = 0;
+            challengesSolved = 0;
+            
+            // Switch to simulation tab
+            switchTab(document.querySelector('[onclick*="simulation"]'), 'simulation');
+            
+            // Show tour elements
+            const overlay = document.getElementById('tourOverlay');
+            const popup = document.getElementById('tourPopup');
+            const score = document.getElementById('tourScore');
+            
+            if (overlay) {
+                overlay.style.display = 'block';
+                overlay.classList.add('active');
+            }
+            if (popup) {
+                popup.style.display = 'block';
+                popup.style.visibility = 'visible';
+            }
+            if (score) {
+                score.style.display = 'block';
+                score.classList.add('active');
+            }
+            
+            showTourStep();
+            updateTourScore();
+        }
+
+        function showTourStep() {
+            const step = tourSteps[currentTourStep];
+            const overlay = document.getElementById('tourOverlay');
+            const popup = document.getElementById('tourPopup');
+            
+            cleanupTourHighlights();
+            overlay.classList.add('active');
+            
+            document.getElementById('tourStepNumber').textContent = currentTourStep + 1;
+            document.getElementById('tourTitle').textContent = step.title;
+            document.getElementById('tourContent').textContent = step.content;
+            document.getElementById('tourProgressBar').style.width = `${((currentTourStep + 1) / tourSteps.length) * 100}%`;
+            
+            const challengeContainer = document.getElementById('tourChallenge');
+            challengeContainer.innerHTML = '';
+            
+            if (step.challenge) {
+                const challengeEl = document.createElement('div');
+                challengeEl.className = 'tour-challenge';
+                challengeEl.innerHTML = `
+                    <div class="tour-challenge-title">
+                        <i class="fas fa-bullseye"></i>
+                        Challenge Mission
+                    </div>
+                    <div class="tour-challenge-content">
+                        ${step.challenge.instruction}
+                    </div>
+                `;
+                challengeContainer.appendChild(challengeEl);
+                
+                document.getElementById('tourNextBtn').disabled = true;
+                startChallengeMonitoring(step.challenge);
+            } else {
+                document.getElementById('tourNextBtn').disabled = false;
+            }
+            
+            positionTourElements(step);
+            
+            setTimeout(() => {
+                popup.classList.add('active');
+            }, 100);
+            
+            document.getElementById('tourPrevBtn').disabled = currentTourStep === 0;
+            
+            const nextBtn = document.getElementById('tourNextBtn');
+            if (currentTourStep === tourSteps.length - 1) {
+                nextBtn.textContent = 'Finish Tour';
+                nextBtn.onclick = () => finalizeTour();
+            } else {
+                nextBtn.textContent = 'Next';
+                nextBtn.onclick = nextTourStep;
+            }
+            
+            updateTourScore();
+        }
+
+        function positionTourElements(step) {
+            const target = document.querySelector(step.target);
+            const popup = document.getElementById('tourPopup');
+            const spotlight = document.getElementById('tourSpotlight');
+            const secondarySpotlight = document.getElementById('tourSpotlightSecondary');
+            
+            if (target) {
+                const rect = target.getBoundingClientRect();
+                
+                spotlight.style.left = `${rect.left - 10}px`;
+                spotlight.style.top = `${rect.top - 10}px`;
+                spotlight.style.width = `${rect.width + 20}px`;
+                spotlight.style.height = `${rect.height + 20}px`;
+                spotlight.style.display = 'block';
+                
+                target.classList.add('highlight-element');
+                
+                if (step.challenge && step.challenge.secondary_highlight) {
+                    const secondaryTarget = document.querySelector(step.challenge.secondary_highlight);
+                    if (secondaryTarget) {
+                        const secondaryRect = secondaryTarget.getBoundingClientRect();
+                        secondarySpotlight.style.left = `${secondaryRect.left - 5}px`;
+                        secondarySpotlight.style.top = `${secondaryRect.top - 5}px`;
+                        secondarySpotlight.style.width = `${secondaryRect.width + 10}px`;
+                        secondarySpotlight.style.height = `${secondaryRect.height + 10}px`;
+                        secondarySpotlight.style.display = 'block';
+                        
+                        secondaryTarget.classList.add('highlight-element');
+                    }
+                } else {
+                    secondarySpotlight.style.display = 'none';
+                }
+                
+                const popupRect = popup.getBoundingClientRect();
+                let left, top;
+                
+                switch (step.position) {
+                    case 'right':
+                        left = rect.right + 20;
+                        top = rect.top;
+                        break;
+                    case 'left':
+                        left = rect.left - popupRect.width - 20;
+                        top = rect.top;
+                        break;
+                    case 'top':
+                        left = rect.left + (rect.width - popupRect.width) / 2;
+                        top = rect.top - popupRect.height - 20;
+                        break;
+                    case 'bottom':
+                        left = rect.left + (rect.width - popupRect.width) / 2;
+                        top = rect.bottom + 20;
+                        break;
+                    case 'center':
+                        left = (window.innerWidth - popupRect.width) / 2;
+                        top = (window.innerHeight - popupRect.height) / 2;
+                        break;
+                    default:
+                        left = rect.right + 20;
+                        top = rect.top;
+                }
+                
+                left = Math.max(20, Math.min(left, window.innerWidth - popupRect.width - 20));
+                top = Math.max(20, Math.min(top, window.innerHeight - popupRect.height - 20));
+                
+                popup.style.left = `${left}px`;
+                popup.style.top = `${top}px`;
+                
+                setTimeout(() => {
+                    target.classList.remove('highlight-element');
+                    if (step.challenge && step.challenge.secondary_highlight) {
+                        const secondaryTarget = document.querySelector(step.challenge.secondary_highlight);
+                        if (secondaryTarget) {
+                            secondaryTarget.classList.remove('highlight-element');
+                        }
+                    }
+                }, 3000);
+            } else {
+                popup.style.left = '50%';
+                popup.style.top = '50%';
+                popup.style.transform = 'translate(-50%, -50%)';
+                spotlight.style.display = 'none';
+            }
+        }
+
+        function startChallengeMonitoring(challenge) {
+            let challengeCompleted = false;
+            
+            const checkInterval = setInterval(() => {
+                if (!tourActive || !challenge || challengeCompleted) {
+                    clearInterval(checkInterval);
+                    return;
+                }
+                
+                switch (challenge.type) {
+                    case 'material_comparison':
+                        const materialSelect = document.querySelector(challenge.target_element);
+                        challengeCompleted = materialSelect && materialSelect.value === challenge.target_value;
+                        break;
+                        
+                    case 'temperature_experiment':
+                    case 'doping_exploration':
+                    case 'energy_range_adjustment':
+                    case 'thermal_effects_boost':
+                    case 'animation_speed_control':
+                        const rangeInput = document.querySelector(challenge.target_element);
+                        if (rangeInput) {
+                            const rangeValue = parseFloat(rangeInput.value);
+                            challengeCompleted = Math.abs(rangeValue - challenge.target_value) <= (challenge.tolerance || 0.1);
+                        }
+                        break;
+                        
+                    case 'doping_type_switch':
+                        const dopingTypeSelect = document.querySelector(challenge.target_element);
+                        challengeCompleted = dopingTypeSelect && dopingTypeSelect.value === challenge.target_value;
+                        break;
+                        
+                    case 'tab_switch':
+                        challengeCompleted = currentTab === 'challenges';
+                        break;
+                }
+                
+                if (challengeCompleted) {
+                    clearInterval(checkInterval);
+                    onChallengeCompleted(challenge);
+                }
+            }, 500);
+        }
+
+        function onChallengeCompleted(challenge) {
+            const challengeEl = document.querySelector('.tour-challenge');
+            if (challengeEl) {
+                challengeEl.classList.add('challenge-success');
+                challengeEl.innerHTML = `
+                    <div class="tour-challenge-title">
+                        <i class="fas fa-check-circle"></i>
+                        Challenge Completed! 🎉
+                    </div>
+                    <div class="tour-challenge-content">
+                        Excellent work! You've earned ${challenge.reward} points!
+                    </div>
+                `;
+            }
+            
+            tourScore += challenge.reward;
+            challengesSolved++;
+            
+            document.getElementById('tourNextBtn').disabled = false;
+            updateTourScore();
+        }
+
+        function nextTourStep() {
+            if (currentTourStep < tourSteps.length - 1) {
+                currentTourStep++;
+                showTourStep();
+            } else if (currentTourStep === tourSteps.length - 1) {
+                // Last step - finalize tour
+                finalizeTour();
+            }
+        }
+
+        function prevTourStep() {
+            if (currentTourStep > 0) {
+                currentTourStep--;
+                showTourStep();
+            }
+        }
+
+        function skipTour() {
+            const userConfirmed = confirm(
+                "⚠️ Are you sure you want to skip the guided walkthrough?\n\n" +
+                "You'll miss out on:\n" +
+                "• Step-by-step explanations of DOS and Fermi level physics\n" +
+                "• Interactive challenges with immediate feedback\n" +
+                "• Achievement badges and progress tracking\n" +
+                "• Guided practice with real semiconductor parameters\n" +
+                "• Tips and hints for understanding quantum concepts\n\n" +
+                "Without the walkthrough, the advanced physics may be difficult to understand.\n\n" +
+                "Click 'OK' to skip anyway, or 'Cancel' to continue the walkthrough."
+            );
+            
+            if (!userConfirmed) {
+                return;
+            }
+            
+            finalizeTour();
+        }
+
+        function finalizeTour() {
+            tourActive = false;
+            cleanupTourHighlights();
+            
+            const overlay = document.getElementById('tourOverlay');
+            const popup = document.getElementById('tourPopup');
+            const score = document.getElementById('tourScore');
+            const spotlight = document.getElementById('tourSpotlight');
+            const secondarySpotlight = document.getElementById('tourSpotlightSecondary');
+            
+            if (overlay) {
+                overlay.classList.remove('active');
+                overlay.style.display = 'none';
+                overlay.style.pointerEvents = 'none';
+                overlay.style.zIndex = '-1';
+            }
+            if (popup) {
+                popup.classList.remove('active');
+                popup.style.display = 'none';
+            }
+            if (score) {
+                score.classList.remove('active');
+                score.style.display = 'none';
+            }
+            if (spotlight) {
+                spotlight.style.display = 'none';
+            }
+            if (secondarySpotlight) {
+                secondarySpotlight.style.display = 'none';
+            }
+            
+            // Ensure challenges tab is properly reset and interactive
+            const challengesTab = document.getElementById('challenges');
+            if (challengesTab) {
+                challengesTab.style.pointerEvents = 'auto';
+                challengesTab.style.zIndex = '1';
+            }
+            
+            // Re-enable all matching items
+            document.querySelectorAll('.matching-item').forEach(item => {
+                item.style.pointerEvents = 'auto';
+                item.style.zIndex = 'auto';
+            });
+            
+            setTimeout(() => {
+                const finalAchievement = {
+                    title: '🏆 Quantum Physics Expert!',
+                    description: `Congratulations! You've completed the DOS & Fermi Level walkthrough with ${challengesSolved} challenges solved and ${tourScore} points earned! You now understand the fundamental quantum mechanics behind all semiconductor devices.`,
+                    icon: '🎓'
+                };
+                showAchievement(finalAchievement);
+            }, 300);
+        }
+
+        function cleanupTourHighlights() {
+            document.querySelectorAll('.highlight-element').forEach(el => {
+                el.classList.remove('highlight-element');
+            });
+            
+            const secondarySpotlight = document.getElementById('tourSpotlightSecondary');
+            if (secondarySpotlight) {
+                secondarySpotlight.style.display = 'none';
+            }
+        }
+
+        function showAchievement(achievement) {
+            const achievementEl = document.getElementById('tourAchievements');
+            if (achievementEl) {
+                document.getElementById('achievementTitle').textContent = achievement.title;
+                document.getElementById('achievementDescription').textContent = achievement.description;
+                document.querySelector('.achievement-icon').textContent = achievement.icon;
+                achievementEl.classList.add('active');
+            }
+        }
+
+        function closeAchievement() {
+            const achievementEl = document.getElementById('tourAchievements');
+            if (achievementEl) {
+                achievementEl.classList.remove('active');
+            }
+        }
+
+        function updateTourScore() {
+            const stepsElement = document.getElementById('stepsCompleted');
+            const challengesElement = document.getElementById('challengesSolved');
+            const scoreElement = document.getElementById('totalScore');
+            
+            if (stepsElement) stepsElement.textContent = `${currentTourStep + 1}/${tourSteps.length}`;
+            if (challengesElement) challengesElement.textContent = `${challengesSolved}/8`;
+            if (scoreElement) scoreElement.textContent = tourScore;
+        }
+
+        // ==================== COMPREHENSIVE CHALLENGE SYSTEM ====================
+
+        // Challenge tracking
+        let challengeAnswers = {
+            quiz1: [],
+            fillBlanks: [],
+            matching: {},
+            calculations: []
+        };
+
+        let challengeStates = {
+            1: false, // Rapid Fire Quiz
+            2: false, // Fill in Blanks
+            3: false, // Matching
+            4: false  // Calculations
+        };
+
+        // Enhanced question bank with detailed explanations and hints
+        const questionBank = {
+            rapidFire: [
+                { 
+                    q: "Forward bias makes current flow easily through a diode.", 
+                    a: true,
+                    explanation: "Forward bias reduces the potential barrier, allowing majority carriers to overcome it easily and flow across the junction.",
+                    hint: "Think about what happens to the energy barrier when you apply forward voltage."
+                },
+                { 
+                    q: "The depletion region gets wider under forward bias.", 
+                    a: false,
+                    explanation: "Forward bias actually narrows the depletion region by reducing the effective voltage across the junction.",
+                    hint: "Forward bias opposes the built-in potential, affecting the depletion width."
+                },
+                { 
+                    q: "Higher doping concentration increases built-in potential.", 
+                    a: true,
+                    explanation: "Built-in potential Vbi = (kT/q)ln(NaNd/ni²). Higher doping (Na, Nd) increases Vbi logarithmically.",
+                    hint: "Look at the built-in potential equation and see how Na and Nd affect it."
+                },
+                { 
+                    q: "DOS varies as √E with energy in 3D semiconductors.", 
+                    a: true,
+                    explanation: "The square root dependence comes from the parabolic band approximation in 3D systems.",
+                    hint: "Consider the shape of the DOS curves you see in the simulation."
+                },
+                { 
+                    q: "Silicon has a larger bandgap than Germanium.", 
+                    a: true,
+                    explanation: "Silicon has Eg ≈ 1.12 eV while Germanium has Eg ≈ 0.67 eV. Try switching materials in the simulation!",
+                    hint: "Compare the energy gaps: Si (1.12 eV) vs Ge (0.67 eV)."
+                },
+                { 
+                    q: "The Fermi level represents the chemical potential of electrons.", 
+                    a: true,
+                    explanation: "The Fermi level is the electrochemical potential that determines electron distribution and transport.",
+                    hint: "Think about what determines whether electrons will move between different regions."
+                },
+                { 
+                    q: "Higher temperature always increases the Fermi level.", 
+                    a: false,
+                    explanation: "Temperature affects the Fermi level differently depending on doping type and concentration.",
+                    hint: "Consider how intrinsic carrier concentration changes with temperature."
+                },
+                { 
+                    q: "N-type doping moves the Fermi level toward the conduction band.", 
+                    a: true,
+                    explanation: "N-type dopants provide electrons, increasing electron concentration and moving EF upward.",
+                    hint: "N-type = more electrons. Where do electrons like to be?"
+                },
+                { 
+                    q: "P-type doping creates excess electrons.", 
+                    a: false,
+                    explanation: "P-type doping creates holes (electron deficiencies), not excess electrons.",
+                    hint: "P-type = Positive charge carriers. What are positive charge carriers called?"
+                },
+                { 
+                    q: "The DOS is zero in the bandgap region.", 
+                    a: true,
+                    explanation: "The bandgap is a forbidden energy region with no available electronic states.",
+                    hint: "Look at the simulation - do you see any DOS curves in the gap between bands?"
+                }
+            ],
+            
+            fillInTheBlanks: [
+                {
+                    text: "The Fermi level represents the {blank1} potential of electrons in a material.",
+                    answers: { blank1: "chemical" },
+                    explanations: {
+                        blank1: "The Fermi level is the chemical potential of electrons, determining their tendency to move between regions."
+                    },
+                    hint: "Think about what drives electron flow between different materials or regions."
+                },
+                {
+                    text: "In intrinsic semiconductors, the Fermi level lies approximately at the {blank1} of the bandgap.",
+                    answers: { blank1: "middle" },
+                    explanations: {
+                        blank1: "In pure semiconductors, the Fermi level is positioned near the middle of the bandgap."
+                    },
+                    hint: "Pure semiconductors have equal numbers of electrons and holes."
+                },
+                {
+                    text: "The DOS in 3D semiconductors varies as {blank1} with energy.",
+                    answers: { blank1: "√E" },
+                    explanations: {
+                        blank1: "The square root dependence comes from the parabolic band approximation in 3D systems."
+                    },
+                    hint: "Look at the shape of the DOS curves in the simulation."
+                },
+                {
+                    text: "N-type doping introduces {blank1} as majority carriers, while P-type introduces {blank2}.",
+                    answers: { blank1: "electrons", blank2: "holes" },
+                    explanations: {
+                        blank1: "N-type dopants donate electrons to the conduction band",
+                        blank2: "P-type dopants accept electrons, creating holes in the valence band"
+                    },
+                    hint: "N = negative carriers, P = positive carriers"
+                },
+                {
+                    text: "Higher temperature increases the {blank1} carrier concentration exponentially.",
+                    answers: { blank1: "intrinsic" },
+                    explanations: {
+                        blank1: "Thermal energy excites electrons from valence to conduction band, creating electron-hole pairs."
+                    },
+                    hint: "What happens when you increase temperature in the simulation?"
+                }
+            ],
+            
+            calculations: [
+                {
+                    problem: "If the Fermi level is 0.3 eV above the intrinsic level at 300K, the electron concentration is approximately {blank1} times the intrinsic concentration.",
+                    answers: { blank1: "100000" },
+                    tolerance: 50000,
+                    explanation: "Using n = ni × exp((EF - Ei)/(kT)), where kT ≈ 0.026 eV at 300K",
+                    hint: "Use the relationship between Fermi level position and carrier concentration"
+                },
+                {
+                    problem: "For Silicon at 300K with kT = 0.026 eV, if Na = Nd = 10^16 cm^-3, the built-in potential is approximately {blank1} eV.",
+                    answers: { blank1: "0.7" },
+                    tolerance: 0.1,
+                    explanation: "Using Vbi = (kT/q)ln(NaNd/ni²) with ni = 1.45×10^10 cm^-3 for Si at 300K",
+                    hint: "Use the built-in potential formula with Si parameters at room temperature"
+                }
+            ]
+        };
+
+        // Random question selection system
+        let selectedQuestions = {
+            rapidFire: [],
+            fillInTheBlanks: [],
+            calculations: []
+        };
+
+        function selectRandomQuestions() {
+            // Select random questions from each category
+            selectedQuestions.rapidFire = getRandomItems(questionBank.rapidFire, 3);
+            selectedQuestions.fillInTheBlanks = getRandomItems(questionBank.fillInTheBlanks, 3);
+            selectedQuestions.calculations = getRandomItems(questionBank.calculations, 2);
+        }
+
+        function getRandomItems(array, count) {
+            const shuffled = [...array].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function initializeChallengeAnswers() {
+            challengeAnswers.quiz1 = new Array(selectedQuestions.rapidFire.length).fill(null);
+            challengeAnswers.fillBlanks = [];
+            challengeAnswers.calculations = [];
+        }
+
+        // Challenge functions
+        function initializeChallenges() {
+            if (!selectedQuestions.rapidFire.length) {
+                selectRandomQuestions();
+                initializeChallengeAnswers();
+                generateChallengeContent();
+            }
+            updateChallengeStats();
+        }
+
+        function generateChallengeContent() {
+            const container = document.getElementById('challengeContent');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <!-- Challenge Statistics -->
+                <div class="challenge-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalChallenges">4</div>
+                        <div class="stat-label">Total Challenges</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="completedChallenges">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="challengeScore">0</div>
+                        <div class="stat-label">Score</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="challenge-progress">
+                    <div class="challenge-progress-bar" id="overallProgress" style="width: 0%;"></div>
+                </div>
+
+                <!-- Challenge 1: Rapid Fire Quiz -->
+                <div class="challenge-section" id="challenge1">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">🧠</div>
+                        <div>
+                            <h3 class="challenge-title">Rapid Fire Quiz</h3>
+                            <p class="challenge-description">Test your understanding of DOS and Fermi level fundamentals!</p>
+                        </div>
+                    </div>
+                    <div id="quiz1Content"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkQuizAnswers(1)">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(1)">Reset</button>
+                    </div>
+                    <div class="challenge-feedback" id="challenge1-feedback"></div>
+                </div>
+
+                <!-- Challenge 2: Fill in the Blanks -->
+                <div class="challenge-section" id="challenge2">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">📝</div>
+                        <div>
+                            <h3 class="challenge-title">Fill in the Blanks</h3>
+                            <p class="challenge-description">Complete these statements about DOS and Fermi levels!</p>
+                        </div>
+                    </div>
+                    <div id="fillBlanksContent"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkFillBlanks()">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(2)">Reset</button>
+                    </div>
+                    <div class="challenge-feedback" id="challenge2-feedback"></div>
+                </div>
+
+                <!-- Challenge 3: Matching Exercise -->
+                <div class="challenge-section" id="challenge3">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">🔗</div>
+                        <div>
+                            <h3 class="challenge-title">Match the Following</h3>
+                            <p class="challenge-description">Connect DOS concepts with their descriptions!</p>
+                        </div>
+                    </div>
+                    <div class="matching-container">
+                        <div class="matching-column">
+                            <h4 style="text-align: center; margin-bottom: 15px; color: #1f2937;">Concepts</h4>
+                            <div class="matching-item" data-id="dos" onclick="selectMatchingItem(this)">
+                                Density of States
+                            </div>
+                            <div class="matching-item" data-id="fermi" onclick="selectMatchingItem(this)">
+                                Fermi Level
+                            </div>
+                            <div class="matching-item" data-id="bandgap" onclick="selectMatchingItem(this)">
+                                Bandgap
+                            </div>
+                            <div class="matching-item" data-id="doping" onclick="selectMatchingItem(this)">
+                                Doping
+                            </div>
+                        </div>
+
+                        <div class="matching-connections" id="matchingConnections">
+                            <!-- Connection lines will be drawn here -->
+                        </div>
+
+                        <div class="matching-column">
+                            <h4 style="text-align: center; margin-bottom: 15px; color: #1f2937;">Descriptions</h4>
+                            <div class="matching-item" data-id="def-dos" onclick="selectMatchingItem(this)">
+                                Number of quantum states per unit energy
+                            </div>
+                            <div class="matching-item" data-id="def-fermi" onclick="selectMatchingItem(this)">
+                                Chemical potential of electrons
+                            </div>
+                            <div class="matching-item" data-id="def-bandgap" onclick="selectMatchingItem(this)">
+                                Forbidden energy region
+                            </div>
+                            <div class="matching-item" data-id="def-doping" onclick="selectMatchingItem(this)">
+                                Adding impurities to control conductivity
+                            </div>
+                        </div>
+                    </div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkMatching()">Check Matches</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(3)">Reset</button>
+                    </div>
+                    <div class="challenge-feedback" id="challenge3-feedback"></div>
+                </div>
+
+                <!-- Challenge 4: Calculations -->
+                <div class="challenge-section" id="challenge4">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">🧮</div>
+                        <div>
+                            <h3 class="challenge-title">Calculation Challenge</h3>
+                            <p class="challenge-description">Apply physics equations to solve numerical problems!</p>
+                        </div>
+                    </div>
+                    <div id="calculationsContent"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkCalculations()">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetChallenge(4)">Reset</button>
+                    </div>
+                    <div class="challenge-feedback" id="challenge4-feedback"></div>
+                </div>
+            `;
+            
+            // Generate specific challenge content
+            generateRapidFireQuiz();
+            generateFillInTheBlanks();
+            generateCalculationChallenge();
+        }
+
+        function generateRapidFireQuiz() {
+            const container = document.getElementById('quiz1Content');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            selectedQuestions.rapidFire.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.innerHTML = `
+                    <h4>${index + 1}. ${question.q}</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizAnswer(1, ${index + 1}, true, this)">True</div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(1, ${index + 1}, false, this)">False</div>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function generateFillInTheBlanks() {
+            const container = document.getElementById('fillBlanksContent');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            let blankCounter = 1;
+            challengeAnswers.fillBlanks = [];
+            
+            selectedQuestions.fillInTheBlanks.forEach((question, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'fill-blank-container';
+                
+                let processedText = question.text;
+                const blanksInQuestion = [];
+                
+                Object.keys(question.answers).forEach(blankKey => {
+                    const inputId = `blank${blankCounter}`;
+                    const regex = new RegExp(`{${blankKey}}`, 'g');
+                    processedText = processedText.replace(regex, 
+                        `<input type="text" class="fill-blank-input" id="${inputId}" placeholder="?">`
+                    );
+                    
+                    blanksInQuestion.push({
+                        id: inputId,
+                        correctAnswer: question.answers[blankKey]
+                    });
+                    blankCounter++;
+                });
+                
+                challengeAnswers.fillBlanks.push(blanksInQuestion);
+                
+                questionDiv.innerHTML = `<div class="fill-blank-text">${processedText}</div>`;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function generateCalculationChallenge() {
+            const container = document.getElementById('calculationsContent');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            let blankCounter = 1;
+            challengeAnswers.calculations = [];
+            
+            selectedQuestions.calculations.forEach((question, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'fill-blank-container';
+                
+                let processedText = question.problem;
+                const blanksInQuestion = [];
+                
+                Object.keys(question.answers).forEach(blankKey => {
+                    const inputId = `calc${blankCounter}`;
+                    const regex = new RegExp(`{${blankKey}}`, 'g');
+                    processedText = processedText.replace(regex, 
+                        `<input type="text" class="fill-blank-input" id="${inputId}" placeholder="?">`
+                    );
+                    
+                    blanksInQuestion.push({
+                        id: inputId,
+                        correctAnswer: question.answers[blankKey],
+                        tolerance: question.tolerance || 0
+                    });
+                    blankCounter++;
+                });
+                
+                challengeAnswers.calculations.push(blanksInQuestion);
+                
+                questionDiv.innerHTML = `
+                    <div class="fill-blank-text">
+                        <strong>Problem ${qIndex + 1}:</strong> ${processedText}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Challenge interaction functions
+        function selectQuizAnswer(challengeNum, questionNum, answer, element) {
+            // Clear previous selections for this question
+            const parentQuestion = element.closest('.quiz-question');
+            parentQuestion.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Mark this option as selected
+            element.classList.add('selected');
+            
+            // Store the answer
+            challengeAnswers.quiz1[questionNum - 1] = answer;
+        }
+
+        let selectedMatchingItems = [];
+        let connectionLines = {};
+        let currentConnectionId = 0;
+        
+        function selectMatchingItem(element) {
+            if (element.classList.contains('matched')) return;
+            
+            // If already selected, deselect it
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedMatchingItems = selectedMatchingItems.filter(item => item !== element);
+                return;
+            }
+            
+            // Select the item
+            element.classList.add('selected');
+            selectedMatchingItems.push(element);
+            
+            // If we have two selected items
+            if (selectedMatchingItems.length === 2) {
+                const [item1, item2] = selectedMatchingItems;
+                
+                // Check if they are from different columns
+                const isLeftColumn1 = item1.closest('.matching-column:first-child');
+                const isLeftColumn2 = item2.closest('.matching-column:first-child');
+                
+                if (isLeftColumn1 !== isLeftColumn2) {
+                    // Create a pair
+                    createMatchingPair(item1, item2);
+                }
+                
+                // Deselect both items
+                item1.classList.remove('selected');
+                item2.classList.remove('selected');
+                selectedMatchingItems = [];
+            }
+        }
+        
+        function createMatchingPair(item1, item2) {
+            const connectionId = `conn-${currentConnectionId++}`;
+            
+            // Mark items as paired
+            item1.classList.add('paired', 'matched');
+            item2.classList.add('paired', 'matched');
+            
+            // Store the connection
+            connectionLines[connectionId] = { item1, item2 };
+            
+            // Store the connection ID on the items
+            item1.dataset.connectionId = connectionId;
+            item2.dataset.connectionId = connectionId;
+            
+            // Store the match
+            const leftItem = item1.closest('.matching-column:first-child') ? item1 : item2;
+            const rightItem = item1.closest('.matching-column:first-child') ? item2 : item1;
+            
+            challengeAnswers.matching[leftItem.dataset.id] = rightItem.dataset.id;
+            
+            // Draw the visual connection line
+            drawMatchingLine(connectionId, leftItem, rightItem);
+        }
+        
+        function drawMatchingLine(connectionId, leftItem, rightItem) {
+            const connectionsDiv = document.getElementById('matchingConnections');
+            if (!connectionsDiv) {
+                console.log('matchingConnections div not found');
+                return;
+            }
+            
+            // Create or get SVG
+            let svg = connectionsDiv.querySelector('svg');
+            if (!svg) {
+                svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.style.position = 'absolute';
+                svg.style.top = '0';
+                svg.style.left = '0';
+                svg.style.width = '100%';
+                svg.style.height = '100%';
+                svg.style.pointerEvents = 'none';
+                svg.style.zIndex = '50';
+                svg.style.overflow = 'visible';
+                connectionsDiv.appendChild(svg);
+            }
+            
+            // Get the matching container to calculate relative positions
+            const matchingContainer = connectionsDiv.closest('.matching-container');
+            if (!matchingContainer) {
+                console.log('matching container not found');
+                return;
+            }
+            
+            const containerRect = matchingContainer.getBoundingClientRect();
+            const connectionsRect = connectionsDiv.getBoundingClientRect();
+            const leftRect = leftItem.getBoundingClientRect();
+            const rightRect = rightItem.getBoundingClientRect();
+            
+            // Calculate line coordinates
+            // Start from right edge of left item relative to connections div
+            const x1 = leftRect.right - connectionsRect.left;
+            const y1 = leftRect.top + leftRect.height / 2 - connectionsRect.top;
+            
+            // End at left edge of right item relative to connections div
+            const x2 = rightRect.left - connectionsRect.left;
+            const y2 = rightRect.top + rightRect.height / 2 - connectionsRect.top;
+            
+            console.log(`Drawing line: (${x1}, ${y1}) to (${x2}, ${y2})`);
+            
+            // Create line element
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            line.setAttribute('stroke', '#6366f1');
+            line.setAttribute('stroke-width', '4');
+            line.setAttribute('stroke-linecap', 'round');
+            line.setAttribute('id', connectionId);
+            
+            svg.appendChild(line);
+            console.log('Line added to SVG');
+        }
+        
+        function clearMatchingLines() {
+            const connectionsDiv = document.getElementById('matchingConnections');
+            if (!connectionsDiv) return;
+            
+            const svg = connectionsDiv.querySelector('svg');
+            if (svg) {
+                svg.remove();
+            }
+        }
+
+        // Challenge checking functions
+        function checkQuizAnswers(challengeNum) {
+            const correctAnswers = selectedQuestions.rapidFire.map(q => q.a);
+            const userAnswers = challengeAnswers.quiz1;
+            
+            let score = 0;
+            let total = correctAnswers.length;
+            let explanationHTML = '';
+            
+            // Check each question and provide explanations
+            for (let i = 0; i < total; i++) {
+                const questionElement = document.querySelectorAll('#quiz1Content .quiz-question')[i];
+                const options = questionElement.querySelectorAll('.quiz-option');
+                const question = selectedQuestions.rapidFire[i];
+                
+                if (userAnswers[i] === correctAnswers[i]) {
+                    score++;
+                    // Mark correct answer
+                    options.forEach(opt => {
+                        if (opt.classList.contains('selected')) {
+                            opt.classList.add('correct');
+                        }
+                    });
+                    explanationHTML += `<p><strong>Q${i + 1}:</strong> ✓ <span style="color: #10b981;">Correct!</span><br>` +
+                                      `<strong>Your Answer:</strong> ${correctAnswers[i] ? 'True' : 'False'}<br>` +
+                                      `<strong>Explanation:</strong> ${question.explanation}</p>`;
+                } else {
+                    // Mark incorrect answer
+                    options.forEach(opt => {
+                        if (opt.classList.contains('selected')) {
+                            opt.classList.add('incorrect');
+                        }
+                    });
+                    const yourAnswer = userAnswers[i] !== null && userAnswers[i] !== undefined ? (userAnswers[i] ? 'True' : 'False') : 'Not answered';
+                    explanationHTML += `<p><strong>Q${i + 1}:</strong> ✗ <span style="color: #ef4444;">Incorrect</span><br>` +
+                                      `<strong>Your Answer:</strong> ${yourAnswer}<br>` +
+                                      `<strong>Correct Answer:</strong> <span style="color: #10b981; font-weight: 600;">${correctAnswers[i] ? 'True' : 'False'}</span><br>` +
+                                      `<strong>Explanation:</strong> ${question.explanation}</p>`;
+                }
+            }
+            
+            const feedback = document.getElementById('challenge1-feedback');
+            feedback.innerHTML = explanationHTML;
+            feedback.className = score === total ? 'challenge-feedback success' : 'challenge-feedback error';
+            feedback.style.display = 'block';
+            
+            if (score === total) {
+                markChallengeComplete(1, 100);
+            }
+        }
+
+        function checkFillBlanks() {
+            let totalBlanks = 0;
+            let correctBlanks = 0;
+            let explanationHTML = '';
+            
+            challengeAnswers.fillBlanks.forEach((questionBlanks, qIndex) => {
+                const question = selectedQuestions.fillInTheBlanks[qIndex];
+                let questionCorrect = true;
+                let blankDetails = '';
+                
+                questionBlanks.forEach((blank, blankIndex) => {
+                    totalBlanks++;
+                    const input = document.getElementById(blank.id);
+                    const userAnswer = input.value.toLowerCase().trim();
+                    const correctAnswer = blank.correctAnswer;
+                    
+                    if (userAnswer === correctAnswer.toLowerCase()) {
+                        correctBlanks++;
+                        input.classList.add('correct');
+                        blankDetails += `  • Blank ${blankIndex + 1}: ✓ Correct (${correctAnswer})<br>`;
+                    } else {
+                        questionCorrect = false;
+                        input.classList.add('incorrect');
+                        blankDetails += `  • Blank ${blankIndex + 1}: ✗ Your answer: "${userAnswer || 'empty'}" | <span style="color: #10b981; font-weight: 600;">Correct: ${correctAnswer}</span><br>`;
+                    }
+                });
+                
+                const statusIcon = questionCorrect ? '✓' : '✗';
+                const statusColor = questionCorrect ? '#10b981' : '#ef4444';
+                explanationHTML += `<p><strong>Q${qIndex + 1}:</strong> <span style="color: ${statusColor};">${statusIcon}</span><br>` +
+                                  blankDetails +
+                                  `<strong>Hint:</strong> ${question.hint}</p>`;
+            });
+            
+            const feedback = document.getElementById('challenge2-feedback');
+            feedback.innerHTML = explanationHTML;
+            feedback.className = correctBlanks === totalBlanks ? 'challenge-feedback success' : 'challenge-feedback error';
+            feedback.style.display = 'block';
+            
+            if (correctBlanks === totalBlanks) {
+                markChallengeComplete(2, 150);
+            }
+        }
+
+        function checkMatching() {
+            const correctMatches = {
+                'dos': 'def-dos',
+                'fermi': 'def-fermi',
+                'bandgap': 'def-bandgap',
+                'doping': 'def-doping'
+            };
+            
+            const matchLabels = {
+                'dos': 'Density of States',
+                'fermi': 'Fermi Level',
+                'bandgap': 'Bandgap',
+                'doping': 'Doping'
+            };
+            
+            const matchDescriptions = {
+                'def-dos': 'Number of quantum states per unit energy',
+                'def-fermi': 'Chemical potential of electrons',
+                'def-bandgap': 'Forbidden energy region',
+                'def-doping': 'Adding impurities to control conductivity'
+            };
+            
+            let correct = 0;
+            let total = Object.keys(correctMatches).length;
+            let detailsHTML = '';
+            
+            // Check each match
+            Object.keys(correctMatches).forEach(leftId => {
+                const userRightId = challengeAnswers.matching[leftId];
+                const correctRightId = correctMatches[leftId];
+                const leftItem = document.querySelector(`[data-id="${leftId}"]`);
+                
+                if (userRightId) {
+                    const rightItem = document.querySelector(`[data-id="${userRightId}"]`);
+                    
+                    if (correctRightId === userRightId) {
+                        correct++;
+                        leftItem.classList.add('correct-match');
+                        rightItem.classList.add('correct-match');
+                        detailsHTML += `<p><strong>${matchLabels[leftId]}:</strong> ✓ <span style="color: #10b981;">Correct match!</span><br>` +
+                                      `Matched with: ${matchDescriptions[userRightId]}</p>`;
+                    } else {
+                        leftItem.classList.add('incorrect-match');
+                        rightItem.classList.add('incorrect-match');
+                        detailsHTML += `<p><strong>${matchLabels[leftId]}:</strong> ✗ <span style="color: #ef4444;">Incorrect</span><br>` +
+                                      `Your match: ${matchDescriptions[userRightId]}<br>` +
+                                      `<span style="color: #10b981; font-weight: 600;">Correct match: ${matchDescriptions[correctRightId]}</span></p>`;
+                    }
+                } else {
+                    detailsHTML += `<p><strong>${matchLabels[leftId]}:</strong> ⚠️ <span style="color: #f59e0b;">Not matched</span><br>` +
+                                  `<span style="color: #10b981; font-weight: 600;">Should match with: ${matchDescriptions[correctRightId]}</span></p>`;
+                }
+            });
+            
+            const feedback = document.getElementById('challenge3-feedback');
+            if (correct === total) {
+                feedback.innerHTML = '<h4 style="color: #10b981;">🎉 Perfect matching!</h4>' + detailsHTML;
+                feedback.className = 'challenge-feedback success';
+                markChallengeComplete(3, 120);
+            } else {
+                feedback.innerHTML = `<h4 style="color: #ef4444;">Score: ${correct}/${total} correct</h4>` + detailsHTML;
+                feedback.className = 'challenge-feedback error';
+            }
+            feedback.style.display = 'block';
+        }
+
+        function checkCalculations() {
+            let totalBlanks = 0;
+            let correctBlanks = 0;
+            let explanationHTML = '';
+            
+            challengeAnswers.calculations.forEach((questionBlanks, qIndex) => {
+                const question = selectedQuestions.calculations[qIndex];
+                let questionCorrect = true;
+                let blankDetails = '';
+                
+                questionBlanks.forEach((blank, blankIndex) => {
+                    totalBlanks++;
+                    const input = document.getElementById(blank.id);
+                    const userAnswer = parseFloat(input.value);
+                    const correctAnswer = parseFloat(blank.correctAnswer);
+                    const tolerance = blank.tolerance || 0;
+                    
+                    const isCorrect = !isNaN(userAnswer) && Math.abs(userAnswer - correctAnswer) <= tolerance;
+                    
+                    if (isCorrect) {
+                        correctBlanks++;
+                        input.classList.add('correct');
+                        blankDetails += `  • Value ${blankIndex + 1}: ✓ Correct (${correctAnswer})<br>`;
+                    } else {
+                        questionCorrect = false;
+                        input.classList.add('incorrect');
+                        const userVal = isNaN(userAnswer) ? 'empty/invalid' : userAnswer.toFixed(4);
+                        blankDetails += `  • Value ${blankIndex + 1}: ✗ Your answer: ${userVal} | <span style="color: #10b981; font-weight: 600;">Correct: ${correctAnswer}</span>${tolerance > 0 ? ` (±${tolerance})` : ''}<br>`;
+                    }
+                });
+                
+                const statusIcon = questionCorrect ? '✓' : '✗';
+                const statusColor = questionCorrect ? '#10b981' : '#ef4444';
+                explanationHTML += `<p><strong>Problem ${qIndex + 1}:</strong> <span style="color: ${statusColor};">${statusIcon}</span><br>` +
+                                  blankDetails +
+                                  `<strong>Explanation:</strong> ${question.explanation}</p>`;
+            });
+            
+            const feedback = document.getElementById('challenge4-feedback');
+            feedback.innerHTML = explanationHTML;
+            feedback.className = correctBlanks === totalBlanks ? 'challenge-feedback success' : 'challenge-feedback error';
+            feedback.style.display = 'block';
+            
+            if (correctBlanks === totalBlanks) {
+                markChallengeComplete(4, 200);
+            }
+        }
+
+        // Helper functions for challenges
+        function markChallengeComplete(challengeNum, points) {
+            if (!challengeStates[challengeNum]) {
+                challengeStates[challengeNum] = true;
+                
+                const challengeSection = document.getElementById(`challenge${challengeNum}`);
+                challengeSection.classList.add('completed');
+                
+                updateChallengeStats();
+                
+                if (tourActive) {
+                    tourScore += points;
+                    challengesSolved++;
+                    updateTourScore();
+                }
+            }
+        }
+
+        function resetChallenge(challengeNum) {
+            challengeStates[challengeNum] = false;
+            const challengeSection = document.getElementById(`challenge${challengeNum}`);
+            challengeSection.classList.remove('completed');
+            
+            // Reset specific challenge data
+            switch (challengeNum) {
+                case 1:
+                    challengeAnswers.quiz1 = new Array(selectedQuestions.rapidFire.length).fill(null);
+                    challengeSection.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected', 'correct', 'incorrect');
+                    });
+                    break;
+                case 2:
+                    challengeSection.querySelectorAll('.fill-blank-input').forEach(input => {
+                        input.value = '';
+                        input.classList.remove('correct', 'incorrect');
+                    });
+                    break;
+                case 3:
+                    challengeAnswers.matching = {};
+                    selectedMatchingItems = [];
+                    connectionLines = {};
+                    currentConnectionId = 0;
+                    clearMatchingLines();
+                    challengeSection.querySelectorAll('.matching-item').forEach(item => {
+                        item.classList.remove('selected', 'matched', 'paired', 'correct-match', 'incorrect-match');
+                        delete item.dataset.connectionId;
+                    });
+                    break;
+                case 5:
+                    challengeSection.querySelectorAll('.fill-blank-input').forEach(input => {
+                        input.value = '';
+                        input.classList.remove('correct', 'incorrect');
+                    });
+                    break;
+            }
+            
+            const feedback = document.getElementById(`challenge${challengeNum}-feedback`);
+            if (feedback) feedback.style.display = 'none';
+            
+            updateChallengeStats();
+        }
+
+        function updateChallengeStats() {
+            const completed = Object.values(challengeStates).filter(state => state).length;
+            const total = Object.keys(challengeStates).length;
+            const score = completed * 50;
+            
+            const completedEl = document.getElementById('completedChallenges');
+            const scoreEl = document.getElementById('challengeScore');
+            const progressEl = document.getElementById('overallProgress');
+            
+            if (completedEl) completedEl.textContent = completed;
+            if (scoreEl) scoreEl.textContent = score;
+            if (progressEl) progressEl.style.width = `${(completed / total) * 100}%`;
+        }
+
+        function showQuizHints(challengeNum) {
+            let hintsHTML = '<strong>💡 Hints:</strong><br><br>';
+            selectedQuestions.rapidFire.forEach((question, index) => {
+                hintsHTML += `<p><strong>Q${index + 1}:</strong> ${question.hint}</p>`;
+            });
+            
+            const feedback = document.getElementById(`challenge${challengeNum}-feedback`);
+            feedback.innerHTML = hintsHTML;
+            feedback.className = 'challenge-feedback';
+            feedback.style.display = 'block';
+        }
+
+        function showFillBlanksHint() {
+            let hintsHTML = '<strong>💡 Hints:</strong><br><br>';
+            selectedQuestions.fillInTheBlanks.forEach((question, index) => {
+                hintsHTML += `<p><strong>Q${index + 1}:</strong> ${question.hint}</p>`;
+            });
+            
+            const feedback = document.getElementById('challenge2-feedback');
+            feedback.innerHTML = hintsHTML;
+            feedback.className = 'challenge-feedback';
+            feedback.style.display = 'block';
+        }
+
+        function showMatchingHints() {
+            const hints = `<strong>💡 Matching Hints:</strong><br><br>
+                <p>• DOS: Think about quantum states available for electrons</p>
+                <p>• Fermi Level: The energy level that determines electron distribution</p>
+                <p>• Bandgap: The energy difference between valence and conduction bands</p>
+                <p>• Doping: Adding impurities to change electrical properties</p>`;
+            
+            const feedback = document.getElementById('challenge3-feedback');
+            feedback.innerHTML = hints;
+            feedback.className = 'challenge-feedback';
+            feedback.style.display = 'block';
+        }
+
+        function showCalculationHint() {
+            let hintsHTML = '<strong>💡 Formula Hints:</strong><br><br>';
+            selectedQuestions.calculations.forEach((question, index) => {
+                hintsHTML += `<p><strong>Problem ${index + 1}:</strong> ${question.hint}<br>`;
+                hintsHTML += `<em>${question.explanation}</em></p>`;
+            });
+            
+            const feedback = document.getElementById('challenge4-feedback');
+            feedback.innerHTML = hintsHTML;
+            feedback.className = 'challenge-feedback';
+            feedback.style.display = 'block';
+        }
+
+        function generateNewQuestions() {
+            selectRandomQuestions();
+            initializeChallengeAnswers();
+            generateChallengeContent();
+            
+            // Reset all challenge states
+            Object.keys(challengeStates).forEach(key => {
+                challengeStates[key] = false;
+            });
+            updateChallengeStats();
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                font-family: 'Poppins', sans-serif;
+                font-weight: 600;
+            `;
+            notification.innerHTML = '<i class="fas fa-check-circle"></i> New questions generated!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        function resetAllChallenges() {
+            Object.keys(challengeStates).forEach(key => {
+                challengeStates[key] = false;
+                resetChallenge(parseInt(key));
+            });
+            
+            updateChallengeStats();
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                font-family: 'Poppins', sans-serif;
+                font-weight: 600;
+            `;
+            notification.innerHTML = '<i class="fas fa-undo"></i> All challenges reset!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        // Initialize when page loads
+        function initializeApp() {
+            init();
+            console.log('Dynamic DOS & Fermi Level Simulator loaded!');
+            console.log('New features: Dynamic filled states, thermal effects, guided tour');
+            console.log('Shortcuts: Space (animation), R (reset), H (help), +/- (speed), T (tour)');
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (canvas && currentTab === 'simulation') {
+                    setTimeout(() => {
+                        drawSimulation();
+                    }, 100);
+                }
+            });
+            
+            // Auto-start the guided tour after a short delay
+            setTimeout(() => {
+                startGuidedTour();
+            }, 1000);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+    </script>
+<script src="../assets/js/iframeResize.js"></script>
+        
+        </body>
+</html>
